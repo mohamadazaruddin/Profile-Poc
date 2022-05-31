@@ -57,26 +57,21 @@ export const Demo = () => {
       </div>
       <div>
         <div className="box" style={{ width: "50%", float: "right" }}>
-          <h1>Preview</h1>
           <div
-            className="img-preview"
-            style={{ width: "100%", float: "left", height: "300px" }}
-          />
+            className="box"
+            style={{ width: "50%", float: "right", height: "300px" }}
+          >
+            <h1>
+              <span>Crop</span>
+              <button style={{ float: "right" }} onClick={getCropData}>
+                Crop Image
+              </button>
+            </h1>
+            <img style={{ width: "100%" }} src={cropData} alt="cropped" />
+          </div>
         </div>
-        <div
-          className="box"
-          style={{ width: "50%", float: "right", height: "300px" }}
-        >
-          <h1>
-            <span>Crop</span>
-            <button style={{ float: "right" }} onClick={getCropData}>
-              Crop Image
-            </button>
-          </h1>
-          <img style={{ width: "100%" }} src={cropData} alt="cropped" />
-        </div>
+        <br style={{ clear: "both" }} />
       </div>
-      <br style={{ clear: "both" }} />
     </div>
   );
 };

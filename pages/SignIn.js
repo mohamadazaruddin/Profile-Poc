@@ -2,8 +2,10 @@ import React from "react";
 import { Box, Button, FormLabel, Input } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
+import { Router, useRouter } from "next/router";
 
 export default function SignIn() {
+  const router = useRouter();
   return (
     <Box>
       <Box
@@ -24,8 +26,8 @@ export default function SignIn() {
             password: "",
           }}
           onSubmit={(values) => {
-              localStorage.setItem("signedInObject", JSON.stringify(values));
-          
+            localStorage.setItem("signedInObject", JSON.stringify(values));
+            router.push("/Profile");
           }}
           validationSchema={Yup.object({
             FullName: Yup.string().max(15, "Too Long").required("Required"),
@@ -120,7 +122,7 @@ export default function SignIn() {
                 ) : null}
               </Box>
               <Box textAlign="center" mt="20px">
-                <Button bg="#FFC803" w="60%">
+                <Button name="Submit" type="submit" bg="#FFC803" w="60%">
                   Submit
                 </Button>
               </Box>

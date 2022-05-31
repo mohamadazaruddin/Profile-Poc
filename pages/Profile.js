@@ -1,7 +1,34 @@
-import { Box, Button, Flex, Text, Heading } from "@chakra-ui/react";
-import React from "react";
-
+import {
+  Box,
+  Text,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Flex,
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+} from "@chakra-ui/react";
+import * as Yup from "yup";
+import { Formik, Field, Form } from "formik";
+import { Router, useRouter } from "next/router";
 export default function Profile() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [Values, setValues] = useState();
+  useEffect(() => {
+    const signedInObject = window.localStorage.getItem("signedInObject");
+    setValues(JSON.parse(signedInObject));
+  }, []);
+  const router = useRouter();
   return (
     <Box bg="#3997f8" p="30px">
       <Box
@@ -23,7 +50,6 @@ export default function Profile() {
             ></Box>
           </Box>
           <Box p="15px">
-            <Heading> Shoaib Shaikh </Heading>
             <Text color="#3997f8" fontWeight="600" m="0px" mb="10px">
               @shaikhshoaib040 @gmail.com
             </Text>
@@ -48,9 +74,157 @@ export default function Profile() {
               }}
               border="none"
               cursor="pointer"
+              onClick={onOpen}
             >
               Edit Profile
             </Button>
+            {typeof Values !== "undefined" && (
+              <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Edit Profile</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <Formik
+                      initialValues={{
+                        FullName: Values.FullName,
+                        MobNo: Values.MobNo,
+                        email: Values.email,
+                        password: Values.password,
+                      }}
+                      onSubmit={(values) => {
+                        localStorage.setItem(
+                          "signedInObject",
+                          JSON.stringify(values)
+                        );
+                        router.push("/Profile");
+                      }}
+                      validationSchema={Yup.object({
+                        FullName: Yup.string()
+                          .max(15, "Too Long")
+                          .required("Required"),
+                        MobNo: Yup.string()
+                          .max(10, "Invalid Number")
+                          .min(10, "Invalid Number")
+                          .required("Required"),
+                        email: Yup.string()
+                          .email("Enter Valid Email")
+                          .required("Required"),
+                        password: Yup.string()
+                          .min(8, "Minimum 8 Characters Required")
+                          .max(15, "Maximum 15 Characters Required")
+                          .required("Required"),
+                        conPassword: Yup.string(),
+                      })}
+                    >
+                      {({ errors, touched }) => (
+                        <Form>
+                          <Box py="10px">
+                            <FormLabel
+                              htmlFor="FullName"
+                              fontSize="20px"
+                              fontWeight="600"
+                            >
+                              Full Name
+                            </FormLabel>
+                            <Field
+                              as={Input}
+                              name="FullName"
+                              id="FullName"
+                              bg="#fff"
+                              color="#333"
+                              borderRadius="25px"
+                              type="text"
+                            />
+                            {errors.FullName && touched.FullName ? (
+                              <Box as="p" color="red">
+                                {errors.FullName}
+                              </Box>
+                            ) : null}
+                          </Box>
+                          <Box py="10px">
+                            <FormLabel
+                              htmlFor="MobNo"
+                              fontSize="20px"
+                              fontWeight="600"
+                            >
+                              Mobile Number
+                            </FormLabel>
+                            <Field
+                              as={Input}
+                              name="MobNo"
+                              id="MobNo"
+                              bg="#fff"
+                              color="#333"
+                              type="number"
+                            />
+                            {errors.MobNo && touched.MobNo ? (
+                              <Box as="p" color="red">
+                                {errors.MobNo}
+                              </Box>
+                            ) : null}
+                          </Box>
+                          <Box py="10px">
+                            <FormLabel
+                              htmlFor="email"
+                              fontSize="20px"
+                              fontWeight="600"
+                            >
+                              Email
+                            </FormLabel>
+                            <Field
+                              as={Input}
+                              name="email"
+                              id="email"
+                              bg="#fff"
+                              color="#333"
+                              type="email"
+                            />
+                            {errors.email && touched.email ? (
+                              <Box as="p" color="red">
+                                {errors.email}
+                              </Box>
+                            ) : null}
+                          </Box>
+                          <Box py="10px">
+                            <FormLabel
+                              htmlFor="password"
+                              fontSize="20px"
+                              fontWeight="600"
+                            >
+                              Create Password
+                            </FormLabel>
+                            <Field
+                              as={Input}
+                              name="password"
+                              id="password"
+                              bg="#fff"
+                              color="#333"
+                              type="password"
+                            />
+                            {errors.password && touched.password ? (
+                              <Box as="p" color="red">
+                                {errors.password}
+                              </Box>
+                            ) : null}
+                          </Box>
+                          <Box textAlign="center" mt="20px">
+                            <Button
+                              name="Submit"
+                              type="submit"
+                              bg="#FFC803"
+                              w="60%"
+                            >
+                              Submit
+                            </Button>
+                          </Box>
+                        </Form>
+                      )}
+                    </Formik>
+                  </ModalBody>
+                </ModalContent>
+              </Modal>
+            )}
           </Box>
         </Flex>
       </Box>

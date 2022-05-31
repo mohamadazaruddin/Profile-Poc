@@ -9,7 +9,7 @@ import {
 import React from "react";
 import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
-import { useEffect } from "react/cjs/react.production.min";
+import { useEffect } from "react";
 const SignupSchema = Yup.object().shape({
   Username: Yup.string()
     .min(2, "Too Short!")
