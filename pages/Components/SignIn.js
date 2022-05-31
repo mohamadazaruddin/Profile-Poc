@@ -24,7 +24,7 @@ export default function SignIn() {
             password: "",
           }}
           onSubmit={(values) => {
-            alert(JSON.stringify(values, null, 2));
+            localStorage.setItem("signedInObject", JSON.stringify(values));
           }}
           validationSchema={Yup.object({
             FullName: Yup.string().max(15, "Too Long").required("Required"),
