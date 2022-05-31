@@ -20,13 +20,13 @@ export default function Profile() {
               bg="gray"
               borderRadius="50%"
               p="15px"
-            ></Box>{" "}
-          </Box>{" "}
+            ></Box>
+          </Box>
           <Box p="15px">
-            <Heading> Shoaib Shaikh </Heading>{" "}
-            <Text color="#3997f8" fontWeight="600" mb="10px">
-              @shaikhshoaib040 @gmail.com{" "}
-            </Text>{" "}
+            <Heading> Shoaib Shaikh </Heading>
+            <Text color="#3997f8" fontWeight="600" m="0px" mb="10px">
+              @shaikhshoaib040 @gmail.com
+            </Text>
             <Text fontWeight="600" mb="25px">
               I am Shoaib Shaikh Rashid As an inter Lorem, ipsum dolor sit amet
               consectetur adipisicing elit.Blanditiis a beatae ullam vitae sunt
@@ -35,23 +35,25 @@ export default function Profile() {
               ipsum dolor sit amet consectetur adipisicing elit.Adipisci nemo
               iste dignissimos soluta!Dicta nobis voluptates totam, reiciendis
               expedita error doloribus ea.Asperiores illo nihil quibusdam,
-              eligendi expedita iusto necessitatibus.{" "}
-            </Text>{" "}
+              eligendi expedita iusto necessitatibus.
+            </Text>
             <Button
               bg="#3997f8"
               fontWeight="bold"
               color="#fff"
               borderRadius="25px"
-              px="30px"
+              p="10px 30px"
               _hover={{
                 bg: "#017eff",
               }}
+              border="none"
+              cursor="pointer"
             >
-              Edit Profile{" "}
-            </Button>{" "}
-          </Box>{" "}
-        </Flex>{" "}
-      </Box>{" "}
+              Edit Profile
+            </Button>
+          </Box>
+        </Flex>
+      </Box>
     </Box>
   );
 }
