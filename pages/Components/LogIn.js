@@ -7,10 +7,9 @@ export default function () {
     <div>
       <Box>
         <Button onClick={() => Router.push("/Components/SignIn")}>
-          {" "}
-          Sign In{" "}
-        </Button>{" "}
-      </Box>{" "}
+          Sign In
+        </Button>
+      </Box>
     </div>
   );
 }
