@@ -2,11 +2,33 @@ import React, { useState } from "react";
 import { Box, Button, FormLabel, Input } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import { Router, useRouter } from "next/router";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function SignIn() {
   const router = useRouter();
   const [Users] = useState([]);
+
+  const handleSubmit = (values) => {
+    let a;
+    if (localStorage.getItem("signedInObject") === null) {
+      a = [];
+      a.push(values);
+    } else {
+      a = JSON.parse(localStorage.getItem("signedInObject"));
+    }
+    a.map((items) => {
+      if (items.email === values.email) {
+        items.FullName = values.FullName;
+        items.MobNo = values.MobNo;
+        items.password = values.password;
+      } else {
+        a.push(values);
+      }
+    });
+    localStorage.setItem("signedInObject", JSON.stringify(a));
+    router.push("/Profile");
+  };
   return (
     <Box p="50px">
       <Box
@@ -26,13 +48,7 @@ export default function SignIn() {
             email: "",
             password: "",
           }}
-          onSubmit={(values) => {
-            Users.push(JSON.stringify(values));
-            localStorage.setItem("signedInObject", Users);
-            localStorage.removeItem("fullname");
-            console.log("Users", Users);
-            router.push("/Profile");
-          }}
+          onSubmit={handleSubmit}
           validationSchema={Yup.object({
             FullName: Yup.string().max(15, "Too Long").required("Required"),
             MobNo: Yup.string()

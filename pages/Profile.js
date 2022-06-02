@@ -88,7 +88,7 @@ export default function Profile() {
                 </Box>
                 <Box>
                   <Text fontWeight="600" mb="25px">
-                    I am {value.FullName} as an inter Lorem, ipsum dolor sit
+                    I am {value.FullName} as an intern Lorem, ipsum dolor sit
                     amet consectetur adipisicing elit.Blanditiis a beatae ullam
                     vitae sunt repudiandae voluptate animi molestias,
                     voluptatem, dolor
