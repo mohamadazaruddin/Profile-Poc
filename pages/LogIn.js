@@ -16,7 +16,7 @@ const SignupSchema = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Required"),
   Password: Yup.string()
-    .min(2, "Too Short!")
+    .min(8, "Too Short!")
     .max(50, "Too Long!")
     .required("Required"),
 });
@@ -27,7 +27,7 @@ export default function LogIn() {
     console.log("signedInObject", JSON.parse(signedInObject));
   }, []);
   return (
-    <Box>
+    <Box p="50px">
       <Box m="auto" bg="#39BEF8" borderRadius="25px" w="314px">
         <Text textAlign="center" fontSize="32px" fontWeight="700" color="#fff">
           Login
