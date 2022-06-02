@@ -28,10 +28,10 @@ export default function LogIn() {
   }, []);
   return (
     <Box p="50px">
-      <Box m="auto" bg="#39BEF8" borderRadius="25px" w="314px">
-        <Text textAlign="center" fontSize="32px" fontWeight="700" color="#fff">
-          Login
-        </Text>
+      <Box m="auto" bg="#3997f8" borderRadius="25px" p="40px" w="50%">
+        <Box textAlign="center" as="h1" fontSize="5xl" color="#fff">
+          Log In
+        </Box>
         <Box>
           <Formik
             initialValues={{
@@ -45,61 +45,56 @@ export default function LogIn() {
           >
             {({ errors, touched }) => (
               <Form>
-                <Box p="40px">
-                  <FormControl>
-                    <FormLabel
-                      color="#fff"
+                <Box>
+                  <Box py="10px">
+                    <FormControl>
+                      <FormLabel color="#fff" fontSize="16px" fontWeight="700">
+                        User Name
+                      </FormLabel>
+                      <Field
+                        name="Username"
+                        as={Input}
+                        bg="#fff"
+                        color="#000"
+                        placeholder="Username"
+                      />
+                      {errors.Username && touched.Username ? (
+                        <Text color="red" fontSize="14px" fontWeight="600">
+                          {errors.Username}
+                        </Text>
+                      ) : null}
+                    </FormControl>
+                  </Box>
+                  <Box py="10px">
+                    <FormControl>
+                      <FormLabel color="#fff" fontSize="16px" fontWeight="700">
+                        Password
+                      </FormLabel>
+                      <Field
+                        name="Password"
+                        as={Input}
+                        bg="#fff"
+                        color="#000"
+                        placeholder="Password"
+                      />
+                      {errors.Password && touched.Password ? (
+                        <Text color="red" fontSize="14px" fontWeight="600">
+                          {errors.Password}
+                        </Text>
+                      ) : null}
+                    </FormControl>
+                  </Box>
+                  <Box textAlign="center">
+                    <Button
+                      mt="20px"
+                      bg="#f3ca39"
                       fontSize="16px"
-                      fontWeight="700"
-                      pb="10px"
+                      px="80px"
+                      type="submit"
                     >
-                      User Name
-                    </FormLabel>
-                    <Field
-                      name="Username"
-                      as={Input}
-                      bg="#fff"
-                      color="#000"
-                      placeholder="Username"
-                    />
-                    {errors.Username && touched.Username ? (
-                      <Text color="red" fontSize="14px" fontWeight="600">
-                        {errors.Username}
-                      </Text>
-                    ) : null}
-                  </FormControl>
-                  <FormControl>
-                    <FormLabel
-                      color="#fff"
-                      fontSize="16px"
-                      fontWeight="700"
-                      py="10px"
-                    >
-                      Password
-                    </FormLabel>
-                    <Field
-                      name="Password"
-                      as={Input}
-                      bg="#fff"
-                      color="#000"
-                      placeholder="Password"
-                    />
-                    {errors.Password && touched.Password ? (
-                      <Text color="red" fontSize="14px" fontWeight="600">
-                        {errors.Password}
-                      </Text>
-                    ) : null}
-                  </FormControl>
-                  <Button
-                    my="40px"
-                    borderRadius="25px"
-                    bg="#FFC803"
-                    fontSize="16px"
-                    px="80px"
-                    type="submit"
-                  >
-                    Log in
-                  </Button>
+                      Log in
+                    </Button>
+                  </Box>
                 </Box>
               </Form>
             )}

@@ -36,6 +36,19 @@ export default function SignIn(value) {
       setImage(reader.result);
     };
     reader.readAsDataURL(files[0]);
+    const file = e.target.files[0];
+    getBase64(file).then((base64) => {
+      localStorage.setItem("fileBase64", JSON.stringify(base64));
+      console.debug("file stored", base64);
+    });
+  };
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
   };
 
   const getCropData = () => {
@@ -81,6 +94,7 @@ export default function SignIn(value) {
               .min(8, "Minimum 8 Characters Required")
               .max(15, "Maximum 15 Characters Required")
               .required("Required"),
+            cropImg: Yup.string().required("Required"),
             conPassword: Yup.string().oneOf(
               [Yup.ref("password"), null],
               "Passwords must match"
@@ -263,7 +277,13 @@ export default function SignIn(value) {
                 </Flex>
               </Box>
               <Box textAlign="center" mt="20px">
-                <Button bg="#FFC803" w="60%" type="submit" name="submit">
+                <Button
+                  bg="#f3ca39"
+                  px="80px"
+                  type="submit"
+                  color="#000"
+                  name="submit"
+                >
                   Submit
                 </Button>
               </Box>
