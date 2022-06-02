@@ -9,23 +9,25 @@ import {
 import React from "react";
 import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 const SignupSchema = Yup.object().shape({
   Username: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
     .required("Required"),
-  Password: Yup.string()
-    .min(8, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
+  Password: Yup.string().max(50, "Too Long!").required("Required"),
 });
 
 export default function LogIn() {
+  const router = useRouter();
+  const [value, setValues] = useState();
+  const [valueSubmitted, setValueSubmitted] = useState(false);
   useEffect(() => {
     const signedInObject = window.localStorage.getItem("signedInObject");
-    console.log("signedInObject", JSON.parse(signedInObject));
-  }, []);
+    setValues(JSON.parse(signedInObject));
+    setValueSubmitted(false);
+  }, [valueSubmitted]);
   return (
     <Box p="50px">
       <Box m="auto" bg="#3997f8" borderRadius="25px" p="40px" w="50%">

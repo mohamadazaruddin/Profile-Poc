@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Box, Button, FormLabel, Input, Flex, Image } from "@chakra-ui/react";
+import { Box, Button, FormLabel, Input } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import {
@@ -15,14 +17,33 @@ import {
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
 
-// const defaultSrc =
-//   "https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg";
-
 export default function SignIn(value) {
   const [image, setImage] = useState();
   const [cropData, setCropData] = useState(false);
   const [cropper, setCropper] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
+  const handleSubmit = (values) => {
+    let a;
+    if (localStorage.getItem("signedInObject") === null) {
+      a = [];
+      a.push(values);
+    } else {
+      a = JSON.parse(localStorage.getItem("signedInObject"));
+    }
+    a.map((items) => {
+      if (items.email === values.email) {
+        items.FullName = values.FullName;
+        items.MobNo = values.MobNo;
+        items.password = values.password;
+      } else {
+        a.push(values);
+      }
+    });
+    localStorage.setItem("signedInObject", JSON.stringify(a));
+    router.push("/Profile");
+  };
+
   const onChange = (e) => {
     e.preventDefault();
     let files;
@@ -78,12 +99,8 @@ export default function SignIn(value) {
             conPassword: "",
             cropImg: "",
           }}
-          onSubmit={(values) => {
-            console.log(values, "values");
-            localStorage.setItem("signData", JSON.stringify(values));
-            // localStorage.setItem("ImgData", JSON.stringify(cropData))
-          }}
-          validationSchema={Yup.object().shape({
+          onSubmit={handleSubmit}
+          validationSchema={Yup.object({
             FullName: Yup.string().max(15, "Too Long").required("Required"),
             MobNo: Yup.string()
               .max(10, "Invalid Number")
