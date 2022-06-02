@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, FormLabel, Input } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
@@ -6,6 +6,7 @@ import { Router, useRouter } from "next/router";
 
 export default function SignIn() {
   const router = useRouter();
+  const [Users] = useState([]);
   return (
     <Box>
       <Box
@@ -26,7 +27,10 @@ export default function SignIn() {
             password: "",
           }}
           onSubmit={(values) => {
-            localStorage.setItem("signedInObject", JSON.stringify(values));
+            Users.push(JSON.stringify(values));
+            localStorage.setItem("signedInObject", Users);
+            localStorage.removeItem("fullname");
+            console.log("Users", Users);
             router.push("/Profile");
           }}
           validationSchema={Yup.object({
