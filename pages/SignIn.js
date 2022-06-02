@@ -8,7 +8,7 @@ export default function SignIn() {
   const router = useRouter();
   const [Users] = useState([]);
   return (
-    <Box>
+    <Box p="50px">
       <Box
         w="50%"
         bg="#3997f8"
@@ -36,8 +36,8 @@ export default function SignIn() {
           validationSchema={Yup.object({
             FullName: Yup.string().max(15, "Too Long").required("Required"),
             MobNo: Yup.string()
-              .max(10, "Invalid Number")
-              .min(10, "Invalid Number")
+              .max(10, "Number To Long")
+              .min(10, "Number To Short")
               .required("Required"),
             email: Yup.string().email("Enter Valid Email").required("Required"),
             password: Yup.string()
@@ -50,7 +50,7 @@ export default function SignIn() {
           {({ errors, touched }) => (
             <Form>
               <Box textAlign="center" as="h1" fontSize="5xl">
-                Sign In<Box>Shoaibaksdn</Box>
+                Sign In
               </Box>
               <Box py="10px">
                 <FormLabel htmlFor="FullName" fontSize="20px" fontWeight="600">
@@ -62,7 +62,6 @@ export default function SignIn() {
                   id="FullName"
                   bg="#fff"
                   color="#333"
-                  borderRadius="25px"
                   type="text"
                 />
                 {errors.FullName && touched.FullName ? (
@@ -126,13 +125,28 @@ export default function SignIn() {
                 ) : null}
               </Box>
               <Box textAlign="center" mt="20px">
-                <Button name="Submit" type="submit" bg="#FFC803" w="60%">
+                <Button
+                  name="Submit"
+                  type="submit"
+                  bg="#cfba28"
+                  color="black"
+                  w="60%"
+                  _hover={{ bg: "#f3d400" }}
+                >
                   Submit
                 </Button>
               </Box>
             </Form>
           )}
         </Formik>
+        <Box textAlign="end" mt="25px">
+          <Box>
+            Already have an Account?
+            <Link href="/LogIn" color="#002bff" mx="5px" fontWeight="700">
+              Log in
+            </Link>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
