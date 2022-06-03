@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Box, Button, FormLabel, Input } from "@chakra-ui/react";
+import { Box, Button, FormLabel, Input, Flex, Image } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import {
@@ -16,32 +14,47 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+// const defaultSrc =
+//   "https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg";
 
 export default function SignIn(value) {
   const [image, setImage] = useState();
   const [cropData, setCropData] = useState(false);
   const [cropper, setCropper] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const router = useRouter();
+  function getUniqueListBy(arr, key) {
+    return [...new Map(arr.map((item) => [item[key], item])).values()];
+  }
   const handleSubmit = (values) => {
-    let a;
-    if (localStorage.getItem("signedInObject") === null) {
-      a = [];
-      a.push(values);
-    } else {
-      a = JSON.parse(localStorage.getItem("signedInObject"));
-    }
-    a.map((items) => {
-      if (items.email === values.email) {
-        items.FullName = values.FullName;
-        items.MobNo = values.MobNo;
-        items.password = values.password;
-      } else {
-        a.push(values);
-      }
-    });
-    localStorage.setItem("signedInObject", JSON.stringify(a));
-    router.push("/Profile");
+    values.cropImage = cropData;
+    let dummyArray = [];
+    dummyArray.push(values);
+    const arr1 = getUniqueListBy(dummyArray, values.email);
+    arr1.push(dummyArray);
+    localStorage.setItem("signedInObject", JSON.stringify(dummyArray));
+    console.log(arr1);
+    // if (localStorage.getItem("signedInObject") === null) {
+    //   a = [];
+    //   a.push(values);
+    // } else {
+    //   a = JSON.parse(localStorage.getItem("signedInObject"));
+    //   a.map((items) => {
+    //     if (items.email == values.email) {
+    //       items.FullName = values.FullName;
+    //       items.MobNo = values.MobNo;
+    //       items.password = values.password;
+    //       items.cropImage = values.cropImage;
+    //     } else {
+    //       a.push(values);
+    //     }
+    //   });
+    // }
+    // localStorage.setItem("signedInObject", JSON.stringify(a));
+    // console.log(a);
+    // router.push("/Profile");
   };
 
   const onChange = (e) => {
@@ -58,7 +71,6 @@ export default function SignIn(value) {
     };
     reader.readAsDataURL(files[0]);
   };
-
   const getCropData = () => {
     if (typeof cropper !== "undefined") {
       setCropData(cropper.getCroppedCanvas().toDataURL());
@@ -84,10 +96,10 @@ export default function SignIn(value) {
             email: "",
             password: "",
             conPassword: "",
-            cropImg: "",
+            cropImage: "",
           }}
           onSubmit={handleSubmit}
-          validationSchema={Yup.object({
+          validationSchema={Yup.object().shape({
             FullName: Yup.string().max(15, "Too Long").required("Required"),
             MobNo: Yup.string()
               .max(10, "Invalid Number")

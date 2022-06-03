@@ -1,10 +1,10 @@
 import { Box } from "@chakra-ui/react";
-import SignIn from "./SignIn";
+import Filter from "./filter";
 
 export default function Home() {
   return (
     <Box>
-      <SignIn />
+      <Filter />
     </Box>
   );
 }
