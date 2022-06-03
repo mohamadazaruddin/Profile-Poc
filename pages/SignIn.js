@@ -1,5 +1,17 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import { Box, Button, FormLabel, Input, Flex, Image } from "@chakra-ui/react";
+=======
+import {
+  Box,
+  Button,
+  FormLabel,
+  Input,
+  Flex,
+  Image,
+  Spacer,
+} from "@chakra-ui/react";
+>>>>>>> 330da6241110f9e9c99826ca47b5ffef80add9fa
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import Cropper from "react-cropper";
@@ -13,18 +25,23 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 // const defaultSrc =
 //   "https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg";
 
-export default function SignIn(value) {
+// const defaultSrc =
+//   "https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg";
+
+export default function SignIn() {
   const [image, setImage] = useState();
   const [cropData, setCropData] = useState(false);
   const [cropper, setCropper] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const router = useRouter();
+<<<<<<< HEAD
   function getUniqueListBy(arr, key) {
     return [...new Map(arr.map((item) => [item[key], item])).values()];
   }
@@ -54,9 +71,32 @@ export default function SignIn(value) {
     // }
     // localStorage.setItem("signedInObject", JSON.stringify(a));
     // console.log(a);
+=======
+
+  // localStorage.removeItem("signedInObject");
+  const handleSubmit = (values) => {
+    values.cropImage = cropData;
+    console.log(cropData, "crop");
+    // localStorage.removeItem("signedInObject");
+    let a;
+    if (localStorage.getItem("signedInObject") === null) {
+      a = [];
+      a.push(values);
+      localStorage.setItem("signedInObject", JSON.stringify(a));
+    } else {
+      a = JSON.parse(localStorage.getItem("signedInObject"));
+    }
+    a.map((items) => {
+      if (items.email == values.email) {
+        alert("Email already Exists");
+      } else {
+        a.push(values);
+        localStorage.setItem("signedInObject", JSON.stringify(a));
+      }
+    });
+>>>>>>> 330da6241110f9e9c99826ca47b5ffef80add9fa
     // router.push("/Profile");
   };
-
   const onChange = (e) => {
     e.preventDefault();
     let files;
@@ -282,9 +322,11 @@ export default function SignIn(value) {
                       onClick={onOpen}
                       pos="absolute"
                       left="50%"
+                      bg="#5f43cf"
                       top="50%"
                       transform="translate(-50%, -50%)"
-                      color="#000"
+                      color="#fff"
+                      _hover={{ bg: "#715fbb" }}
                     >
                       Upload Image
                     </Button>
@@ -292,9 +334,26 @@ export default function SignIn(value) {
                 </Flex>
               </Box>
               <Box textAlign="center" mt="20px">
-                <Button bg="#FFC803" w="60%" type="submit" name="submit">
-                  Submit
-                </Button>
+                <Flex>
+                  <Button
+                    bg="#FFC803"
+                    px="80px"
+                    color="#000"
+                    type="submit"
+                    name="submit"
+                  >
+                    Sign In
+                  </Button>
+                  <Spacer />
+                  <Button
+                    bg="#FFC803"
+                    px="80px"
+                    color="#000"
+                    onClick={() => router.push("/LogIn")}
+                  >
+                    Log In
+                  </Button>
+                </Flex>
               </Box>
             </Form>
           )}

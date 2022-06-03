@@ -256,3 +256,24 @@ export default function SignIn(value) {
     </Box>
   );
 }
+  // const handleSubmit = (values) => {
+  //   let a;
+  //   if (localStorage.getItem("signedInObject") === null) {
+  //     a = [];
+  //     a.push(values);
+  //   } else {
+  //     a = JSON.parse(localStorage.getItem("signedInObject"));
+  //   }
+  //   a.map((items) => {
+  //     if (items.email === values.email) {
+  //       items.FullName = values.FullName;
+  //       items.MobNo = values.MobNo;
+  //       items.password = values.password;
+  //     } else {
+  //       a.push(values);
+  //     }
+  //   });
+  //   localStorage.setItem("signedInObject", JSON.stringify(a));
+  //   router.push("/Profile");
+  // };
+  // onSubmit = { handleSubmit };
