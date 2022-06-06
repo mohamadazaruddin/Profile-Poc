@@ -25,7 +25,7 @@ export default function Profile() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [valueSubmitted, setValueSubmitted] = useState(false);
   const [userArray, setuserArray] = useState();
-  const [singleObj, setSingleObj] = useState();
+  const [singleObj, setSingleObj] = useState({});
 
   useEffect(() => {
     const signedInObject = window.localStorage.getItem("signedInObject");
@@ -79,12 +79,10 @@ export default function Profile() {
                 h="150px"
                 bg="gray"
                 borderRadius="50%"
-                p="15px"
-                display="grid"
-                placeItems="center"
-              >
-                image
-              </Box>
+                bgImg={singleObj.cropImage}
+                backgroundSize="cover"
+                backgroundPosition="center"
+              ></Box>
             </Box>
             <Box p="15px">
               <Box fontWeight="600" fontSize="30px" lineHeight="25px">

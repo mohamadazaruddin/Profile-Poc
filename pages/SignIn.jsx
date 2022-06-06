@@ -30,8 +30,8 @@ export default function SignIn() {
   const [image, setImage] = useState();
   const [cropData, setCropData] = useState(false);
   const [cropper, setCropper] = useState();
+  const [cropImg, setcropImg] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const router = useRouter();
 
   const [MobSmallWidth] = useMediaQuery("(max-width:300px)");
@@ -53,20 +53,14 @@ export default function SignIn() {
     if (ifUserExist) {
       alert("Email Already Exists");
     } else {
-      a.push(values);
-      localStorage.setItem("signedInObject", JSON.stringify(a));
-    }
-
-    a.map((items) => {
-      if (items.email == values.email) {
-        alert("Email already Exists");
-      } else {
+      if (cropImg) {
         a.push(values);
         localStorage.setItem("signedInObject", JSON.stringify(a));
+        router.push("/LogIn");
+      } else {
+        alert("Please Upload Image");
       }
-    });
-
-    // router.push("/Profile");
+    }
   };
   const onChange = (e) => {
     e.preventDefault();
@@ -85,6 +79,7 @@ export default function SignIn() {
   const getCropData = () => {
     if (typeof cropper !== "undefined") {
       setCropData(cropper.getCroppedCanvas().toDataURL());
+      setcropImg(true);
       onClose();
     }
   };
@@ -129,17 +124,15 @@ export default function SignIn() {
                 .max(10, "Invalid Number")
                 .min(10, "Invalid Number")
                 .required("Required"),
-              email: Yup.string()
-                .matches(/\S+@\S+\.\S+/, "Enter Valid Email")
-                .required("Required"),
+              email: Yup.string().email().required("Required"),
               password: Yup.string()
                 .min(8, "Minimum 8 Characters Required")
                 .max(15, "Maximum 15 Characters Required")
                 .required("Required"),
-              conPassword: Yup.string().oneOf(
-                [Yup.ref("password"), null],
-                "Passwords must match"
-              ),
+              conPassword: Yup.string()
+                .required()
+                .oneOf([Yup.ref("password"), null], "Passwords must match"),
+              cropImage: Yup.string().required,
             })}
           >
             {({ errors, touched }) => (
@@ -275,7 +268,8 @@ export default function SignIn() {
                             </ModalHeader>
                             <ModalCloseButton />
                             <ModalBody>
-                              <Input
+                              <Field
+                                as={Input}
                                 type="file"
                                 name="cropImg"
                                 mb="10px"
@@ -349,6 +343,11 @@ export default function SignIn() {
                       </Box>
                     </Flex>
                   </Box>
+                  {errors.cropImage && touched.cropImage ? (
+                    <Box as="p" color="red">
+                      {errors.cropImage}
+                    </Box>
+                  ) : null}
                   <Box textAlign="center" mt="20px">
                     <Flex alignItems="center" justifyContent="space-between">
                       <Button
@@ -408,12 +407,7 @@ export default function SignIn() {
                 .max(10, "Invalid Number")
                 .min(10, "Invalid Number")
                 .required("Required"),
-              email: Yup.string()
-                .matches(
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1, 3}\.[0-9]{1, 3}\.[0-9]{1, 3}\.[0-9]{1, 3}\])|(([a-zA-Z\-0-9]+\.)+[com,in,co]{2, 3}))$/,
-                  "Enter Valid Email"
-                )
-                .required("Required"),
+              email: Yup.string().email().required("Required"),
               password: Yup.string()
                 .min(8, "Minimum 8 Characters Required")
                 .max(15, "Maximum 15 Characters Required")
