@@ -23,7 +23,6 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useDisclosure } from "@chakra-ui/react";
-
 import { useMediaQuery } from "@chakra-ui/react";
 
 export default function SignIn() {
@@ -35,6 +34,7 @@ export default function SignIn() {
   const router = useRouter();
 
   const [MobSmallWidth] = useMediaQuery("(max-width:300px)");
+
   const handleSubmit = (values) => {
     values.cropImage = cropData;
     let a = [];
