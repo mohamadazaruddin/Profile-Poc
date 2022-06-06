@@ -1,13 +1,4 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  FormLabel,
-  Input,
-  Flex,
-  Image,
-  Spacer,
-} from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import Cropper from "react-cropper";
@@ -23,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useDisclosure } from "@chakra-ui/react";
+
 import { useMediaQuery } from "@chakra-ui/react";
 
 export default function SignIn() {
@@ -30,7 +22,37 @@ export default function SignIn() {
   const [cropData, setCropData] = useState(false);
   const [cropper, setCropper] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const router = useRouter();
+
+  function getUniqueListBy(arr, key) {
+    return [...new Map(arr.map((item) => [item[key], item])).values()];
+  }
+  const handleSubmit = (values) => {
+    values.cropImage = cropData;
+    let dummyArray = [];
+    dummyArray.push(values);
+    const arr1 = getUniqueListBy(dummyArray, values.email);
+    arr1.push(dummyArray);
+    localStorage.setItem("signedInObject", JSON.stringify(dummyArray));
+    console.log(arr1);
+    // if (localStorage.getItem("signedInObject") === null) {
+    //   a = [];
+    //   a.push(values);
+    // } else {
+    //   a = JSON.parse(localStorage.getItem("signedInObject"));
+    //   a.map((items) => {
+    //     if (items.email == values.email) {
+    //       items.FullName = values.FullName;
+    //       items.MobNo = values.MobNo;
+    //       items.password = values.password;
+    //       items.cropImage = values.cropImage;
+    //     } else {
+    //       a.push(values);
+    //     }
+    //   });
+    // }
+    // localStorage.setItem("signedInObject", JSON.stringify(a));
 
   const [MobSmallWidth] = useMediaQuery("(max-width:300px)");
   const handleSubmit = (values) => {
@@ -54,6 +76,16 @@ export default function SignIn() {
       a.push(values);
       localStorage.setItem("signedInObject", JSON.stringify(a));
     }
+
+    a.map((items) => {
+      if (items.email == values.email) {
+        alert("Email already Exists");
+      } else {
+        a.push(values);
+        localStorage.setItem("signedInObject", JSON.stringify(a));
+      }
+    });
+
     // router.push("/Profile");
   };
   const onChange = (e) => {
