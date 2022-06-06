@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import { Box, Button, FormLabel, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  FormLabel,
+  Input,
+  Flex,
+  Image,
+  Spacer,
+} from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import {
@@ -15,33 +21,42 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useDisclosure } from "@chakra-ui/react";
 
-export default function SignIn(value) {
+// const defaultSrc =
+//   "https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg";
+
+export default function SignIn() {
   const [image, setImage] = useState();
   const [cropData, setCropData] = useState(false);
   const [cropper, setCropper] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
+
+  // localStorage.removeItem("signedInObject");
   const handleSubmit = (values) => {
-    let a;
-    if (localStorage.getItem("signedInObject") === null) {
-      a = [];
-      a.push(values);
-    } else {
-      a = JSON.parse(localStorage.getItem("signedInObject"));
-    }
-    a.map((items) => {
-      if (items.email === values.email) {
-        items.FullName = values.FullName;
-        items.MobNo = values.MobNo;
-        items.password = values.password;
-      } else {
-        a.push(values);
+    values.cropImage = cropData;
+    let a = [];
+    const userObj = localStorage.getItem("signedInObject");
+    let ifUserExist = false;
+    if (userObj) {
+      a = JSON.parse(userObj);
+      for (let index = 0; index < a.length; index++) {
+        const element = a[index];
+        if (values.email === element.email) {
+          ifUserExist = true;
+          break;
+        }
       }
-    });
-    localStorage.setItem("signedInObject", JSON.stringify(a));
-    router.push("/Profile");
+    }
+    if (ifUserExist) {
+      alert("Email Already Exists");
+    } else {
+      a.push(values);
+      localStorage.setItem("signedInObject", JSON.stringify(a));
+    }
+    // router.push("/Profile");
   };
 
   const onChange = (e) => {
@@ -57,21 +72,7 @@ export default function SignIn(value) {
       setImage(reader.result);
     };
     reader.readAsDataURL(files[0]);
-    const file = e.target.files[0];
-    getBase64(file).then((base64) => {
-      localStorage.setItem("fileBase64", JSON.stringify(base64));
-      console.debug("file stored", base64);
-    });
   };
-  const getBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(file);
-    });
-  };
-
   const getCropData = () => {
     if (typeof cropper !== "undefined") {
       setCropData(cropper.getCroppedCanvas().toDataURL());
@@ -97,10 +98,10 @@ export default function SignIn(value) {
             email: "",
             password: "",
             conPassword: "",
-            cropImg: "",
+            cropImage: "",
           }}
           onSubmit={handleSubmit}
-          validationSchema={Yup.object({
+          validationSchema={Yup.object().shape({
             FullName: Yup.string().max(15, "Too Long").required("Required"),
             MobNo: Yup.string()
               .max(10, "Invalid Number")
@@ -111,7 +112,6 @@ export default function SignIn(value) {
               .min(8, "Minimum 8 Characters Required")
               .max(15, "Maximum 15 Characters Required")
               .required("Required"),
-            cropImg: Yup.string().required("Required"),
             conPassword: Yup.string().oneOf(
               [Yup.ref("password"), null],
               "Passwords must match"
@@ -284,9 +284,11 @@ export default function SignIn(value) {
                       onClick={onOpen}
                       pos="absolute"
                       left="50%"
+                      bg="#5f43cf"
                       top="50%"
                       transform="translate(-50%, -50%)"
-                      color="#000"
+                      color="#fff"
+                      _hover={{ bg: "#715fbb" }}
                     >
                       Upload Image
                     </Button>
@@ -294,15 +296,26 @@ export default function SignIn(value) {
                 </Flex>
               </Box>
               <Box textAlign="center" mt="20px">
-                <Button
-                  bg="#f3ca39"
-                  px="80px"
-                  type="submit"
-                  color="#000"
-                  name="submit"
-                >
-                  Submit
-                </Button>
+                <Flex>
+                  <Button
+                    bg="#FFC803"
+                    px="80px"
+                    color="#000"
+                    type="submit"
+                    name="submit"
+                  >
+                    Sign In
+                  </Button>
+                  <Spacer />
+                  <Button
+                    bg="#FFC803"
+                    px="80px"
+                    color="#000"
+                    // onClick={() => router.push("/LogIn")}
+                  >
+                    Log In
+                  </Button>
+                </Flex>
               </Box>
             </Form>
           )}

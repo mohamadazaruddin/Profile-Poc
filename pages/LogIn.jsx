@@ -42,7 +42,30 @@ export default function LogIn() {
             }}
             validationSchema={SignupSchema}
             onSubmit={(values) => {
-              console.log(values);
+              const userObj = localStorage.getItem("signedInObject");
+              let userParsedObj = JSON.parse(userObj);
+              let validUser = true;
+              for (let index = 0; index < userParsedObj.length; index++) {
+                const element = userParsedObj[index];
+                if (
+                  values.Username == element.email &&
+                  values.Password == element.password
+                ) {
+                  validUser = true;
+                  break;
+                } else {
+                  validUser = false;
+                }
+              }
+              if (!validUser) {
+                alert("Invalid Username or Password");
+              } else {
+                localStorage.setItem(
+                  "username",
+                  JSON.stringify(values.Username)
+                );
+                router.push("/Profile");
+              }
             }}
           >
             {({ errors, touched }) => (

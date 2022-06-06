@@ -23,16 +23,44 @@ import { Formik, Field, Form } from "formik";
 import { useRouter } from "next/router";
 export default function Profile() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [value, setValues] = useState();
   const [valueSubmitted, setValueSubmitted] = useState(false);
+  const [userArray, setuserArray] = useState();
+  const [singleObj, setSingleObj] = useState();
 
   useEffect(() => {
     const signedInObject = window.localStorage.getItem("signedInObject");
-    setValues(JSON.parse(signedInObject));
+    const user = window.localStorage.getItem("username");
+    let myUserArray = JSON.parse(signedInObject);
+    setuserArray(myUserArray);
+    let singleUser = JSON.parse(user);
+
+    for (let index = 0; index < myUserArray.length; index++) {
+      const element = myUserArray[index];
+      if (singleUser == element.email) {
+        setSingleObj(element);
+        break;
+      }
+    }
+
     setValueSubmitted(false);
   }, [valueSubmitted]);
 
   const router = useRouter();
+  const handleSubmit = (values) => {
+    for (let index = 0; index < userArray.length; index++) {
+      const element = userArray[index];
+      if (values.email == element.email) {
+        element.FullName = values.FullName;
+        element.MobNo = values.MobNo;
+        element.email = values.email;
+        element.password = values.password;
+        break;
+      }
+    }
+    localStorage.setItem("signedInObject", JSON.stringify(userArray));
+    setValueSubmitted(true);
+    onClose();
+  };
   return (
     <Box bg="#3997f8" p="50px" h="100vh">
       <Box
@@ -44,7 +72,7 @@ export default function Profile() {
         boxShadow="0px 0px 20px #000000b0"
       >
         <Box>
-          {typeof value !== "undefined" && (
+          {typeof singleObj !== "undefined" && (
             <Flex>
               <Box display="flex" alignItems="center">
                 <Box
@@ -61,7 +89,7 @@ export default function Profile() {
               </Box>
               <Box p="15px">
                 <Box fontWeight="600" fontSize="30px" lineHeight="25px">
-                  {value.FullName}
+                  {singleObj.FullName}
                 </Box>
                 <Box>
                   <Text
@@ -71,7 +99,7 @@ export default function Profile() {
                     fontWeight="600"
                     fontSize="16px"
                   >
-                    {value.email}
+                    {singleObj.email}
                   </Text>
                 </Box>
                 <Box display="inline-block" fontSize="17px" fontWeight="600">
@@ -83,14 +111,14 @@ export default function Profile() {
                     mb="10px"
                     fontSize="17px"
                   >
-                    {value.MobNo}
+                    {singleObj.MobNo}
                   </Text>
                 </Box>
                 <Box>
                   <Text fontWeight="600" mb="25px">
-                    I am {value.FullName} as an intern Lorem, ipsum dolor sit
-                    amet consectetur adipisicing elit.Blanditiis a beatae ullam
-                    vitae sunt repudiandae voluptate animi molestias,
+                    I am {singleObj.FullName} as an intern Lorem, ipsum dolor
+                    sit amet consectetur adipisicing elit.Blanditiis a beatae
+                    ullam vitae sunt repudiandae voluptate animi molestias,
                     voluptatem, dolor
                   </Text>
                 </Box>
@@ -116,7 +144,7 @@ export default function Profile() {
             </Flex>
           )}
         </Box>
-        {typeof value !== "undefined" && (
+        {typeof singleObj !== "undefined" && (
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
@@ -125,20 +153,12 @@ export default function Profile() {
               <ModalBody>
                 <Formik
                   initialValues={{
-                    FullName: value.FullName,
-                    MobNo: value.MobNo,
-                    email: value.email,
-                    password: value.password,
+                    FullName: singleObj.FullName,
+                    MobNo: singleObj.MobNo,
+                    email: singleObj.email,
+                    password: singleObj.password,
                   }}
-                  onSubmit={(values) => {
-                    localStorage.setItem(
-                      "signedInObject",
-                      JSON.stringify(values)
-                    );
-                    setValueSubmitted(true);
-                    router.push("/Profile");
-                    onClose();
-                  }}
+                  onSubmit={handleSubmit}
                   validationSchema={Yup.object({
                     FullName: Yup.string()
                       .max(15, "Too Long")
@@ -218,6 +238,7 @@ export default function Profile() {
                           bg="#fff"
                           color="#333"
                           type="email"
+                          disabled
                         />
                         {errors.email && touched.email ? (
                           <Box as="p" color="red">
