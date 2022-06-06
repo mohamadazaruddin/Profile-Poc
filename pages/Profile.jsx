@@ -72,77 +72,75 @@ export default function Profile() {
         boxShadow="0px 0px 20px #000000b0"
       >
         <Box>
-          {typeof singleObj !== "undefined" && (
-            <Flex>
-              <Box display="flex" alignItems="center">
-                <Box
-                  w="150px"
-                  h="150px"
-                  bg="gray"
-                  borderRadius="50%"
-                  p="15px"
-                  display="grid"
-                  placeItems="center"
+          <Flex>
+            <Box display="flex" alignItems="center">
+              <Box
+                w="150px"
+                h="150px"
+                bg="gray"
+                borderRadius="50%"
+                p="15px"
+                display="grid"
+                placeItems="center"
+              >
+                image
+              </Box>
+            </Box>
+            <Box p="15px">
+              <Box fontWeight="600" fontSize="30px" lineHeight="25px">
+                {singleObj.FullName}
+              </Box>
+              <Box>
+                <Text
+                  color="#7e7c7c"
+                  m="0px"
+                  mb="0px"
+                  fontWeight="600"
+                  fontSize="16px"
                 >
-                  image
-                </Box>
+                  {singleObj.email}
+                </Text>
               </Box>
-              <Box p="15px">
-                <Box fontWeight="600" fontSize="30px" lineHeight="25px">
-                  {singleObj.FullName}
-                </Box>
-                <Box>
-                  <Text
-                    color="#7e7c7c"
-                    m="0px"
-                    mb="0px"
-                    fontWeight="600"
-                    fontSize="16px"
-                  >
-                    {singleObj.email}
-                  </Text>
-                </Box>
-                <Box display="inline-block" fontSize="17px" fontWeight="600">
-                  Mob:
-                  <Text
-                    display="inline-block"
-                    color="#7e7c7c"
-                    mx="5px"
-                    mb="10px"
-                    fontSize="17px"
-                  >
-                    {singleObj.MobNo}
-                  </Text>
-                </Box>
-                <Box>
-                  <Text fontWeight="600" mb="25px">
-                    I am {singleObj.FullName} as an intern Lorem, ipsum dolor
-                    sit amet consectetur adipisicing elit.Blanditiis a beatae
-                    ullam vitae sunt repudiandae voluptate animi molestias,
-                    voluptatem, dolor
-                  </Text>
-                </Box>
-                <Box textAlign="end">
-                  <Button
-                    bg="#3997f8"
-                    fontWeight="bold"
-                    color="#fff"
-                    borderRadius="25px"
-                    p="10px 30px"
-                    _hover={{
-                      bg: "#017eff",
-                    }}
-                    border="none"
-                    cursor="pointer"
-                    onClick={onOpen}
-                    _focus={{ border: "none" }}
-                  >
-                    Edit Profile
-                  </Button>
-                </Box>
+              <Box display="inline-block" fontSize="17px" fontWeight="600">
+                Mob:
+                <Text
+                  display="inline-block"
+                  color="#7e7c7c"
+                  mx="5px"
+                  mb="10px"
+                  fontSize="17px"
+                >
+                  {singleObj.MobNo}
+                </Text>
               </Box>
-            </Flex>
-          )}
+              <Box>
+                <Text fontWeight="600" mb="25px">
+                  I am
+                  {singleObj.FullName} as an intern Lorem, ipsum dolor sit amet
+                  consectetur adipisicing elit.Blanditiis a beatae ullam vitae
+                  sunt repudiandae voluptate animi molestias, voluptatem, dolor
+                </Text>
+              </Box>
+              <Box textAlign="end">
+                <Button
+                  bg="#3997f8"
+                  fontWeight="bold"
+                  color="#fff"
+                  borderRadius="25px"
+                  p="10px 30px"
+                  _hover={{
+                    bg: "#017eff",
+                  }}
+                  border="none"
+                  cursor="pointer"
+                  onClick={onOpen}
+                  _focus={{ border: "none" }}
+                >
+                  Edit Profile
+                </Button>
+              </Box>
+            </Box>
+          </Flex>
         </Box>
         {typeof singleObj !== "undefined" && (
           <Modal isOpen={isOpen} onClose={onClose}>
@@ -236,9 +234,9 @@ export default function Profile() {
                           name="email"
                           id="email"
                           bg="#fff"
+                          disabled
                           color="#333"
                           type="email"
-                          disabled
                         />
                         {errors.email && touched.email ? (
                           <Box as="p" color="red">
