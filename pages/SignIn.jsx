@@ -7,6 +7,8 @@ import {
   Flex,
   Image,
   Spacer,
+  Select,
+  Text,
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
@@ -113,6 +115,7 @@ export default function SignIn() {
               password: "",
               conPassword: "",
               cropImage: "",
+              role: "",
             }}
             onSubmit={handleSubmit}
             validationSchema={Yup.object().shape({
@@ -132,7 +135,7 @@ export default function SignIn() {
               conPassword: Yup.string()
                 .required()
                 .oneOf([Yup.ref("password"), null], "Passwords must match"),
-              cropImage: Yup.string().required,
+              role: Yup.string().required("Required"),
             })}
           >
             {({ errors, touched }) => (
@@ -255,6 +258,25 @@ export default function SignIn() {
                       <Box as="p" color="red">
                         {errors.conPassword}
                       </Box>
+                    ) : null}
+                  </Box>
+                  <Box py="10px">
+                    <Field
+                      as={Select}
+                      color="black"
+                      id="role"
+                      name="role"
+                      placeholder="Role"
+                    >
+                      <option value="Intern">Intern</option>
+                      <option value="Junior Developer">Junior Developer</option>
+                      <option value="Senior Developer">Senior Developer</option>
+                      <option value="CEO">CEO</option>
+                    </Field>
+                    {errors.role && touched.role ? (
+                      <Text color="red" fontSize="14px" fontWeight="600">
+                        {errors.role}
+                      </Text>
                     ) : null}
                   </Box>
                   <Box py="10px">
@@ -396,6 +418,7 @@ export default function SignIn() {
               password: "",
               conPassword: "",
               cropImage: "",
+              role: "",
             }}
             onSubmit={handleSubmit}
             validationSchema={Yup.object().shape({
@@ -416,6 +439,7 @@ export default function SignIn() {
                 [Yup.ref("password"), null],
                 "Passwords must match"
               ),
+              role: Yup.string().required("Required"),
             })}
           >
             {({ errors, touched }) => (
@@ -538,6 +562,25 @@ export default function SignIn() {
                       <Box as="p" color="red">
                         {errors.conPassword}
                       </Box>
+                    ) : null}
+                  </Box>
+                  <Box py="10px">
+                    <Field
+                      as={Select}
+                      color="black"
+                      id="role"
+                      name="role"
+                      placeholder="Role"
+                    >
+                      <option value="Intern">Intern</option>
+                      <option value="Junior Developer">Junior Developer</option>
+                      <option value="Senior Developer">Senior Developer</option>
+                      <option value="CEO">CEO</option>
+                    </Field>
+                    {errors.role && touched.role ? (
+                      <Text color="red" fontSize="14px" fontWeight="600">
+                        {errors.role}
+                      </Text>
                     ) : null}
                   </Box>
                   <Box py="10px">

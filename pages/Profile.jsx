@@ -6,6 +6,7 @@ import {
   FormLabel,
   Input,
   Flex,
+  Select,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
 import {
@@ -54,6 +55,7 @@ export default function Profile() {
         element.MobNo = values.MobNo;
         element.email = values.email;
         element.password = values.password;
+        element.role = values.role;
         break;
       }
     }
@@ -153,6 +155,7 @@ export default function Profile() {
                     MobNo: singleObj.MobNo,
                     email: singleObj.email,
                     password: singleObj.password,
+                    role: singleObj.role,
                   }}
                   onSubmit={handleSubmit}
                   validationSchema={Yup.object({
@@ -262,6 +265,29 @@ export default function Profile() {
                           <Box as="p" color="red">
                             {errors.password}
                           </Box>
+                        ) : null}
+                      </Box>
+                      <Box py="10px">
+                        <Field
+                          as={Select}
+                          color="black"
+                          id="role"
+                          name="role"
+                          placeholder="Role"
+                        >
+                          <option value="Intern">Intern</option>
+                          <option value="Junior Developer">
+                            Junior Developer
+                          </option>
+                          <option value="Senior Developer">
+                            Senior Developer
+                          </option>
+                          <option value="CEO">CEO</option>
+                        </Field>
+                        {errors.role && touched.role ? (
+                          <Text color="red" fontSize="14px" fontWeight="600">
+                            {errors.role}
+                          </Text>
                         ) : null}
                       </Box>
                       <Box textAlign="center" mt="20px">
