@@ -251,7 +251,7 @@ export default function Profile() {
                           fontSize="20px"
                           fontWeight="600"
                         >
-                          Create Password
+                          Change Password
                         </FormLabel>
                         <Field
                           as={Input}
