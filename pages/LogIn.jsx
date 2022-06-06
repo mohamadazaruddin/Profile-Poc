@@ -13,10 +13,7 @@ import { Formik, Field, Form } from "formik";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 const SignupSchema = Yup.object().shape({
-  Username: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
+  Username: Yup.string().email().required("Required"),
   Password: Yup.string().max(50, "Too Long!").required("Required"),
 });
 
