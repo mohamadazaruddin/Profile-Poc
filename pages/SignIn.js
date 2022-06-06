@@ -33,19 +33,31 @@ export default function SignIn() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
-  const [MobSmallWidth] = useMediaQuery('(max-width:300px)')
+  const [MobSmallWidth] = useMediaQuery("(max-width:300px)");
 
   const handleSubmit = (values) => {
     values.cropImage = cropData;
-    console.log(values, "crop");
-    let a;
-    if (localStorage.getItem("signedInObject") === null) {
-      a = [];
+    let a = [];
+    const userObj = localStorage.getItem("signedInObject");
+    let ifUserExist = false;
+    if (userObj) {
+      a = JSON.parse(userObj);
+      for (let index = 0; index < a.length; index++) {
+        const element = a[index];
+        if (values.email === element.email) {
+          ifUserExist = true;
+          break;
+        }
+      }
+    }
+    if (ifUserExist) {
+      alert("Email Already Exists");
+    } else {
       a.push(values);
       localStorage.setItem("signedInObject", JSON.stringify(a));
-    } else {
-      a = JSON.parse(localStorage.getItem("signedInObject"));
+      router.push("./LogIn")
     }
+
     a.map((items) => {
       if (items.email == values.email) {
         alert("Email already Exists");
@@ -54,7 +66,6 @@ export default function SignIn() {
         localStorage.setItem("signedInObject", JSON.stringify(a));
       }
     });
-    // router.push("/Profile");
   };
   const onChange = (e) => {
     e.preventDefault();
@@ -79,8 +90,8 @@ export default function SignIn() {
 
 
   return (
-    <Box p={{ base: "0px", md: "50px" }} bg="#2e6dd2">
-      {MobSmallWidth ?
+    <Box p={{ base: "0px", md: "50px" }} bg="#015bea">
+      {MobSmallWidth ? (
         <Box
           w="100%"
           m="0 auto"
@@ -253,7 +264,9 @@ export default function SignIn() {
                         <Modal isOpen={isOpen} onClose={onClose}>
                           <ModalOverlay />
                           <ModalContent>
-                            <ModalHeader textAlign="center">Crop Image</ModalHeader>
+                            <ModalHeader textAlign="center">
+                              Crop Image
+                            </ModalHeader>
                             <ModalCloseButton />
                             <ModalBody>
                               <Input
@@ -285,30 +298,41 @@ export default function SignIn() {
                               />
                             </ModalBody>
                             <ModalFooter>
-                              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                              <Button
+                                colorScheme="blue"
+                                mr={3}
+                                onClick={onClose}
+                              >
                                 Close
                               </Button>
                               <Button onClick={getCropData}>Crop Image</Button>
                             </ModalFooter>
-                          </ModalContent>
-                        </Modal>
+                          </ModalContent >
+                        </Modal >
                         {/* <Input type="image" src={cropData} alt="submit" value={cropData} name="cropImg" /> */}
-                        {cropData ? (
-                          <Image w="100%" src={cropData} alt="cropped" p="20px" />
-                        ) : (
-                          <Box
-                            h="150px"
-                            w="150px"
-                            bg="#c1bebe"
-                            display="grid"
-                            placeItems="center"
-                            color="#000"
-                            m="auto"
-                          >
-                            Image
-                          </Box>
-                        )}
-                      </Box>
+                        {
+                          cropData ? (
+                            <Image
+                              w="100%"
+                              src={cropData}
+                              alt="cropped"
+                              p="20px"
+                            />
+                          ) : (
+                            <Box
+                              h="150px"
+                              w="150px"
+                              bg="#c1bebe"
+                              display="grid"
+                              placeItems="center"
+                              color="#000"
+                              m="auto"
+                            >
+                              Image
+                            </Box>
+                          )
+                        }
+                      </Box >
                       <Box pos="relative" w="100%" textAlign="center" mt="10px">
                         <Button
                           onClick={onOpen}
@@ -319,8 +343,8 @@ export default function SignIn() {
                           Upload Image
                         </Button>
                       </Box>
-                    </Flex>
-                  </Box>
+                    </Flex >
+                  </Box >
                   <Box textAlign="center" mt="20px">
                     <Flex alignItems="center" justifyContent="space-between">
                       <Button
@@ -334,7 +358,7 @@ export default function SignIn() {
                       </Button>
                       {/* <Spacer /> */}
                       <Button
-                        bg="#57b84d"
+                        bg="linear-gradient(90deg, rgba(203,104,5,1) 0%, rgba(255,171,3,1) 59%)"
                         px="30px"
                         color="#ffffff"
                         onClick={() => router.push("/LogIn")}
@@ -343,12 +367,13 @@ export default function SignIn() {
                       </Button>
                     </Flex>
                   </Box>
-                </Box>
-              </Form>
-            )}
-          </Formik>
-        </Box>
-        :
+                </Box >
+              </Form >
+            )
+            }
+          </Formik >
+        </Box >
+      ) : (
         <Box
           w={{ base: "100%", md: "50%" }}
           m="0 auto"
@@ -365,7 +390,7 @@ export default function SignIn() {
               m='auto'
               w='100%'
             />
-          </Box>
+          </Box >
           <Formik
             initialValues={{
               FullName: "",
@@ -520,7 +545,9 @@ export default function SignIn() {
                         <Modal isOpen={isOpen} onClose={onClose}>
                           <ModalOverlay />
                           <ModalContent>
-                            <ModalHeader textAlign="center">Crop Image</ModalHeader>
+                            <ModalHeader textAlign="center">
+                              Crop Image
+                            </ModalHeader>
                             <ModalCloseButton />
                             <ModalBody>
                               <Input
@@ -552,30 +579,41 @@ export default function SignIn() {
                               />
                             </ModalBody>
                             <ModalFooter>
-                              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                              <Button
+                                colorScheme="blue"
+                                mr={3}
+                                onClick={onClose}
+                              >
                                 Close
                               </Button>
                               <Button onClick={getCropData}>Crop Image</Button>
                             </ModalFooter>
-                          </ModalContent>
-                        </Modal>
+                          </ModalContent >
+                        </Modal >
                         {/* <Input type="image" src={cropData} alt="submit" value={cropData} name="cropImg" /> */}
-                        {cropData ? (
-                          <Image w="100%" src={cropData} alt="cropped" p="20px" />
-                        ) : (
-                          <Box
-                            h="150px"
-                            w="150px"
-                            bg="#c1bebe"
-                            display="grid"
-                            placeItems="center"
-                            color="#000"
-                            m="auto"
-                          >
-                            Image
-                          </Box>
-                        )}
-                      </Box>
+                        {
+                          cropData ? (
+                            <Image
+                              w="100%"
+                              src={cropData}
+                              alt="cropped"
+                              p="20px"
+                            />
+                          ) : (
+                            <Box
+                              h="150px"
+                              w="150px"
+                              bg="#c1bebe"
+                              display="grid"
+                              placeItems="center"
+                              color="#000"
+                              m="auto"
+                            >
+                              Image
+                            </Box>
+                          )
+                        }
+                      </Box >
                       <Box pos="relative" w="50%" m={{ base: "auto", sm: "0px" }} textAlign="center" mt={{ base: "10px", sm: "0px" }}>
                         <Button
                           onClick={onOpen}
@@ -591,11 +629,11 @@ export default function SignIn() {
                         </Button>
                       </Box>
                     </Box>
-                  </Box>
+                  </Box >
                   <Box textAlign="center" mt="20px">
                     <Flex alignItems="center" justifyContent="space-between">
                       <Button
-                        bg="#57b84d"
+                        bg="linear-gradient(90deg, rgba(203,104,5,1) 0%, rgba(255,171,3,1) 59%)"
                         px="50px"
                         color="#ffffff"
                         type="submit"
@@ -605,7 +643,7 @@ export default function SignIn() {
                       </Button>
                       {/* <Spacer /> */}
                       <Button
-                        bg="#57b84d"
+                        bg="linear-gradient(90deg, rgba(203,104,5,1) 0%, rgba(255,171,3,1) 59%)"
                         px="50px"
                         color="#ffffff"
                         onClick={() => router.push("/LogIn")}
@@ -614,12 +652,12 @@ export default function SignIn() {
                       </Button>
                     </Flex>
                   </Box>
-                </Box>
-              </Form>
+                </Box >
+              </Form >
             )}
-          </Formik>
-        </Box>
-      }
-    </Box >
+          </Formik >
+        </Box >
+      )}
+    </Box>
   );
 }
