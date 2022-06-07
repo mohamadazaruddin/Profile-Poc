@@ -81,7 +81,7 @@ export default function Profile() {
                 h="150px"
                 bg="gray"
                 borderRadius="50%"
-                bgImg={singleObj.cropImage}
+                bgImg={singleObj.CropImage}
                 backgroundSize="cover"
                 backgroundPosition="center"
               ></Box>
@@ -167,7 +167,7 @@ export default function Profile() {
                       .min(10, "Number To Short")
                       .required("Required"),
                     Email: Yup.string()
-                      .Email("Enter Valid Email")
+                      .email("Enter Valid Email")
                       .required("Required"),
                     Password: Yup.string()
                       .min(8, "Minimum 8 Characters Required")
@@ -274,6 +274,7 @@ export default function Profile() {
                           id="Role"
                           name="Role"
                           placeholder="Role"
+                          pl="0px"
                         >
                           <option value="Intern">Intern</option>
                           <option value="Junior Developer">
