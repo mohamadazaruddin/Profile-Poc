@@ -124,8 +124,10 @@ export default function SignIn() {
                 .matches(/^[a-zA-Z]+[\-'\s]?[a-zA-Z ]+$/, "Enter Valid Name")
                 .required("Required"),
               MobNo: Yup.string()
-                .max(10, "Invalid Number")
-                .min(10, "Invalid Number")
+                .matches(
+                  /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g,
+                  "Enter Valid Mobile Number"
+                )
                 .required("Required"),
               email: Yup.string().email().required("Required"),
               password: Yup.string()
@@ -133,7 +135,7 @@ export default function SignIn() {
                 .max(15, "Maximum 15 Characters Required")
                 .required("Required"),
               conPassword: Yup.string()
-                .required()
+                .required("Required")
                 .oneOf([Yup.ref("password"), null], "Passwords must match"),
               role: Yup.string().required("Required"),
             })}
