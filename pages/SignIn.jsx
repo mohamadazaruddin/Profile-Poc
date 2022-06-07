@@ -38,7 +38,7 @@ export default function SignIn() {
   const [MobSmallWidth] = useMediaQuery("(max-width:300px)");
 
   const handleSubmit = (values) => {
-    values.cropImage = cropData;
+    values.CropImage = cropData;
     let a = [];
     const userObj = localStorage.getItem("signedInObject");
     let ifUserExist = false;
@@ -46,7 +46,7 @@ export default function SignIn() {
       a = JSON.parse(userObj);
       for (let index = 0; index < a.length; index++) {
         const element = a[index];
-        if (values.email === element.email) {
+        if (values.Email === element.Email) {
           ifUserExist = true;
           break;
         }
@@ -85,7 +85,6 @@ export default function SignIn() {
       onClose();
     }
   };
-
   return (
     <Box p={{ base: "0px", md: "50px" }} bg="#015bea">
       {MobSmallWidth ? (
@@ -99,23 +98,17 @@ export default function SignIn() {
           boxShadow="0px 0px 10px #000"
         >
           <Box>
-            <Image
-              src="./Mumbai.jpeg"
-              alt=""
-              m="auto"
-              w="100%"
-              // h="200px"
-            />
+            <Image src="./Mumbai.jpeg" alt="" m="auto" w="100%" />
           </Box>
           <Formik
             initialValues={{
               FullName: "",
               MobNo: "",
-              email: "",
-              password: "",
-              conPassword: "",
-              cropImage: "",
-              role: "",
+              Email: "",
+              Password: "",
+              ConPassword: "",
+              CropImage: "",
+              Role: "",
             }}
             onSubmit={handleSubmit}
             validationSchema={Yup.object().shape({
@@ -124,20 +117,17 @@ export default function SignIn() {
                 .matches(/^[a-zA-Z]+[\-'\s]?[a-zA-Z ]+$/, "Enter Valid Name")
                 .required("Required"),
               MobNo: Yup.string()
-                .matches(
-                  /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g,
-                  "Enter Valid Mobile Number"
-                )
+                .matches(/^[6-9]{1}[0-9]{9}$/, "Enter valid phone number")
                 .required("Required"),
-              email: Yup.string().email().required("Required"),
-              password: Yup.string()
+              Email: Yup.string().email().required("Required"),
+              Password: Yup.string()
                 .min(8, "Minimum 8 Characters Required")
                 .max(15, "Maximum 15 Characters Required")
                 .required("Required"),
-              conPassword: Yup.string()
-                .required("Required")
-                .oneOf([Yup.ref("password"), null], "Passwords must match"),
-              role: Yup.string().required("Required"),
+              ConPassword: Yup.string()
+                .required()
+                .oneOf([Yup.ref("Password"), null], "Passwords must match"),
+              Role: Yup.string().required("Required"),
             })}
           >
             {({ errors, touched }) => (
@@ -153,6 +143,12 @@ export default function SignIn() {
                     Sign In
                   </Box>
                   <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
+                      Name
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
                     <Field
                       as={Input}
                       borderRadius="unset"
@@ -164,7 +160,7 @@ export default function SignIn() {
                       color="#787878"
                       type="text"
                       pl="0px"
-                      placeholder="NAME"
+                      placeholder="John Doe"
                       _focus={{ borderColor: "#ccc" }}
                       _hover={{ borderColor: "#ccc" }}
                     />
@@ -175,6 +171,12 @@ export default function SignIn() {
                     ) : null}
                   </Box>
                   <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
+                      Mobile No.
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
                     <Field
                       as={Input}
                       name="MobNo"
@@ -186,7 +188,7 @@ export default function SignIn() {
                       border="none"
                       borderBottom="2px solid #ccc"
                       pl="0px"
-                      placeholder="Mobile Number"
+                      placeholder="9876543210"
                       _focus={{ borderColor: "#ccc" }}
                       _hover={{ borderColor: "#ccc" }}
                     />
@@ -197,87 +199,112 @@ export default function SignIn() {
                     ) : null}
                   </Box>
                   <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
+                      Email
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
                     <Field
                       as={Input}
-                      name="email"
-                      id="email"
+                      name="Email"
+                      id="Email"
                       bg="#fff"
                       color="#787878"
-                      type="email"
+                      type="Email"
                       borderRadius="unset"
                       border="none"
                       borderBottom="2px solid #ccc"
                       pl="0px"
-                      placeholder="Email"
+                      placeholder="example@gmail.com"
                       _focus={{ borderColor: "#ccc" }}
                       _hover={{ borderColor: "#ccc" }}
                     />
-                    {errors.email && touched.email ? (
+                    {errors.Email && touched.Email ? (
                       <Box as="p" color="red">
-                        {errors.email}
+                        {errors.Email}
                       </Box>
                     ) : null}
                   </Box>
                   <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
+                      Password
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
                     <Field
                       as={Input}
-                      name="password"
-                      id="password"
+                      name="Password"
+                      id="Password"
                       bg="#fff"
                       color="#787878"
-                      type="password"
+                      type="Password"
                       pl="0px"
                       borderRadius="unset"
                       border="none"
                       borderBottom="2px solid #ccc"
-                      placeholder="Password"
+                      placeholder="Pass@123"
                       _focus={{ borderColor: "#ccc" }}
                       _hover={{ borderColor: "#ccc" }}
                     />
-                    {errors.password && touched.password ? (
+                    {errors.Password && touched.Password ? (
                       <Box as="p" color="red">
-                        {errors.password}
+                        {errors.Password}
                       </Box>
                     ) : null}
                   </Box>
                   <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
+                      Confirm Password
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
                     <Field
                       as={Input}
-                      name="conPassword"
-                      id="conPassword"
+                      name="ConPassword"
+                      id="ConPassword"
                       bg="#fff"
                       color="#787878"
-                      type="password"
+                      type="Password"
                       borderRadius="unset"
                       border="none"
                       borderBottom="2px solid #ccc"
                       pl="0px"
-                      placeholder="Confirm Password"
+                      placeholder="Must match Password"
                       _focus={{ borderColor: "#ccc" }}
                       _hover={{ borderColor: "#ccc" }}
                     />
-                    {errors.conPassword && touched.conPassword ? (
+                    {errors.ConPassword && touched.ConPassword ? (
                       <Box as="p" color="red">
-                        {errors.conPassword}
+                        {errors.ConPassword}
                       </Box>
                     ) : null}
                   </Box>
                   <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
+                      Role
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
                     <Field
                       as={Select}
                       color="black"
-                      id="role"
-                      name="role"
-                      placeholder="Role"
+                      id="Role"
+                      name="Role"
+                      placeholder="Select"
+                      pl="0"
                     >
                       <option value="Intern">Intern</option>
                       <option value="Junior Developer">Junior Developer</option>
                       <option value="Senior Developer">Senior Developer</option>
                       <option value="CEO">CEO</option>
                     </Field>
-                    {errors.role && touched.role ? (
+                    {errors.Role && touched.Role ? (
                       <Text color="red" fontSize="14px" fontWeight="600">
-                        {errors.role}
+                        {errors.Role}
                       </Text>
                     ) : null}
                   </Box>
@@ -294,6 +321,7 @@ export default function SignIn() {
                             <ModalBody>
                               <Field
                                 as={Input}
+                                accept="image/x-png,image/gif,image/jpeg"
                                 type="file"
                                 name="cropImg"
                                 mb="10px"
@@ -367,9 +395,9 @@ export default function SignIn() {
                       </Box>
                     </Flex>
                   </Box>
-                  {errors.cropImage && touched.cropImage ? (
+                  {errors.CropImage && touched.CropImage ? (
                     <Box as="p" color="red">
-                      {errors.cropImage}
+                      {errors.CropImage}
                     </Box>
                   ) : null}
                   <Box textAlign="center" mt="20px">
@@ -383,14 +411,13 @@ export default function SignIn() {
                       >
                         Sign In
                       </Button>
-                      {/* <Spacer /> */}
                       <Button
-                        bg="linear-gradient(90deg, rgba(203,104,5,1) 0%, rgba(255,171,3,1) 59%)"
+                        bg="blue"
                         px="30px"
                         color="#ffffff"
                         onClick={() => router.push("/LogIn")}
                       >
-                        Log In
+                        Already Have an Account Login
                       </Button>
                     </Flex>
                   </Box>
@@ -416,11 +443,11 @@ export default function SignIn() {
             initialValues={{
               FullName: "",
               MobNo: "",
-              email: "",
-              password: "",
-              conPassword: "",
-              cropImage: "",
-              role: "",
+              Email: "",
+              Password: "",
+              ConPassword: "",
+              CropImage: "",
+              Role: "",
             }}
             onSubmit={handleSubmit}
             validationSchema={Yup.object().shape({
@@ -429,19 +456,19 @@ export default function SignIn() {
                 .matches(/^[a-zA-Z]+[\-'\s]?[a-zA-Z ]+$/, "Enter Valid Name")
                 .required("Required"),
               MobNo: Yup.string()
-                .max(10, "Invalid Number")
-                .min(10, "Invalid Number")
+                .matches(/^[6-9]{1}[0-9]{9}$/, "Enter valid phone number")
                 .required("Required"),
-              email: Yup.string().email().required("Required"),
-              password: Yup.string()
-                .min(8, "Minimum 8 Characters Required")
-                .max(15, "Maximum 15 Characters Required")
+              Email: Yup.string().email().required("Required"),
+              Password: Yup.string()
+                .matches(
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                  "Password must be strong"
+                )
                 .required("Required"),
-              conPassword: Yup.string().oneOf(
-                [Yup.ref("password"), null],
-                "Passwords must match"
-              ),
-              role: Yup.string().required("Required"),
+              ConPassword: Yup.string()
+                .required("Required")
+                .oneOf([Yup.ref("Password"), null], "Passwords must match"),
+              Role: Yup.string().required("Required"),
             })}
           >
             {({ errors, touched }) => (
@@ -457,6 +484,12 @@ export default function SignIn() {
                     Sign In
                   </Box>
                   <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
+                      Name
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
                     <Field
                       as={Input}
                       borderRadius="unset"
@@ -468,7 +501,7 @@ export default function SignIn() {
                       color="#787878"
                       type="text"
                       pl="0px"
-                      placeholder="NAME"
+                      placeholder="John Doe"
                       _focus={{ borderColor: "#ccc" }}
                       _hover={{ borderColor: "#ccc" }}
                     />
@@ -479,6 +512,12 @@ export default function SignIn() {
                     ) : null}
                   </Box>
                   <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
+                      Mobile No.
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
                     <Field
                       as={Input}
                       name="MobNo"
@@ -490,7 +529,7 @@ export default function SignIn() {
                       border="none"
                       borderBottom="2px solid #ccc"
                       pl="0px"
-                      placeholder="Mobile Number"
+                      placeholder="9876543210"
                       _focus={{ borderColor: "#ccc" }}
                       _hover={{ borderColor: "#ccc" }}
                     />
@@ -501,87 +540,118 @@ export default function SignIn() {
                     ) : null}
                   </Box>
                   <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
+                      Email
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
                     <Field
                       as={Input}
-                      name="email"
-                      id="email"
+                      name="Email"
+                      id="Email"
                       bg="#fff"
                       color="#787878"
-                      type="email"
+                      type="Email"
                       borderRadius="unset"
                       border="none"
                       borderBottom="2px solid #ccc"
                       pl="0px"
-                      placeholder="Email"
+                      placeholder="example@gmail.com"
                       _focus={{ borderColor: "#ccc" }}
                       _hover={{ borderColor: "#ccc" }}
                     />
-                    {errors.email && touched.email ? (
+                    {errors.Email && touched.Email ? (
                       <Box as="p" color="red">
-                        {errors.email}
+                        {errors.Email}
                       </Box>
                     ) : null}
                   </Box>
                   <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
+                      Password
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
                     <Field
                       as={Input}
-                      name="password"
-                      id="password"
+                      name="Password"
+                      id="Password"
                       bg="#fff"
                       color="#787878"
-                      type="password"
+                      type="Password"
                       pl="0px"
                       borderRadius="unset"
                       border="none"
                       borderBottom="2px solid #ccc"
-                      placeholder="Password"
+                      placeholder="Pass@123"
                       _focus={{ borderColor: "#ccc" }}
                       _hover={{ borderColor: "#ccc" }}
                     />
-                    {errors.password && touched.password ? (
+                    {errors.Password && touched.Password ? (
                       <Box as="p" color="red">
-                        {errors.password}
+                        {errors.Password}
                       </Box>
                     ) : null}
                   </Box>
                   <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
+                      Confirm Password
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
                     <Field
                       as={Input}
-                      name="conPassword"
-                      id="conPassword"
+                      name="ConPassword"
+                      id="ConPassword"
                       bg="#fff"
                       color="#787878"
-                      type="password"
+                      type="Password"
                       borderRadius="unset"
                       border="none"
                       borderBottom="2px solid #ccc"
                       pl="0px"
-                      placeholder="Confirm Password"
+                      placeholder="Must match Password"
                       _focus={{ borderColor: "#ccc" }}
                       _hover={{ borderColor: "#ccc" }}
                     />
-                    {errors.conPassword && touched.conPassword ? (
+                    {errors.ConPassword && touched.ConPassword ? (
                       <Box as="p" color="red">
-                        {errors.conPassword}
+                        {errors.ConPassword}
                       </Box>
                     ) : null}
                   </Box>
                   <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
+                      Role
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
                     <Field
                       as={Select}
-                      color="black"
-                      id="role"
-                      name="role"
-                      placeholder="Role"
+                      id="Role"
+                      name="Role"
+                      placeholder="Select"
+                      bg="#fff"
+                      color="#787878"
+                      borderRadius="unset"
+                      border="none"
+                      borderBottom="2px solid #ccc"
+                      pl="0px"
+                      _focus={{ borderColor: "#ccc" }}
+                      _hover={{ borderColor: "#ccc" }}
                     >
                       <option value="Intern">Intern</option>
                       <option value="Junior Developer">Junior Developer</option>
                       <option value="Senior Developer">Senior Developer</option>
                       <option value="CEO">CEO</option>
                     </Field>
-                    {errors.role && touched.role ? (
+                    {errors.Role && touched.Role ? (
                       <Text color="red" fontSize="14px" fontWeight="600">
-                        {errors.role}
+                        {errors.Role}
                       </Text>
                     ) : null}
                   </Box>
@@ -603,13 +673,13 @@ export default function SignIn() {
                                 onChange={onChange}
                                 bg="transparent"
                                 border="none"
+                                accept="image/x-png,image/gif,image/jpeg"
                                 _focus={{ boxShadow: "none" }}
                               />
                               <Cropper
                                 style={{ height: 400, width: "100%" }}
                                 zoomTo={0.5}
                                 initialAspectRatio={1}
-                                // preview=".img-preview"
                                 src={image}
                                 viewMode={1}
                                 minCropBoxHeight={10}
@@ -636,7 +706,6 @@ export default function SignIn() {
                             </ModalFooter>
                           </ModalContent>
                         </Modal>
-                        {/* <Input type="image" src={cropData} alt="submit" value={cropData} name="cropImg" /> */}
                         {cropData ? (
                           <Image
                             w="100%"
@@ -696,12 +765,12 @@ export default function SignIn() {
                       </Button>
                       {/* <Spacer /> */}
                       <Button
-                        bg="linear-gradient(90deg, rgba(203,104,5,1) 0%, rgba(255,171,3,1) 59%)"
-                        px="50px"
+                        bg="blue"
+                        px="30px"
                         color="#ffffff"
                         onClick={() => router.push("/LogIn")}
                       >
-                        Log In
+                        Already Have an Account Login
                       </Button>
                     </Flex>
                   </Box>

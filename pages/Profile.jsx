@@ -37,7 +37,7 @@ export default function Profile() {
 
     for (let index = 0; index < myUserArray.length; index++) {
       const element = myUserArray[index];
-      if (singleUser == element.email) {
+      if (singleUser == element.Email) {
         setSingleObj(element);
         break;
       }
@@ -50,12 +50,12 @@ export default function Profile() {
   const handleSubmit = (values) => {
     for (let index = 0; index < userArray.length; index++) {
       const element = userArray[index];
-      if (values.email == element.email) {
+      if (values.Email == element.Email) {
         element.FullName = values.FullName;
         element.MobNo = values.MobNo;
-        element.email = values.email;
-        element.password = values.password;
-        element.role = values.role;
+        element.Email = values.Email;
+        element.Password = values.Password;
+        element.Role = values.Role;
         break;
       }
     }
@@ -98,7 +98,7 @@ export default function Profile() {
                   fontWeight="600"
                   fontSize="16px"
                 >
-                  {singleObj.email}
+                  {singleObj.Email}
                 </Text>
               </Box>
               <Box display="inline-block" fontSize="17px" fontWeight="600">
@@ -153,9 +153,9 @@ export default function Profile() {
                   initialValues={{
                     FullName: singleObj.FullName,
                     MobNo: singleObj.MobNo,
-                    email: singleObj.email,
-                    password: singleObj.password,
-                    role: singleObj.role,
+                    Email: singleObj.Email,
+                    Password: singleObj.Password,
+                    Role: singleObj.Role,
                   }}
                   onSubmit={handleSubmit}
                   validationSchema={Yup.object({
@@ -166,10 +166,10 @@ export default function Profile() {
                       .max(10, "Number To Long")
                       .min(10, "Number To Short")
                       .required("Required"),
-                    email: Yup.string()
-                      .email("Enter Valid Email")
+                    Email: Yup.string()
+                      .Email("Enter Valid Email")
                       .required("Required"),
-                    password: Yup.string()
+                    Password: Yup.string()
                       .min(8, "Minimum 8 Characters Required")
                       .max(15, "Maximum 15 Characters Required")
                       .required("Required"),
@@ -224,7 +224,7 @@ export default function Profile() {
                       </Box>
                       <Box py="10px">
                         <FormLabel
-                          htmlFor="email"
+                          htmlFor="Email"
                           fontSize="20px"
                           fontWeight="600"
                         >
@@ -232,38 +232,38 @@ export default function Profile() {
                         </FormLabel>
                         <Field
                           as={Input}
-                          name="email"
-                          id="email"
+                          name="Email"
+                          id="Email"
                           bg="#fff"
                           disabled
                           color="#333"
-                          type="email"
+                          type="Email"
                         />
-                        {errors.email && touched.email ? (
+                        {errors.Email && touched.Email ? (
                           <Box as="p" color="red">
-                            {errors.email}
+                            {errors.Email}
                           </Box>
                         ) : null}
                       </Box>
                       <Box py="10px">
                         <FormLabel
-                          htmlFor="password"
+                          htmlFor="Password"
                           fontSize="20px"
                           fontWeight="600"
                         >
-                          Create Password
+                          Change Password
                         </FormLabel>
                         <Field
                           as={Input}
-                          name="password"
-                          id="password"
+                          name="Password"
+                          id="Password"
                           bg="#fff"
                           color="#333"
-                          type="password"
+                          type="Password"
                         />
-                        {errors.password && touched.password ? (
+                        {errors.Password && touched.Password ? (
                           <Box as="p" color="red">
-                            {errors.password}
+                            {errors.Password}
                           </Box>
                         ) : null}
                       </Box>
@@ -271,8 +271,8 @@ export default function Profile() {
                         <Field
                           as={Select}
                           color="black"
-                          id="role"
-                          name="role"
+                          id="Role"
+                          name="Role"
                           placeholder="Role"
                         >
                           <option value="Intern">Intern</option>
@@ -284,9 +284,9 @@ export default function Profile() {
                           </option>
                           <option value="CEO">CEO</option>
                         </Field>
-                        {errors.role && touched.role ? (
+                        {errors.Role && touched.Role ? (
                           <Text color="red" fontSize="14px" fontWeight="600">
-                            {errors.role}
+                            {errors.Role}
                           </Text>
                         ) : null}
                       </Box>
