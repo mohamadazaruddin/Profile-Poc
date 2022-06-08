@@ -46,10 +46,7 @@ export default function LogIn() {
       >
         <Box
           width={{ base: "0%", md: "50%" }}
-          backgroundImage={{
-            base: "Base-Bg-I.jpg",
-          }}
-          backgroundPosition="center"
+          backgroundImage="https://t4.ftcdn.net/jpg/01/19/11/55/360_F_119115529_mEnw3lGpLdlDkfLgRcVSbFRuVl6sMDty.jpg"
           backgroundSize="cover"
           backgroundRepeat="no-repeat"
         ></Box>
@@ -201,6 +198,6 @@ export default function LogIn() {
           </Box>
         </Box>
       </Box>
-    </Flex>
+    </Flex >
   );
 }
