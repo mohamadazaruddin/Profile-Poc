@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Home.module.css";
+import Style from "../styles/Home.module.css";
 import {
   Box,
   Button,
@@ -40,27 +40,6 @@ import { useRouter } from "next/router";
 import { makeStyles, withStyles, createStyles } from "@material-ui/styles";
 import { useStyles } from "@chakra-ui/react";
 
-const stylesInput = makeStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "black",
-    },
-    "& .MuiInput-underline:after": {
-      borderColor: "black",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "black",
-      },
-      "&:hover fieldset": {
-        borderColor: "black",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "black",
-      },
-    },
-  },
-});
 export default function SignIn() {
   const [image, setImage] = useState();
   const [cropData, setCropData] = useState(false);
@@ -69,7 +48,6 @@ export default function SignIn() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false);
   const [errInput, setErrInput] = useState(false);
-  const classes = stylesInput();
   const router = useRouter();
 
   const [MobSmallWidth] = useMediaQuery("(max-width:300px)");
@@ -204,6 +182,7 @@ export default function SignIn() {
                     name="FullName"
                     id="FullName"
                     type="text"
+                    variant="standard"
                     label="Full Name"
                     InputLabelProps={{
                       style: {
@@ -218,7 +197,6 @@ export default function SignIn() {
                         borderColor: "black",
                       },
                     }}
-                    className={classes.root}
                     width="100%"
                     fullWidth
                     placeholder="John Doe"
@@ -249,7 +227,6 @@ export default function SignIn() {
                         color: "",
                       },
                     }}
-                    className={classes.root}
                     width="100%"
                     fullWidth
                     type="number"
@@ -279,7 +256,6 @@ export default function SignIn() {
                     InputProps={{
                       style: {},
                     }}
-                    className={classes.root}
                     type="email"
                     width="100%"
                     fullWidth
@@ -310,7 +286,6 @@ export default function SignIn() {
                         color: "",
                       },
                     }}
-                    className={classes.root}
                     id="Password"
                     width="100%"
                     fullWidth
@@ -349,7 +324,6 @@ export default function SignIn() {
                         color: "",
                       },
                     }}
-                    className={classes.root}
                     name="ConPassword"
                     width="100%"
                     fullWidth
