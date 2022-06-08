@@ -18,7 +18,10 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Checkbox
+  Checkbox,
+  Spacer,
+  Hide,
+  Show
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
@@ -141,7 +144,7 @@ export default function SignIn() {
       }}
     >
       <Box
-        w={{ base: "100%", md: "50%" }}
+        w={{ base: "100%", md: "70%", lg: "60%" }}
         pos="relative"
         m="0 auto"
         bg="#ffffff"
@@ -149,9 +152,6 @@ export default function SignIn() {
         p="0 0"
         borderRadius="5px"
       >
-        {/* <Box>
-                    <Image src="./Mumbai.jpeg" alt="" m="auto" w="100%" />
-                </Box> */}
         <Formik
           initialValues={{
             FullName: "",
@@ -419,7 +419,7 @@ export default function SignIn() {
                 </Box>
                 <Box py="10px">
                   <Box display={{ base: "block", sm: "flex" }}>
-                    <Box w="50%" m="auto">
+                    <Box w={{ base: "100%", sm: "50%" }} m="auto">
                       <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
@@ -477,8 +477,8 @@ export default function SignIn() {
                         />
                       ) : (
                         <Box
-                          h="150px"
-                          w="150px"
+                          h={{ base: "200px", sm: "150px" }}
+                          w={{ base: "200px", sm: "150px" }}
                           bg="#c1bebe"
                           display="grid"
                           placeItems="center"
@@ -491,10 +491,10 @@ export default function SignIn() {
                     </Box>
                     <Box
                       pos="relative"
-                      w="50%"
+                      w={{ base: "100%", sm: "50%" }}
                       m={{ base: "auto", sm: "0px" }}
                       textAlign="center"
-                      mt={{ base: "10px", sm: "0px" }}
+                      mt={{ base: "15px", sm: "0px" }}
                     >
                       <Button
                         onClick={onOpen}
@@ -508,6 +508,7 @@ export default function SignIn() {
                         }}
                         color="#fff"
                         _hover={{ bg: "#715fbb" }}
+                        px={{ base: "50px", sm: "30px" }}
                       >
                         Upload Image
                       </Button>
@@ -515,7 +516,9 @@ export default function SignIn() {
                   </Box>
                 </Box>
                 <Box textAlign="center" mt="20px">
-                  <Flex alignItems="center" justifyContent="space-between">
+                  <Flex alignItems="center"
+                    display={{ base: "block", sm: "flex" }}
+                    justifyContent="space-between">
                     <Button
                       bg="#56ab2f"
                       px="50px"
@@ -525,20 +528,40 @@ export default function SignIn() {
                       opacity="0.7"
                       _hover={{ opacity: "1" }}
                       transition="0.5s linear"
+                      mb={{ base: "10px", sm: "0px" }}
                     >
                       Sign In
                     </Button>
-                    <Button
-                      bg="blue"
-                      px="30px"
-                      color="#ffffff"
-                      onClick={() => router.push("/LogIn")}
-                      opacity="0.5"
-                      _hover={{ opacity: "1" }}
-                      transition="0.5s linear"
-                    >
-                      Already Have an Account Login
-                    </Button>
+                    <Hide below="sm">
+                      <Button
+                        bg="blue"
+                        px="30px"
+                        color="#ffffff"
+                        onClick={() => router.push("/LogIn")}
+                        opacity="0.5"
+                        _hover={{ opacity: "1" }}
+                        transition="0.5s linear"
+                      >
+                        Already Have An Account Login
+                      </Button>
+                    </Hide>
+                    <Show below="sm">
+                      <Box color="#000"
+                        fontSize="15px"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        flexWrap="wrap">
+                        Already Have An Account ?
+                        <Text onClick={() => router.push("/LogIn")}
+                          ml="5px"
+                          textDecoration="underline"
+                          color="blue"
+                          cursor="pointer"
+                        >
+                          LogIn</Text>
+                      </Box>
+                    </Show>
                   </Flex>
                 </Box>
               </Box>
@@ -546,6 +569,6 @@ export default function SignIn() {
           )}
         </Formik>
       </Box>
-    </Box>
+    </Box >
   );
 }

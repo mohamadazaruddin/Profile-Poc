@@ -35,25 +35,16 @@ export default function LogIn() {
       alignItems="center"
     >
       <Box
-        m={{ base: "0px", sm: "50px", md: "auto" }}
+        m={{ base: "10px", sm: "50px", md: "auto" }}
         boxShadow={"0px 0px 25px #00000094"}
         w="100%"
-        height={{ md: "auto", base: "100%" }}
+        height={{ md: "auto", base: "" }}
         display="flex"
         flexDirection={{ base: "column", md: "row" }}
         justifyContent="center"
       >
         <Box
-          width="100%"
-          display={{ base: "block", md: "none" }}
-          backgroundImage="Lg-Bg-I.png"
-          backgroundPosition="center"
-          backgroundSize="cover"
-          backgroundRepeat="no-repeat"
-          h="50%"
-        ></Box>
-        <Box
-          width={{ base: "0%", md: "45%" }}
+          width={{ base: "0%", md: "50%" }}
           backgroundImage={{
             base: "Base-Bg-I.jpg",
           }}

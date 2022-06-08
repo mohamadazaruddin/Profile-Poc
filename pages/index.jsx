@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
-// import SignIn from "./SignIn";
+import SignIn from "./SignIn";
 import MaterialUiDemo from "./MaterialuiDemo";
-import SignIn from "./SiginDemo";
+// import SignIn from "./SiginDemo";
 
 export default function Home() {
   return (
