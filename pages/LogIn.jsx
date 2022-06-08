@@ -28,7 +28,7 @@ export default function LogIn() {
   }, [valueSubmitted]);
 
   return (
-    <Box
+    <Flex
       maxW={{ md: "70%", sm: "100%", base: "100%" }}
       height="100vh"
       margin="auto"
@@ -189,6 +189,6 @@ export default function LogIn() {
           </Box>
         </Box>
       </Box>
-    </Box>
+    </Flex>
   );
 }

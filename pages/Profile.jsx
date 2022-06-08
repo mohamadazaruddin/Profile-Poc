@@ -2,23 +2,19 @@ import {
   Box,
   Text,
   Button,
-  FormControl,
   FormLabel,
   Input,
   Flex,
   Select,
-} from "@chakra-ui/react";
-import React, { useEffect, useState, useRef } from "react";
-import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
 import { useRouter } from "next/router";
@@ -64,83 +60,136 @@ export default function Profile() {
     onClose();
   };
   return (
-    <Box bg="#3997f8" p="50px" h="100vh">
+    <Box
+      bg="#3997f8"
+      display="grid"
+      h="100vh"
+      padding={{ lg: "0px", base: "30px" }}
+    >
       <Box
         bg="#fff"
-        p="0px 30px"
+        p="16px"
         borderRadius="10px"
-        w="70%"
+        w={{ base: "100%", lg: "40%" }}
         m="auto"
         boxShadow="0px 0px 20px #000000b0"
       >
         <Box>
-          <Flex>
-            <Box display="flex" alignItems="center">
-              <Box
-                w="150px"
-                h="150px"
-                bg="gray"
-                borderRadius="50%"
-                bgImg={singleObj.CropImage}
-                backgroundSize="cover"
-                backgroundPosition="center"
-              ></Box>
-            </Box>
-            <Box p="15px">
-              <Box fontWeight="600" fontSize="30px" lineHeight="25px">
-                {singleObj.FullName}
+          <Box w="90px" h="80px" alignItems="center" pr="15px">
+            <Box
+              w="100%"
+              h="100%"
+              bg="gray"
+              borderRadius="50%"
+              bgImg={singleObj.CropImage}
+              backgroundSize="cover"
+              backgroundPosition="center"
+              border=" 1px solid rgb(245, 245, 245)"
+            ></Box>
+          </Box>
+          <Box pt="15px" alignItems="center">
+            <Box mr="10px" fontFamily="sans-serif">
+              <Box>
+                <Text
+                  fontWeight="600"
+                  fontSize="20px"
+                  color="#212121"
+                  lineHeight="25px"
+                >
+                  {singleObj.FullName}
+                </Text>
               </Box>
               <Box>
                 <Text
-                  color="#7e7c7c"
+                  fontSize="12px"
+                  color="#9e9e9e"
+                  lineHeight="1.66"
+                  fontWeight="400"
+                >
+                  UI Developer
+                </Text>
+              </Box>
+              <Box pt="24px">
+                <Text
+                  fontSize="12px"
+                  color="#616161"
+                  lineHeight="1.57"
+                  fontWeight="400"
+                >
+                  I am {singleObj.FullName} as an {singleObj.Role} Lorem, ipsum
+                  dolor sit amet consectetur adipisicing elit.Blanditiis a
+                  beatae ullam vitae sunt repudiandae voluptate animi molestias,
+                  voluptatem, dolor
+                </Text>
+              </Box>
+              <Box pt="24px">
+                <Text color="#9e9e9e" fontWeight="400" fontSize="12px">
+                  Email
+                </Text>
+                <Text
+                  color="#212121"
                   m="0px"
                   mb="0px"
                   fontWeight="600"
-                  fontSize="16px"
+                  fontSize="12px"
+                  lineHeight="1.6"
                 >
                   {singleObj.Email}
                 </Text>
               </Box>
-              <Box display="inline-block" fontSize="17px" fontWeight="600">
-                Mob:
-                <Text
-                  display="inline-block"
-                  color="#7e7c7c"
-                  mx="5px"
-                  mb="10px"
-                  fontSize="17px"
-                >
-                  {singleObj.MobNo}
-                </Text>
-              </Box>
-              <Box>
-                <Text fontWeight="600" mb="25px">
-                  I am
-                  {singleObj.FullName} as an intern Lorem, ipsum dolor sit amet
-                  consectetur adipisicing elit.Blanditiis a beatae ullam vitae
-                  sunt repudiandae voluptate animi molestias, voluptatem, dolor
-                </Text>
-              </Box>
-              <Box textAlign="end">
-                <Button
-                  bg="#3997f8"
-                  fontWeight="bold"
-                  color="#fff"
-                  borderRadius="25px"
-                  p="10px 30px"
-                  _hover={{
-                    bg: "#017eff",
-                  }}
-                  border="none"
-                  cursor="pointer"
-                  onClick={onOpen}
-                  _focus={{ border: "none" }}
-                >
-                  Edit Profile
-                </Button>
+              <Box display="flex" justifyContent="space-between" pt="24px">
+                <Box>
+                  <Text color="#9e9e9e" fontWeight="400" fontSize="12px">
+                    Phone
+                  </Text>
+                  <Text
+                    color="#212121"
+                    m="0px"
+                    mb="0px"
+                    fontWeight="600"
+                    fontSize="12px"
+                    lineHeight="1.6"
+                  >
+                    {singleObj.MobNo}
+                  </Text>
+                </Box>
+                <Box w="55%">
+                  <Text color="#9e9e9e" fontWeight="400" fontSize="12px">
+                    Location
+                  </Text>
+                  <Text
+                    color="#212121"
+                    m="0px"
+                    mb="0px"
+                    fontWeight="600"
+                    fontSize="12px"
+                    lineHeight="1.6"
+                  >
+                    India
+                  </Text>
+                </Box>
               </Box>
             </Box>
-          </Flex>
+            <Box>
+              <Button
+                w="100%"
+                bg="#3997f8"
+                color="#fff"
+                fontWeight="500"
+                borderRadius="8px"
+                _hover={{
+                  bg: "#017eff",
+                }}
+                border="none"
+                cursor="pointer"
+                onClick={onOpen}
+                mt="15px"
+                _focus={{ border: "none" }}
+              >
+                Edit Profile
+              </Button>
+            </Box>
+          </Box>
         </Box>
         {typeof singleObj !== "undefined" && (
           <Modal isOpen={isOpen} onClose={onClose}>
@@ -274,7 +323,6 @@ export default function Profile() {
                           id="Role"
                           name="Role"
                           placeholder="Role"
-                          pl="0px"
                         >
                           <option value="Intern">Intern</option>
                           <option value="Junior Developer">

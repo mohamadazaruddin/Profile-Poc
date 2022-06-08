@@ -108,6 +108,7 @@ export default function SignIn() {
               Password: "",
               ConPassword: "",
               CropImage: "",
+              Location: "",
               Role: "",
             }}
             onSubmit={handleSubmit}
@@ -228,7 +229,7 @@ export default function SignIn() {
                   </Box>
                   <Box py="10px">
                     <FormLabel color="black" marginRight="2px" display="inline">
-                      Password
+                      Password Hello World
                     </FormLabel>
                     <Box as="span" color="red">
                       *
@@ -284,6 +285,33 @@ export default function SignIn() {
                   </Box>
                   <Box py="10px">
                     <FormLabel color="black" marginRight="2px" display="inline">
+                      Location
+                    </FormLabel>
+                    <Box as="span" color="red">
+                      *
+                    </Box>
+                    <Field
+                      as={Input}
+                      id="Location"
+                      name="Location"
+                      placeholder="Enter your City"
+                      bg="#fff"
+                      color="#787878"
+                      borderRadius="unset"
+                      border="none"
+                      borderBottom="2px solid #ccc"
+                      pl="0px"
+                      _focus={{ borderColor: "#ccc" }}
+                      _hover={{ borderColor: "#ccc" }}
+                    />
+                    {errors.Location && touched.Location ? (
+                      <Text color="red" fontSize="14px" fontWeight="600">
+                        {errors.Location}
+                      </Text>
+                    ) : null}
+                  </Box>
+                  <Box py="10px">
+                    <FormLabel color="black" marginRight="2px" display="inline">
                       Role
                     </FormLabel>
                     <Box as="span" color="red">
@@ -291,15 +319,23 @@ export default function SignIn() {
                     </Box>
                     <Field
                       as={Select}
-                      color="black"
                       id="Role"
                       name="Role"
                       placeholder="Select"
+                      bg="#fff"
+                      color="#787878"
+                      borderRadius="unset"
+                      border="none"
+                      borderBottom="2px solid #ccc"
                       pl="0px"
+                      _focus={{ borderColor: "#ccc" }}
+                      _hover={{ borderColor: "#ccc" }}
                     >
-                      <option value="Intern">Intern</option>
-                      <option value="Junior Developer">Junior Developer</option>
-                      <option value="Senior Developer">Senior Developer</option>
+                      <option value="DevOps">DevOps</option>
+                      <option value="UI Developer">UI Developer</option>
+                      <option value="Backend Developer">
+                        Backend Developer
+                      </option>
                       <option value="CEO">CEO</option>
                     </Field>
                     {errors.Role && touched.Role ? (
@@ -569,7 +605,7 @@ export default function SignIn() {
                   </Box>
                   <Box py="10px">
                     <FormLabel color="black" marginRight="2px" display="inline">
-                      Password
+                      Password Hello World
                     </FormLabel>
                     <Box as="span" color="red">
                       *
@@ -644,9 +680,11 @@ export default function SignIn() {
                       _focus={{ borderColor: "#ccc" }}
                       _hover={{ borderColor: "#ccc" }}
                     >
-                      <option value="Intern">Intern</option>
-                      <option value="Junior Developer">Junior Developer</option>
-                      <option value="Senior Developer">Senior Developer</option>
+                      <option value="DevOps">DevOps</option>
+                      <option value="UI Developer">UI Developer</option>
+                      <option value="Backend Developer">
+                        Backend Developer
+                      </option>
                       <option value="CEO">CEO</option>
                     </Field>
                     {errors.Role && touched.Role ? (
