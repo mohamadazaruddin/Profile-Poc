@@ -62,7 +62,7 @@ export default function Profile() {
     onClose();
   };
   return (
-    <Box bg="#efefef" w="100%" h="100%">
+    <Box bg="#E3F2FD" w="100%" h="100%">
       <Box
         w="100%"
         maxW="100%"

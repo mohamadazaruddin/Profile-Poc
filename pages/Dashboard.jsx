@@ -52,7 +52,6 @@ export default function Dashboard() {
           <Heading fontSize="25px">Dashboard</Heading>
         </Box>
         <Box
-          // borderRadius="8px"
           p="15px"
           mb="15px"
           border="1px solid rgb(227, 235, 235)"
