@@ -5,7 +5,7 @@ import MaterialUiDemo from "./MaterialuiDemo";
 
 export default function Home() {
   return (
-    <Box>
+    <Box w="100%" h="100%">
       <SignIn />
       {/* <MaterialUiDemo /> */}
     </Box>
