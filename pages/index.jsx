@@ -1,10 +1,13 @@
 import { Box } from "@chakra-ui/react";
-// import SignIn from "./SignIn";
-import ProfileCard from "../Components/ProfileCard";
+import SignIn from "./SignIn";
+import MaterialUiDemo from "./MaterialuiDemo";
+// import SignIn from "./SiginDemo";
+
 export default function Home() {
   return (
     <Box>
-      <ProfileCard />
+      <SignIn />
+      {/* <MaterialUiDemo /> */}
     </Box>
   );
 }

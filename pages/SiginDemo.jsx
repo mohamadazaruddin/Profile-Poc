@@ -175,7 +175,7 @@ export default function SignIn() {
             Email: Yup.string().email().required("Required"),
             Password: Yup.string()
               .matches(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                 "Password must be strong"
               )
               .required("Required"),
@@ -244,11 +244,6 @@ export default function SignIn() {
                         padding: "0 0 10px 0px",
                       },
                     }}
-                    InputProps={{
-                      style: {
-                        color: "",
-                      },
-                    }}
                     className={classes.root}
                     width="100%"
                     fullWidth
@@ -305,11 +300,6 @@ export default function SignIn() {
                         padding: "0 0 10px 0px",
                       },
                     }}
-                    InputProps={{
-                      style: {
-                        color: "",
-                      },
-                    }}
                     className={classes.root}
                     id="Password"
                     width="100%"
@@ -342,11 +332,6 @@ export default function SignIn() {
                         color: "#787878",
                         fontSize: "20px",
                         padding: "0 0 10px 0px",
-                      },
-                    }}
-                    InputProps={{
-                      style: {
-                        color: "",
                       },
                     }}
                     className={classes.root}
@@ -389,10 +374,8 @@ export default function SignIn() {
                     <option bg="#333" value="Intern">
                       Intern
                     </option>
-                    <option value="Frontend Developer">
-                      Frontend Developer
-                    </option>
-                    <option value="Backend Developer">Backend Developer</option>
+                    <option value="Junior Developer">Junior Developer</option>
+                    <option value="Senior Developer">Senior Developer</option>
                     <option value="CEO">CEO</option>
                   </Field>
                   {errors.Role && touched.Role ? (
@@ -523,11 +506,7 @@ export default function SignIn() {
                   </Box>
                 </Box>
                 <Box textAlign="center" mt="20px">
-                  <Flex
-                    alignItems="center"
-                    flexWrap={{ sm: "wrap", md: "nowrap" }}
-                    justifyContent="space-between"
-                  >
+                  <Flex alignItems="center" justifyContent="space-between">
                     <Button
                       bg="#56ab2f"
                       px="50px"
@@ -548,7 +527,6 @@ export default function SignIn() {
                       opacity="0.5"
                       _hover={{ opacity: "1" }}
                       transition="0.5s linear"
-                      mt={{ sm: "15px", md: "0px" }}
                     >
                       Already Have an Account Login
                     </Button>
