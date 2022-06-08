@@ -8,139 +8,233 @@ import {
   Button,
   Link,
   Badge,
+  RadioGroup,
+  Radio,
   useColorModeValue,
   GridItem,
   Grid,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { useRouter } from "next/router";
-
-// import { PhoneIcon } from "@chakra-ui/icons";
+import { PhoneIcon } from "@chakra-ui/icons";
 export default function Dashboard() {
+  const [value, setValue] = useState([]);
+  const [media, setMedia] = useState(false);
   const [items, setItems] = useState([]);
   const router = useRouter();
-
   useEffect(() => {
     const itemobtained = localStorage.getItem("signedInObject");
     if (itemobtained) {
       let user_item = JSON.parse(itemobtained);
       setItems(user_item);
+      setValue(user_item);
     }
-    console.log(itemobtained, "itemobtained");
   }, []);
-
+  const handleChange = (e) => {
+    e.preventDefault();
+    var name = e.target.value;
+    var person = items.filter(function (items) {
+      if (name == "all") {
+        return items;
+      } else {
+        return items.Role == name;
+      }
+    });
+    setValue(person);
+    console.log(name, "name ");
+    console.log(value, "value");
+    console.log(person, "person");
+  };
   return (
-    <Box p={{ md: "30px", sm: "30px", base: "10px" }} bg="#015bea">
-      <Box>
-        <Heading
-          color="#fff"
-          fontSize={{ md: "35px", sm: "30px", base: "30px" }}
+    <Box bg="#E3F2FD" p="20px">
+      <Box bg="#fff" borderRadius="8px" my="20px">
+        <Box p="10px 10px" border="1px solid rgb(227, 235, 235)">
+          <Heading fontSize="25px">Dashboard</Heading>
+        </Box>
+        <Box
+          // borderRadius="8px"
+          p="15px"
+          mb="15px"
+          border="1px solid rgb(227, 235, 235)"
         >
-          Dashboard
-        </Heading>
-        <Text color="#e2e2e2" fontSize={{ md: "18px", sm: "", base: "14px" }}>
-          Get your users list here !
-        </Text>
-      </Box>
-      <Box textAlign="end" mb="30px" mt="15px">
-        <Link
-          _hover={{ textDecoration: "none" }}
-          bg="#fff"
-          py="5px"
-          borderRadius="6px"
-          px="15px"
-        >
-          <Box display="inline-block">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              width="15px"
-              height="12px"
-            >
-              <path d="M3.853 54.87C10.47 40.9 24.54 32 40 32H472C487.5 32 501.5 40.9 508.1 54.87C514.8 68.84 512.7 85.37 502.1 97.33L320 320.9V448C320 460.1 313.2 471.2 302.3 476.6C291.5 482 278.5 480.9 268.8 473.6L204.8 425.6C196.7 419.6 192 410.1 192 400V320.9L9.042 97.33C-.745 85.37-2.765 68.84 3.854 54.87L3.853 54.87z" />
-            </svg>
-          </Box>
-          <Text
-            display={{ md: "inline-block", sm: "inline-block", base: "none" }}
-          >
-            Filter
-          </Text>
-        </Link>
-      </Box>
-      {items.length > 0 ? (
-        <Box bg="#fff" p="25px" borderRadius="10px">
+          <RadioGroup onChange={setValue} defaultValue="all" value={value}>
+            <Stack direction={{ md: "row", base: "column" }} gap="10px">
+              <Radio
+                colorScheme="red"
+                // as={Radio}
+                value="all"
+                // checked={true}
+                onChange={handleChange}
+              >
+                All
+              </Radio>
+              <Radio
+                colorScheme="red"
+                // as={Radio}
+                value="Intern"
+                checked={value === "Intern"}
+                onChange={handleChange}
+              >
+                Intern
+              </Radio>
+              <Radio
+                colorScheme="red"
+                value="Frontend Developer"
+                checked={value === "Frontend Developer"}
+                onChange={handleChange}
+              >
+                Frontend Dev
+              </Radio>
+              <Radio
+                colorScheme="red"
+                value="Backend Developer"
+                checked={value === "Backend Developer"}
+                onChange={handleChange}
+              >
+                Backend Dev
+              </Radio>
+              <Radio
+                colorScheme="red"
+                value="DevOps"
+                checked={value === "DevOps"}
+                onChange={handleChange}
+              >
+                DevOps
+              </Radio>
+            </Stack>
+          </RadioGroup>
+        </Box>
+        <Box p="10px 10px" borderBottom="1px solid rgba(245, 245, 245)">
           <Grid
-            templateColumns={{
-              sm: "repeat(2, 1fr)",
-              base: "repeat(1, 1fr)",
-              md: "repeat(3, 1fr)",
-              lg: "repeat(4, 1fr)",
-            }}
-            gap={{ base: "3", md: "4", lg: "10" }}
+            templateColumns={{ md: "repeat(3, 1fr)", base: "repeat(1, 1fr)" }}
+            gap={6}
           >
-            {items.map((user, i) => (
+            {value.map((items, i) => (
               <GridItem key={i}>
                 <Box
-                  w={"full"}
-                  boxShadow={"2xl "}
-                  borderRadius="5px"
-                  rounded={"lg"}
-                  textAlign={"center"}
-                  border="2px solid #dddbdb69"
-                  _hover={{
-                    border: "2px solid #015bea",
-                    boxShadow: "0px 0px 20px #015bea",
-                  }}
+                  bg="#72a1ff26"
+                  p="16px"
+                  border="2px sloid transparent"
+                  borderRadius="10px"
+                  // w={{ base: "100%", lg: "40%" }}
+                  m="auto"
+                  _hover={{ boxShadow: "0 0 15px  lightblue" }}
                 >
-                  <Box
-                    p={4}
-                    bg="#015bea"
-                    borderTopRightRadius="5px"
-                    borderTopLeftRadius="5px"
-                  >
-                    <Avatar
-                      size="xl"
-                      border="2px solid #fff"
-                      src={user.CropImage}
-                      alt={"Avatar Alt"}
-                    />{" "}
+                  <Box w="90px" h="80px" alignItems="center" pr="15px">
+                    <Box
+                      w="100%"
+                      h="100%"
+                      bg="gray"
+                      borderRadius="50%"
+                      bgImg={items.CropImage}
+                      backgroundSize="cover"
+                      backgroundPosition="center"
+                      border=" 1px solid rgb(245, 245, 245)"
+                    ></Box>
                   </Box>
-                  <Box p={4}>
-                    <Heading fontSize="20px" fontFamily={"body"}>
-                      {user.FullName}
-                    </Heading>
-                    <Text
-                      fontWeight={600}
-                      color={"gray.500"}
-                      mb={0}
-                      fontSize="14px"
-                    >
-                      {user.Email}
-                    </Text>
-                    <Box fontSize="18px" fontWeight="600" mt="10px">
-                      {/* <PhoneIcon w={4} h={4} me="5px" color="#09a852" />:{" "} */}
-                      <Text display="inline-block" color={"gray.500"}>
-                        {user.MobNo}
-                      </Text>
+                  <Box pt="15px" alignItems="center">
+                    <Box mr="10px" fontFamily="sans-serif">
+                      <Box>
+                        <Text
+                          fontWeight="600"
+                          fontSize="20px"
+                          color="#212121"
+                          lineHeight="25px"
+                        >
+                          {items.FullName}
+                        </Text>
+                      </Box>
+                      <Box>
+                        <Text
+                          fontSize="12px"
+                          color="#9E9E9E"
+                          lineHeight="1.66"
+                          fontWeight="400"
+                          textTransform="capitalize"
+                        >
+                          {items.Role}
+                        </Text>
+                      </Box>
+                      <Box pt="24px">
+                        <Text
+                          fontSize="12px"
+                          color="#616161"
+                          lineHeight="1.57"
+                          fontWeight="400"
+                        >
+                          I am {items.FullName} as an {items.Role} Lorem, ipsum
+                          dolor sit amet consectetur adipisicing elit.Blanditiis
+                          a beatae ullam vitae sunt repudiandae voluptate animi
+                          molestias, voluptatem, dolor
+                        </Text>
+                      </Box>
+                      <Box pt="24px">
+                        <Text color="#9E9E9E" fontWeight="400" fontSize="12px">
+                          Email
+                        </Text>
+                        <Text
+                          color="#212121"
+                          m="0px"
+                          mb="0px"
+                          fontWeight="600"
+                          fontSize="12px"
+                          lineHeight="1.6"
+                        >
+                          {items.Email}
+                        </Text>
+                      </Box>
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        pt="24px"
+                      >
+                        <Box>
+                          <Text
+                            color="#9E9E9E"
+                            fontWeight="400"
+                            fontSize="12px"
+                          >
+                            Phone
+                          </Text>
+                          <Text
+                            color="#212121"
+                            m="0px"
+                            mb="0px"
+                            fontWeight="600"
+                            fontSize="12px"
+                            lineHeight="1.6"
+                          >
+                            {items.MobNo}
+                          </Text>
+                        </Box>
+                        <Box w="55%">
+                          <Text
+                            color="#9E9E9E"
+                            fontWeight="400"
+                            fontSize="12px"
+                          >
+                            Location
+                          </Text>
+                          <Text
+                            color="#212121"
+                            m="0px"
+                            mb="0px"
+                            fontWeight="600"
+                            fontSize="12px"
+                            lineHeight="1.6"
+                          >
+                            India
+                          </Text>
+                        </Box>
+                      </Box>
                     </Box>
-                    <Text
-                      textAlign={"center"}
-                      color={useColorModeValue("gray.700", "gray.400")}
-                      px={3}
-                    >
-                      <b> Role</b> : intern
-                    </Text>
                   </Box>
                 </Box>
               </GridItem>
             ))}
           </Grid>
         </Box>
-      ) : (
-        <Box color="#fff" fontSize="40px" textAlign="center">
-          No user found
-        </Box>
-      )}
+      </Box>
     </Box>
   );
 }

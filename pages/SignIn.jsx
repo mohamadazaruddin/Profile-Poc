@@ -34,7 +34,7 @@ import {
   Visibility,
   VisibilityOff,
   InputLabel,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import { useRouter } from "next/router";
 import { makeStyles, withStyles, createStyles } from "@material-ui/styles";
@@ -42,24 +42,24 @@ import { useStyles } from "@chakra-ui/react";
 
 const stylesInput = makeStyles({
   root: {
-    '& label.Mui-focused': {
-      color: 'black',
+    "& label.Mui-focused": {
+      color: "black",
     },
-    '& .MuiInput-underline:after': {
-      borderColor: 'black',
+    "& .MuiInput-underline:after": {
+      borderColor: "black",
     },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'black',
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "black",
       },
-      '&:hover fieldset': {
-        borderColor: 'black',
+      "&:hover fieldset": {
+        borderColor: "black",
       },
-      '&.Mui-focused fieldset': {
-        borderColor: 'black',
+      "&.Mui-focused fieldset": {
+        borderColor: "black",
       },
     },
-  }
+  },
 });
 export default function SignIn() {
   const [image, setImage] = useState();
@@ -68,7 +68,7 @@ export default function SignIn() {
   const [cropImg, setcropImg] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false);
-  const [errInput, setErrInput] = useState(false)
+  const [errInput, setErrInput] = useState(false);
   const classes = stylesInput();
   const router = useRouter();
 
@@ -140,7 +140,7 @@ export default function SignIn() {
         top: 0,
         bottom: 0,
         left: 0,
-        right: 0
+        right: 0,
       }}
     >
       <Box
@@ -175,7 +175,7 @@ export default function SignIn() {
             Email: Yup.string().email().required("Required"),
             Password: Yup.string()
               .matches(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
                 "Password must be strong"
               )
               .required("Required"),
@@ -187,7 +187,7 @@ export default function SignIn() {
           })}
         >
           {({ errors, touched }) => (
-            <Form >
+            <Form>
               <Box p={{ base: "20px", lg: "40px" }} bg="#ffffff" zIndex="99">
                 <Box
                   textAlign="center"
@@ -209,8 +209,8 @@ export default function SignIn() {
                       style: {
                         color: "#787878",
                         fontSize: "20px",
-                        padding: "0 0 10px 0px"
-                      }
+                        padding: "0 0 10px 0px",
+                      },
                     }}
                     InputProps={{
                       style: {
@@ -241,13 +241,13 @@ export default function SignIn() {
                       style: {
                         color: "#787878",
                         fontSize: "20px",
-                        padding: "0 0 10px 0px"
-                      }
+                        padding: "0 0 10px 0px",
+                      },
                     }}
                     InputProps={{
                       style: {
-                        color: ""
-                      }
+                        color: "",
+                      },
                     }}
                     className={classes.root}
                     width="100%"
@@ -273,11 +273,11 @@ export default function SignIn() {
                       style: {
                         color: "#787878",
                         fontSize: "20px",
-                        padding: "0 0 10px 0px"
-                      }
+                        padding: "0 0 10px 0px",
+                      },
                     }}
                     InputProps={{
-                      style: {}
+                      style: {},
                     }}
                     className={classes.root}
                     type="email"
@@ -302,13 +302,13 @@ export default function SignIn() {
                       style: {
                         color: "#787878",
                         fontSize: "20px",
-                        padding: "0 0 10px 0px"
-                      }
+                        padding: "0 0 10px 0px",
+                      },
                     }}
                     InputProps={{
                       style: {
-                        color: ""
-                      }
+                        color: "",
+                      },
                     }}
                     className={classes.root}
                     id="Password"
@@ -325,8 +325,11 @@ export default function SignIn() {
                     </Box>
                   ) : null}
                   <Checkbox
-                    onChange={() => { setShowPassword(!showPassword); }}
-                    color="#333">
+                    onChange={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                    color="#333"
+                  >
                     Show Password
                   </Checkbox>
                 </Box>
@@ -338,13 +341,13 @@ export default function SignIn() {
                       style: {
                         color: "#787878",
                         fontSize: "20px",
-                        padding: "0 0 10px 0px"
-                      }
+                        padding: "0 0 10px 0px",
+                      },
                     }}
                     InputProps={{
                       style: {
-                        color: ""
-                      }
+                        color: "",
+                      },
                     }}
                     className={classes.root}
                     name="ConPassword"
@@ -361,7 +364,12 @@ export default function SignIn() {
                   ) : null}
                 </Box>
                 <Box py="10px">
-                  <FormLabel color="#787878" fontSize="20px" marginRight="2px" display="inline">
+                  <FormLabel
+                    color="#787878"
+                    fontSize="20px"
+                    marginRight="2px"
+                    display="inline"
+                  >
                     Role
                   </FormLabel>
                   <Field
@@ -378,10 +386,14 @@ export default function SignIn() {
                     _focus={{ borderColor: "#ccc" }}
                     _hover={{ borderColor: "#ccc" }}
                   >
-                    <option bg="#333" value="Intern">Intern</option>
-                    <option value="Junior Developer">Junior Developer</option>
-                    <option value="Senior Developer">Senior Developer</option>
-                    <option value="CEO">CEO</option>
+                    <option bg="#333" value="Intern">
+                      Intern
+                    </option>
+                    <option value="Frontend Developer">
+                      Frontend Developer
+                    </option>
+                    <option value="Backend Developer">Backend Developer</option>
+                    <option value="DevOps">DevOps</option>
                   </Field>
                   {errors.Role && touched.Role ? (
                     <Text color="red" fontSize="14px" fontWeight="600">
@@ -390,7 +402,12 @@ export default function SignIn() {
                   ) : null}
                 </Box>
                 <Box py="10px">
-                  <FormLabel color="#787878" fontSize="20px" marginRight="2px" display="inline">
+                  <FormLabel
+                    color="#787878"
+                    fontSize="20px"
+                    marginRight="2px"
+                    display="inline"
+                  >
                     Location
                   </FormLabel>
                   <Field
@@ -457,11 +474,7 @@ export default function SignIn() {
                             />
                           </ModalBody>
                           <ModalFooter>
-                            <Button
-                              colorScheme="blue"
-                              mr={3}
-                              onClick={onClose}
-                            >
+                            <Button colorScheme="blue" mr={3} onClick={onClose}>
                               Close
                             </Button>
                             <Button onClick={getCropData}>Crop Image</Button>
@@ -469,12 +482,7 @@ export default function SignIn() {
                         </ModalContent>
                       </Modal>
                       {cropData ? (
-                        <Image
-                          w="100%"
-                          src={cropData}
-                          alt="cropped"
-                          p="20px"
-                        />
+                        <Image w="100%" src={cropData} alt="cropped" p="20px" />
                       ) : (
                         <Box
                           h={{ base: "200px", sm: "150px" }}
