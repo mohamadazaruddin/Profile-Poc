@@ -6,6 +6,7 @@ import {
   FormLabel,
   Input,
   Flex,
+  Image
 } from "@chakra-ui/react";
 import React from "react";
 import * as Yup from "yup";
@@ -45,12 +46,13 @@ export default function LogIn() {
         <Box
           width={{ base: "0%", md: "50%" }}
           backgroundImage={
-            "https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?w=2000"
+            "https://www.howtogeek.com/wp-content/uploads/2021/01/windows_hello_hero_2.jpg?width=1198&trim=1,1&bg-color=000&pad=1,1"
           }
           backgroundPosition="center"
           backgroundSize="cover"
           backgroundRepeat="no-repeat"
-        ></Box>
+        >
+        </Box>
         <Box
           width={{ base: "100%", md: "50%" }}
           p={{ sm: "50px 40px", base: "50px 15px", md: "70px 40px" }}

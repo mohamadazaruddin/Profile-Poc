@@ -1,20 +1,16 @@
 import React, { useState } from "react";
+import "../styles/Home.module.css";
 import {
   Box,
   Button,
   FormLabel,
-  Input,
   Flex,
   Image,
-  Spacer,
   Select,
+  Input,
   Text,
-} from "@chakra-ui/react";
-import { Formik, Field, Form } from "formik";
-import * as Yup from "yup";
-import Cropper from "react-cropper";
-import "cropperjs/dist/cropper.css";
-import {
+  useDisclosure,
+  useMediaQuery,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -22,17 +18,55 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Checkbox
 } from "@chakra-ui/react";
+import { Formik, Field, Form } from "formik";
+import * as Yup from "yup";
+import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
+import {
+  InputAdornment,
+  IconButton,
+  OutlinedInput,
+  Visibility,
+  VisibilityOff,
+  InputLabel,
+  TextField
+} from "@material-ui/core";
 import { useRouter } from "next/router";
-import { useDisclosure } from "@chakra-ui/react";
-import { useMediaQuery } from "@chakra-ui/react";
+import { makeStyles, withStyles, createStyles } from "@material-ui/styles";
+import { useStyles } from "@chakra-ui/react";
 
+const stylesInput = makeStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'black',
+    },
+    '& .MuiInput-underline:after': {
+      borderColor: 'black',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'black',
+      },
+      '&:hover fieldset': {
+        borderColor: 'black',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'black',
+      },
+    },
+  }
+});
 export default function SignIn() {
   const [image, setImage] = useState();
   const [cropData, setCropData] = useState(false);
   const [cropper, setCropper] = useState();
   const [cropImg, setcropImg] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [showPassword, setShowPassword] = useState(false);
+  const [errInput, setErrInput] = useState(false)
+  const classes = stylesInput();
   const router = useRouter();
 
   const [MobSmallWidth] = useMediaQuery("(max-width:300px)");
@@ -85,20 +119,39 @@ export default function SignIn() {
       onClose();
     }
   };
+
   return (
-    <Box p={{ base: "0px", md: "50px" }} bg="#015bea">
+    <Box
+      p={{ base: "0px", md: "50px" }}
+      bg="#ffffff"
+      backgroundImage="	https://colorlib.com/etc/cf/ContactFrom_v3/images/bg-01.jpg"
+      width="100%"
+      backgroundRepeat="no-repeat"
+      backgroundPosition="center center"
+      backgroundSize="cover"
+      pos="relative"
+      _before={{
+        content: `""`,
+        bg: "rgba(255,255,255,.8)",
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+      }}
+    >
       <Box
         w={{ base: "100%", md: "50%" }}
+        pos="relative"
         m="0 auto"
         bg="#ffffff"
         color="#fff"
         p="0 0"
         borderRadius="5px"
-        boxShadow="0px 0px 10px #000"
       >
-        <Box>
-          <Image src="./Mumbai.jpeg" alt="" m="auto" w="100%" />
-        </Box>
+        {/* <Box>
+                    <Image src="./Mumbai.jpeg" alt="" m="auto" w="100%" />
+                </Box> */}
         <Formik
           initialValues={{
             FullName: "",
@@ -108,6 +161,7 @@ export default function SignIn() {
             ConPassword: "",
             CropImage: "",
             Role: "",
+            Location: "",
           }}
           onSubmit={handleSubmit}
           validationSchema={Yup.object().shape({
@@ -129,11 +183,12 @@ export default function SignIn() {
               .required("Required")
               .oneOf([Yup.ref("Password"), null], "Passwords must match"),
             Role: Yup.string().required("Required"),
+            Location: Yup.string().required("Required"),
           })}
         >
           {({ errors, touched }) => (
-            <Form>
-              <Box p={{ base: "20px", lg: "40px" }}>
+            <Form >
+              <Box p={{ base: "20px", lg: "40px" }} bg="#ffffff" zIndex="99">
                 <Box
                   textAlign="center"
                   as="h1"
@@ -144,23 +199,28 @@ export default function SignIn() {
                   Sign In
                 </Box>
                 <Box py="10px">
-                  <FormLabel color="black" marginRight="2px" display="inline">
-                    Name
-                  </FormLabel>
-                  <Box as="span" color="red">
-                    *
-                  </Box>
                   <Field
-                    as={Input}
-                    borderRadius="unset"
-                    border="none"
-                    borderBottom="2px solid #ccc"
+                    as={TextField}
                     name="FullName"
                     id="FullName"
-                    bg="#fff"
-                    color="#787878"
                     type="text"
-                    pl="0px"
+                    label="Full Name"
+                    InputLabelProps={{
+                      style: {
+                        color: "#787878",
+                        fontSize: "20px",
+                        padding: "0 0 10px 0px"
+                      }
+                    }}
+                    InputProps={{
+                      style: {
+                        color: "black",
+                        borderColor: "black",
+                      },
+                    }}
+                    className={classes.root}
+                    width="100%"
+                    fullWidth
                     placeholder="John Doe"
                     _focus={{ borderColor: "#ccc" }}
                     _hover={{ borderColor: "#ccc" }}
@@ -172,23 +232,27 @@ export default function SignIn() {
                   ) : null}
                 </Box>
                 <Box py="10px">
-                  <FormLabel color="black" marginRight="2px" display="inline">
-                    Mobile No.
-                  </FormLabel>
-                  <Box as="span" color="red">
-                    *
-                  </Box>
                   <Field
-                    as={Input}
+                    as={TextField}
                     name="MobNo"
                     id="MobNo"
-                    bg="#fff"
-                    color="#787878"
+                    label="Mobile No"
+                    InputLabelProps={{
+                      style: {
+                        color: "#787878",
+                        fontSize: "20px",
+                        padding: "0 0 10px 0px"
+                      }
+                    }}
+                    InputProps={{
+                      style: {
+                        color: ""
+                      }
+                    }}
+                    className={classes.root}
+                    width="100%"
+                    fullWidth
                     type="number"
-                    borderRadius="unset"
-                    border="none"
-                    borderBottom="2px solid #ccc"
-                    pl="0px"
                     placeholder="9876543210"
                     _focus={{ borderColor: "#ccc" }}
                     _hover={{ borderColor: "#ccc" }}
@@ -200,23 +264,25 @@ export default function SignIn() {
                   ) : null}
                 </Box>
                 <Box py="10px">
-                  <FormLabel color="black" marginRight="2px" display="inline">
-                    Email
-                  </FormLabel>
-                  <Box as="span" color="red">
-                    *
-                  </Box>
                   <Field
-                    as={Input}
+                    as={TextField}
                     name="Email"
                     id="Email"
-                    bg="#fff"
-                    color="#787878"
-                    type="Email"
-                    borderRadius="unset"
-                    border="none"
-                    borderBottom="2px solid #ccc"
-                    pl="0px"
+                    label="Email"
+                    InputLabelProps={{
+                      style: {
+                        color: "#787878",
+                        fontSize: "20px",
+                        padding: "0 0 10px 0px"
+                      }
+                    }}
+                    InputProps={{
+                      style: {}
+                    }}
+                    className={classes.root}
+                    type="email"
+                    width="100%"
+                    fullWidth
                     placeholder="example@gmail.com"
                     _focus={{ borderColor: "#ccc" }}
                     _hover={{ borderColor: "#ccc" }}
@@ -228,23 +294,27 @@ export default function SignIn() {
                   ) : null}
                 </Box>
                 <Box py="10px">
-                  <FormLabel color="black" marginRight="2px" display="inline">
-                    Password
-                  </FormLabel>
-                  <Box as="span" color="red">
-                    *
-                  </Box>
                   <Field
-                    as={Input}
+                    as={TextField}
                     name="Password"
+                    label="Password"
+                    InputLabelProps={{
+                      style: {
+                        color: "#787878",
+                        fontSize: "20px",
+                        padding: "0 0 10px 0px"
+                      }
+                    }}
+                    InputProps={{
+                      style: {
+                        color: ""
+                      }
+                    }}
+                    className={classes.root}
                     id="Password"
-                    bg="#fff"
-                    color="#787878"
-                    type="Password"
-                    pl="0px"
-                    borderRadius="unset"
-                    border="none"
-                    borderBottom="2px solid #ccc"
+                    width="100%"
+                    fullWidth
+                    type={showPassword ? "text" : "password"}
                     placeholder="Pass@123"
                     _focus={{ borderColor: "#ccc" }}
                     _hover={{ borderColor: "#ccc" }}
@@ -254,28 +324,35 @@ export default function SignIn() {
                       {errors.Password}
                     </Box>
                   ) : null}
+                  <Checkbox
+                    onChange={() => { setShowPassword(!showPassword); }}
+                    color="#333">
+                    Show Password
+                  </Checkbox>
                 </Box>
                 <Box py="10px">
-                  <FormLabel color="black" marginRight="2px" display="inline">
-                    Confirm Password
-                  </FormLabel>
-                  <Box as="span" color="red">
-                    *
-                  </Box>
                   <Field
-                    as={Input}
+                    as={TextField}
+                    label="Confirm Password"
+                    InputLabelProps={{
+                      style: {
+                        color: "#787878",
+                        fontSize: "20px",
+                        padding: "0 0 10px 0px"
+                      }
+                    }}
+                    InputProps={{
+                      style: {
+                        color: ""
+                      }
+                    }}
+                    className={classes.root}
                     name="ConPassword"
+                    width="100%"
+                    fullWidth
                     id="ConPassword"
-                    bg="#fff"
-                    color="#787878"
                     type="Password"
-                    borderRadius="unset"
-                    border="none"
-                    borderBottom="2px solid #ccc"
-                    pl="0px"
-                    placeholder="Must match Password"
-                    _focus={{ borderColor: "#ccc" }}
-                    _hover={{ borderColor: "#ccc" }}
+                    placeholder="Must Match Password"
                   />
                   {errors.ConPassword && touched.ConPassword ? (
                     <Box as="p" color="red">
@@ -284,16 +361,42 @@ export default function SignIn() {
                   ) : null}
                 </Box>
                 <Box py="10px">
-                  <FormLabel color="black" marginRight="2px" display="inline">
+                  <FormLabel color="#787878" fontSize="20px" marginRight="2px" display="inline">
                     Role
                   </FormLabel>
-                  <Box as="span" color="red">
-                    *
-                  </Box>
                   <Field
                     as={Select}
                     id="Role"
                     name="Role"
+                    placeholder="Select"
+                    bg="#ffffff"
+                    color="#787878"
+                    borderRadius="unset"
+                    border="none"
+                    borderBottom="2px solid #ccc"
+                    pl="0px"
+                    _focus={{ borderColor: "#ccc" }}
+                    _hover={{ borderColor: "#ccc" }}
+                  >
+                    <option bg="#333" value="Intern">Intern</option>
+                    <option value="Junior Developer">Junior Developer</option>
+                    <option value="Senior Developer">Senior Developer</option>
+                    <option value="CEO">CEO</option>
+                  </Field>
+                  {errors.Role && touched.Role ? (
+                    <Text color="red" fontSize="14px" fontWeight="600">
+                      {errors.Role}
+                    </Text>
+                  ) : null}
+                </Box>
+                <Box py="10px">
+                  <FormLabel color="#787878" fontSize="20px" marginRight="2px" display="inline">
+                    Location
+                  </FormLabel>
+                  <Field
+                    as={Select}
+                    id="Location"
+                    name="Location"
                     placeholder="Select"
                     bg="#fff"
                     color="#787878"
@@ -304,14 +407,13 @@ export default function SignIn() {
                     _focus={{ borderColor: "#ccc" }}
                     _hover={{ borderColor: "#ccc" }}
                   >
-                    <option value="Intern">Intern</option>
-                    <option value="Junior Developer">Junior Developer</option>
-                    <option value="Senior Developer">Senior Developer</option>
-                    <option value="CEO">CEO</option>
+                    <option value="Wasseypur">Wasseypur</option>
+                    <option value="Mirzapur">Mirzapur</option>
+                    <option value="NaviMumbai">Navi Mumbai</option>
                   </Field>
-                  {errors.Role && touched.Role ? (
+                  {errors.Location && touched.Location ? (
                     <Text color="red" fontSize="14px" fontWeight="600">
-                      {errors.Role}
+                      {errors.Location}
                     </Text>
                   ) : null}
                 </Box>
@@ -415,20 +517,25 @@ export default function SignIn() {
                 <Box textAlign="center" mt="20px">
                   <Flex alignItems="center" justifyContent="space-between">
                     <Button
-                      bg="linear-gradient(90deg, rgba(203,104,5,1) 0%, rgba(255,171,3,1) 59%)"
+                      bg="#56ab2f"
                       px="50px"
                       color="#ffffff"
                       type="submit"
                       name="submit"
+                      opacity="0.7"
+                      _hover={{ opacity: "1" }}
+                      transition="0.5s linear"
                     >
                       Sign In
                     </Button>
-                    {/* <Spacer /> */}
                     <Button
                       bg="blue"
                       px="30px"
                       color="#ffffff"
                       onClick={() => router.push("/LogIn")}
+                      opacity="0.5"
+                      _hover={{ opacity: "1" }}
+                      transition="0.5s linear"
                     >
                       Already Have an Account Login
                     </Button>
