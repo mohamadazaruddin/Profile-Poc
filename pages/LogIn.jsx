@@ -5,13 +5,10 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Flex,
-  Image
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 const SignupSchema = Yup.object().shape({
   Username: Yup.string().email().required("Required"),
@@ -22,6 +19,7 @@ export default function LogIn() {
   const router = useRouter();
   const [value, setValues] = useState();
   const [valueSubmitted, setValueSubmitted] = useState(false);
+
   useEffect(() => {
     const signedInObject = window.localStorage.getItem("signedInObject");
     setValues(JSON.parse(signedInObject));
@@ -37,26 +35,42 @@ export default function LogIn() {
       alignItems="center"
     >
       <Box
-        m="auto"
+        m={{ base: "0px", sm: "50px", md: "auto" }}
         boxShadow={"0px 0px 25px #00000094"}
         w="100%"
         height={{ md: "auto", base: "100%" }}
         display="flex"
+        flexDirection={{ base: "column", md: "row" }}
+        justifyContent="center"
       >
         <Box
-          width={{ base: "0%", md: "50%" }}
-          backgroundImage={
-            "https://www.howtogeek.com/wp-content/uploads/2021/01/windows_hello_hero_2.jpg?width=1198&trim=1,1&bg-color=000&pad=1,1"
-          }
+          width="100%"
+          display={{ base: "block", md: "none" }}
+          backgroundImage="Lg-Bg-I.png"
           backgroundPosition="center"
           backgroundSize="cover"
           backgroundRepeat="no-repeat"
-        >
-        </Box>
+          h="50%"
+        ></Box>
         <Box
-          width={{ base: "100%", md: "50%" }}
-          p={{ sm: "50px 40px", base: "50px 15px", md: "70px 40px" }}
-          bg="#015bea"
+          width={{ base: "0%", md: "45%" }}
+          backgroundImage={{
+            base: "Base-Bg-I.jpg",
+          }}
+          backgroundPosition="center"
+          backgroundSize="cover"
+          backgroundRepeat="no-repeat"
+        ></Box>
+        <Box
+          width={{ base: "100%", md: "55%" }}
+          p={{
+            sm: "50px 40px",
+            base: "30px 20px",
+            md: "30px 20px",
+            lg: "70px 50px",
+          }}
+          h="100%"
+          bg="#406086"
         >
           <Box width="100%" display="flex" mb="10px" justifyContent="center">
             <Box
@@ -78,12 +92,13 @@ export default function LogIn() {
             </Box>
           </Box>
           <Box
-            fontSize={{ base: "25px", sm: "30px", md: "45px" }}
+            fontSize={{ base: "15px", sm: "20px", md: "30px" }}
             color="#fff"
             fontWeight="700"
             display="inline-block"
             width="100%"
             textAlign="center"
+            fontStyle="italic"
           >
             Log in
           </Box>
@@ -128,7 +143,7 @@ export default function LogIn() {
                       <FormControl>
                         <FormLabel
                           color="#fff"
-                          fontSize={{ base: "16px", md: "20px" }}
+                          fontSize={{ base: "16px", md: "18px" }}
                           fontWeight="400"
                         >
                           Email
@@ -138,7 +153,7 @@ export default function LogIn() {
                           as={Input}
                           bg="#fff"
                           color="#000"
-                          borderRadius="25px"
+                          borderRadius="8px"
                           placeholder="Username"
                         />
                         {errors.Username && touched.Username ? (
@@ -152,7 +167,7 @@ export default function LogIn() {
                       <FormControl>
                         <FormLabel
                           color="#fff"
-                          fontSize={{ base: "16px", md: "20px" }}
+                          fontSize={{ base: "16px", md: "18px" }}
                           fontWeight="400"
                         >
                           Password
@@ -160,7 +175,7 @@ export default function LogIn() {
                         <Field
                           name="Password"
                           as={Input}
-                          borderRadius="25px"
+                          borderRadius="8px"
                           bg="#fff"
                           color="#000"
                           placeholder="Password"
@@ -175,11 +190,14 @@ export default function LogIn() {
                     <Box textAlign="center">
                       <Button
                         mt="20px"
-                        bg="linear-gradient(90deg, rgba(203,104,5,1) 0%, rgba(255,171,3,1) 59%)"
+                        bg="#406086"
+                        _hover={{ bg: "#577392" }}
                         fontSize="16px"
                         px={{ base: "25px", md: "50px" }}
-                        w={{ base: "100%", sm: "auto", md: "auto" }}
+                        w="100%"
                         type="submit"
+                        border="1px solid white"
+                        color="#fff"
                       >
                         Log in
                       </Button>
