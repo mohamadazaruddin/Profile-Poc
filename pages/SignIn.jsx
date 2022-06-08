@@ -409,7 +409,7 @@ export default function SignIn() {
                   >
                     <option value="Wasseypur">Wasseypur</option>
                     <option value="Mirzapur">Mirzapur</option>
-                    <option value="NaviMumbai">Navi Mumbai</option>
+                    <option value="Navi Mumbai">Navi Mumbai</option>
                   </Field>
                   {errors.Location && touched.Location ? (
                     <Text color="red" fontSize="14px" fontWeight="600">

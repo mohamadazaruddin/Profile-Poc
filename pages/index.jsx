@@ -5,7 +5,7 @@ import SignIn from "./SiginDemo";
 
 export default function Home() {
   return (
-    <Box>
+    <Box w="100%" h="100%">
       <SignIn />
       {/* <MaterialUiDemo /> */}
     </Box>
