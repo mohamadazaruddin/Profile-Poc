@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Home.module.css";
+import Style from "../styles/Home.module.css";
 import {
   Box,
   Button,
@@ -19,7 +19,11 @@ import {
   ModalBody,
   ModalCloseButton,
   Checkbox,
+  Spacer,
+  Hide,
+  Show,
 } from "@chakra-ui/react";
+import Shake from "reshake/dist/Shake";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import Cropper from "react-cropper";
@@ -37,28 +41,7 @@ import { useRouter } from "next/router";
 import { makeStyles, withStyles, createStyles } from "@material-ui/styles";
 import { useStyles } from "@chakra-ui/react";
 
-const stylesInput = makeStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "black",
-    },
-    "& .MuiInput-underline:after": {
-      borderColor: "black",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "black",
-      },
-      "&:hover fieldset": {
-        borderColor: "black",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "black",
-      },
-    },
-  },
-});
-export default function SignIn() {
+export default function SigninDemo() {
   const [image, setImage] = useState();
   const [cropData, setCropData] = useState(false);
   const [cropper, setCropper] = useState();
@@ -66,7 +49,6 @@ export default function SignIn() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false);
   const [errInput, setErrInput] = useState(false);
-  const classes = stylesInput();
   const router = useRouter();
 
   const [MobSmallWidth] = useMediaQuery("(max-width:300px)");
@@ -141,7 +123,7 @@ export default function SignIn() {
       }}
     >
       <Box
-        w={{ base: "100%", md: "50%" }}
+        w={{ base: "100%", md: "70%", lg: "60%" }}
         pos="relative"
         m="0 auto"
         bg="#ffffff"
@@ -149,9 +131,6 @@ export default function SignIn() {
         p="0 0"
         borderRadius="5px"
       >
-        {/* <Box>
-                    <Image src="./Mumbai.jpeg" alt="" m="auto" w="100%" />
-                </Box> */}
         <Formik
           initialValues={{
             FullName: "",
@@ -175,7 +154,7 @@ export default function SignIn() {
             Email: Yup.string().email().required("Required"),
             Password: Yup.string()
               .matches(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[!@#$%^&])[A-Za-z\d!@#$%^&]{8,}$/,
                 "Password must be strong"
               )
               .required("Required"),
@@ -204,6 +183,7 @@ export default function SignIn() {
                     name="FullName"
                     id="FullName"
                     type="text"
+                    variant="standard"
                     label="Full Name"
                     InputLabelProps={{
                       style: {
@@ -218,7 +198,6 @@ export default function SignIn() {
                         borderColor: "black",
                       },
                     }}
-                    className={classes.root}
                     width="100%"
                     fullWidth
                     placeholder="John Doe"
@@ -226,8 +205,21 @@ export default function SignIn() {
                     _hover={{ borderColor: "#ccc" }}
                   />
                   {errors.FullName && touched.FullName ? (
-                    <Box as="p" color="red">
-                      {errors.FullName}
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
+                      <Shake
+                        h={6}
+                        v={0}
+                        r={0}
+                        dur={500}
+                        int={13.8}
+                        q={3}
+                        max={35}
+                        fixed={true}
+                        fixedStop={true}
+                        freez={true}
+                      >
+                        {errors.FullName}
+                      </Shake>
                     </Box>
                   ) : null}
                 </Box>
@@ -244,7 +236,11 @@ export default function SignIn() {
                         padding: "0 0 10px 0px",
                       },
                     }}
-                    className={classes.root}
+                    InputProps={{
+                      style: {
+                        color: "",
+                      },
+                    }}
                     width="100%"
                     fullWidth
                     type="number"
@@ -253,8 +249,21 @@ export default function SignIn() {
                     _hover={{ borderColor: "#ccc" }}
                   />
                   {errors.MobNo && touched.MobNo ? (
-                    <Box as="p" color="red">
-                      {errors.MobNo}
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
+                      <Shake
+                        h={6}
+                        v={0}
+                        r={0}
+                        dur={500}
+                        int={13.8}
+                        q={3}
+                        max={35}
+                        fixed={true}
+                        fixedStop={true}
+                        freez={true}
+                      >
+                        {errors.MobNo}
+                      </Shake>
                     </Box>
                   ) : null}
                 </Box>
@@ -274,7 +283,6 @@ export default function SignIn() {
                     InputProps={{
                       style: {},
                     }}
-                    className={classes.root}
                     type="email"
                     width="100%"
                     fullWidth
@@ -283,8 +291,21 @@ export default function SignIn() {
                     _hover={{ borderColor: "#ccc" }}
                   />
                   {errors.Email && touched.Email ? (
-                    <Box as="p" color="red">
-                      {errors.Email}
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
+                      <Shake
+                        h={6}
+                        v={0}
+                        r={0}
+                        q={3}
+                        dur={500}
+                        int={13.8}
+                        max={35}
+                        fixed={true}
+                        fixedStop={true}
+                        freez={true}
+                      >
+                        {errors.Email}
+                      </Shake>
                     </Box>
                   ) : null}
                 </Box>
@@ -300,7 +321,11 @@ export default function SignIn() {
                         padding: "0 0 10px 0px",
                       },
                     }}
-                    className={classes.root}
+                    InputProps={{
+                      style: {
+                        color: "",
+                      },
+                    }}
                     id="Password"
                     width="100%"
                     fullWidth
@@ -310,8 +335,21 @@ export default function SignIn() {
                     _hover={{ borderColor: "#ccc" }}
                   />
                   {errors.Password && touched.Password ? (
-                    <Box as="p" color="red">
-                      {errors.Password}
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
+                      <Shake
+                        h={6}
+                        v={0}
+                        q={3}
+                        r={0}
+                        dur={500}
+                        int={13.8}
+                        max={35}
+                        fixed={true}
+                        fixedStop={true}
+                        freez={true}
+                      >
+                        {errors.Password}
+                      </Shake>
                     </Box>
                   ) : null}
                   <Checkbox
@@ -334,7 +372,11 @@ export default function SignIn() {
                         padding: "0 0 10px 0px",
                       },
                     }}
-                    className={classes.root}
+                    InputProps={{
+                      style: {
+                        color: "",
+                      },
+                    }}
                     name="ConPassword"
                     width="100%"
                     fullWidth
@@ -343,8 +385,21 @@ export default function SignIn() {
                     placeholder="Must Match Password"
                   />
                   {errors.ConPassword && touched.ConPassword ? (
-                    <Box as="p" color="red">
-                      {errors.ConPassword}
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
+                      <Shake
+                        h={6}
+                        v={0}
+                        r={0}
+                        dur={500}
+                        int={13.8}
+                        q={3}
+                        max={35}
+                        fixed={true}
+                        fixedStop={true}
+                        freez={true}
+                      >
+                        {errors.ConPassword}
+                      </Shake>
                     </Box>
                   ) : null}
                 </Box>
@@ -374,13 +429,28 @@ export default function SignIn() {
                     <option bg="#333" value="Intern">
                       Intern
                     </option>
-                    <option value="Junior Developer">Junior Developer</option>
-                    <option value="Senior Developer">Senior Developer</option>
-                    <option value="CEO">CEO</option>
+                    <option value="Frontend Developer">
+                      Frontend Developer
+                    </option>
+                    <option value="Backend Developer">Backend Developer</option>
+                    <option value="DevOps">DevOps</option>
                   </Field>
                   {errors.Role && touched.Role ? (
                     <Text color="red" fontSize="14px" fontWeight="600">
-                      {errors.Role}
+                      <Shake
+                        h={6}
+                        v={0}
+                        r={0}
+                        dur={500}
+                        int={13.8}
+                        max={35}
+                        q={3}
+                        fixed={true}
+                        fixedStop={true}
+                        freez={true}
+                      >
+                        {errors.Role}
+                      </Shake>
                     </Text>
                   ) : null}
                 </Box>
@@ -409,17 +479,30 @@ export default function SignIn() {
                   >
                     <option value="Wasseypur">Wasseypur</option>
                     <option value="Mirzapur">Mirzapur</option>
-                    <option value="NaviMumbai">Navi Mumbai</option>
+                    <option value="Navi Mumbai">Navi Mumbai</option>
                   </Field>
                   {errors.Location && touched.Location ? (
                     <Text color="red" fontSize="14px" fontWeight="600">
-                      {errors.Location}
+                      <Shake
+                        h={6}
+                        v={0}
+                        r={0}
+                        q={3}
+                        dur={500}
+                        int={13.8}
+                        max={35}
+                        fixed={true}
+                        fixedStop={true}
+                        freez={true}
+                      >
+                        {errors.Location}
+                      </Shake>
                     </Text>
                   ) : null}
                 </Box>
                 <Box py="10px">
                   <Box display={{ base: "block", sm: "flex" }}>
-                    <Box w="50%" m="auto">
+                    <Box w={{ base: "100%", sm: "50%" }} m="auto">
                       <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
@@ -468,8 +551,8 @@ export default function SignIn() {
                         <Image w="100%" src={cropData} alt="cropped" p="20px" />
                       ) : (
                         <Box
-                          h="150px"
-                          w="150px"
+                          h={{ base: "200px", sm: "150px" }}
+                          w={{ base: "200px", sm: "150px" }}
                           bg="#c1bebe"
                           display="grid"
                           placeItems="center"
@@ -482,10 +565,10 @@ export default function SignIn() {
                     </Box>
                     <Box
                       pos="relative"
-                      w="50%"
+                      w={{ base: "100%", sm: "50%" }}
                       m={{ base: "auto", sm: "0px" }}
                       textAlign="center"
-                      mt={{ base: "10px", sm: "0px" }}
+                      mt={{ base: "15px", sm: "0px" }}
                     >
                       <Button
                         onClick={onOpen}
@@ -499,6 +582,7 @@ export default function SignIn() {
                         }}
                         color="#fff"
                         _hover={{ bg: "#715fbb" }}
+                        px={{ base: "50px", sm: "30px" }}
                       >
                         Upload Image
                       </Button>
@@ -506,7 +590,11 @@ export default function SignIn() {
                   </Box>
                 </Box>
                 <Box textAlign="center" mt="20px">
-                  <Flex alignItems="center" justifyContent="space-between">
+                  <Flex
+                    alignItems="center"
+                    display={{ base: "block", sm: "flex" }}
+                    justifyContent="space-between"
+                  >
                     <Button
                       bg="#56ab2f"
                       px="50px"
@@ -516,20 +604,44 @@ export default function SignIn() {
                       opacity="0.7"
                       _hover={{ opacity: "1" }}
                       transition="0.5s linear"
+                      mb={{ base: "10px", sm: "0px" }}
                     >
                       Sign In
                     </Button>
-                    <Button
-                      bg="blue"
-                      px="30px"
-                      color="#ffffff"
-                      onClick={() => router.push("/LogIn")}
-                      opacity="0.5"
-                      _hover={{ opacity: "1" }}
-                      transition="0.5s linear"
-                    >
-                      Already Have an Account Login
-                    </Button>
+                    <Hide below="sm">
+                      <Button
+                        bg="blue"
+                        px="30px"
+                        color="#ffffff"
+                        onClick={() => router.push("/LogIn")}
+                        opacity="0.5"
+                        _hover={{ opacity: "1" }}
+                        transition="0.5s linear"
+                      >
+                        Already Have An Account Login
+                      </Button>
+                    </Hide>
+                    <Show below="sm">
+                      <Box
+                        color="#000"
+                        fontSize="15px"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        flexWrap="wrap"
+                      >
+                        Already Have An Account ?
+                        <Text
+                          onClick={() => router.push("/LogIn")}
+                          ml="5px"
+                          textDecoration="underline"
+                          color="blue"
+                          cursor="pointer"
+                        >
+                          LogIn
+                        </Text>
+                      </Box>
+                    </Show>
                   </Flex>
                 </Box>
               </Box>

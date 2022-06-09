@@ -10,7 +10,9 @@ import {
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
+import { useToast } from "@chakra-ui/react";
 const SignupSchema = Yup.object().shape({
   Username: Yup.string().email().required("Required"),
   Password: Yup.string().max(50, "Too Long!").required("Required"),
@@ -20,7 +22,8 @@ export default function LogIn() {
   const router = useRouter();
   const [value, setValues] = useState();
   const [valueSubmitted, setValueSubmitted] = useState(false);
-
+  const [showPassword, setShowPassword] = useState(false);
+  const toast = useToast();
   useEffect(() => {
     const signedInObject = window.localStorage.getItem("signedInObject");
     setValues(JSON.parse(signedInObject));
@@ -60,7 +63,8 @@ export default function LogIn() {
               lg: "70px 50px",
             }}
             h="100%"
-            bg="#406086"
+            background="
+linear-gradient(196deg, rgba(4,25,124,1) 11%, rgba(15,42,168,1) 44%, rgba(35,147,247,1) 100%);"
           >
             <Box width="100%" display="flex" mb="10px" justifyContent="center">
               <Box
@@ -144,7 +148,7 @@ export default function LogIn() {
                             bg="#fff"
                             color="#000"
                             borderRadius="8px"
-                            placeholder="Username"
+                            placeholder="Email"
                           />
                           {errors.Username && touched.Username ? (
                             <Text color="red" fontSize="14px" fontWeight="600">
@@ -162,32 +166,76 @@ export default function LogIn() {
                           >
                             Password
                           </FormLabel>
-                          <Field
-                            name="Password"
-                            as={Input}
-                            borderRadius="8px"
-                            bg="#fff"
-                            color="#000"
-                            placeholder="Password"
-                          />
+                          <Flex>
+                            <Field
+                              name="Password"
+                              as={Input}
+                              border="none"
+                              _focus={{
+                                border: "none",
+                              }}
+                              borderRadius="0px"
+                              borderTopLeftRadius="8px"
+                              borderBottomLeftRadius="8px"
+                              bg="#fff"
+                              type={showPassword ? "text" : "password"}
+                              color="#000"
+                              placeholder="Password"
+                            />
+                            <Button
+                              borderRadius="0px"
+                              borderTopRightRadius="8px"
+                              ml="-2px"
+                              borderBottomRightRadius="8px"
+                              _focus={{
+                                border: "none",
+                              }}
+                              _hover={{ bg: "#fff" }}
+                              _active={{ bg: "#fff" }}
+                              bg="#fff"
+                              onClick={() =>
+                                setShowPassword((showPassword) => !showPassword)
+                              }
+                            >
+                              {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                            </Button>
+                          </Flex>
                           {errors.Password && touched.Password ? (
                             <Text color="red" fontSize="14px" fontWeight="600">
                               {errors.Password}
                             </Text>
-                          ) : null}
+                          ) : (
+                            <Text
+                              color="transparent"
+                              fontSize="14px"
+                              fontWeight="600"
+                            >
+                              Required
+                            </Text>
+                          )}
                         </FormControl>
                       </Box>
                       <Box textAlign="center">
                         <Button
                           mt="20px"
-                          bg="#406086"
-                          _hover={{ bg: "#577392" }}
+                          bg="transparent"
+                          _hover={{ bg: "#ffffff3d" }}
                           fontSize="16px"
                           px={{ base: "25px", md: "50px" }}
                           w="100%"
                           type="submit"
                           border="1px solid white"
                           color="#fff"
+                          onClick={() =>
+                            toast({
+                              title: "Account created.",
+                              description:
+                                "We've created your account for you.",
+                              status: "success",
+                              duration: 9000,
+                              isClosable: true,
+                            })
+                          }
                         >
                           Log in
                         </Button>
@@ -199,7 +247,7 @@ export default function LogIn() {
             </Box>
           </Box>
         </Box>
-      </Flex >
+      </Flex>
     </Box>
   );
 }

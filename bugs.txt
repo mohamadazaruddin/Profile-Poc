@@ -1,0 +1,8 @@
+1. sign in image scroll 
+2. password show = solved
+3.dashboard radio btn active class = solved
+4. fontsize overall pages 
+5. No upload image btn = solved
+6. btn size sign in page = solved
+7. label placeholder should be proper = solved
+8. log out = solved

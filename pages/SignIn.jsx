@@ -23,6 +23,7 @@ import {
   Hide,
   Show
 } from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import Cropper from "react-cropper";
@@ -68,6 +69,7 @@ export default function SignIn() {
   const [cropImg, setcropImg] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false);
+  // const [showconfirmPassword, setShowconfirmPassword] = useState(false);
   const [errInput, setErrInput] = useState(false);
   const classes = stylesInput();
   const router = useRouter();
@@ -294,69 +296,78 @@ export default function SignIn() {
                   ) : null}
                 </Box>
                 <Box py="10px">
-                  <Field
-                    as={TextField}
-                    name="Password"
-                    label="Password"
-                    InputLabelProps={{
-                      style: {
-                        color: "#787878",
-                        fontSize: "20px",
-                        padding: "0 0 10px 0px",
-                      },
-                    }}
-                    InputProps={{
-                      style: {
-                        color: "",
-                      },
-                    }}
-                    className={classes.root}
-                    id="Password"
-                    width="100%"
-                    fullWidth
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Pass@123"
-                    _focus={{ borderColor: "#ccc" }}
-                    _hover={{ borderColor: "#ccc" }}
-                  />
+                  <Flex>
+                    <Field
+                      as={TextField}
+                      name="Password"
+                      label="Password"
+                      InputLabelProps={{
+                        style: {
+                          color: "#787878",
+                          fontSize: "20px",
+                          padding: "0 0 10px 0px",
+                        },
+                      }}
+                      InputProps={{
+                        style: {
+                          color: "",
+                        },
+                      }}
+                      className={classes.root}
+                      id="Password"
+                      width="100%"
+                      fullWidth
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Pass@123"
+                      _focus={{ borderColor: "#ccc" }}
+                      _hover={{ borderColor: "#ccc" }}
+                    />
+                    <Button
+                      onClick={() =>
+                        setShowPassword((showPassword) => !showPassword)
+                      }
+                      bg="transparent"
+                      color="#000"
+                      _focus={{ bg: "transparent" }}
+                      _hover={{ bg: "transparent" }}
+                      mt="10px"
+                      _active={{ bg: "transparent" }}
+                    >
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </Flex>
                   {errors.Password && touched.Password ? (
                     <Box as="p" color="red">
                       {errors.Password}
                     </Box>
                   ) : null}
-                  <Checkbox
-                    onChange={() => {
-                      setShowPassword(!showPassword);
-                    }}
-                    color="#333"
-                  >
-                    Show Password
-                  </Checkbox>
                 </Box>
                 <Box py="10px">
-                  <Field
-                    as={TextField}
-                    label="Confirm Password"
-                    InputLabelProps={{
-                      style: {
-                        color: "#787878",
-                        fontSize: "20px",
-                        padding: "0 0 10px 0px",
-                      },
-                    }}
-                    InputProps={{
-                      style: {
-                        color: "",
-                      },
-                    }}
-                    className={classes.root}
-                    name="ConPassword"
-                    width="100%"
-                    fullWidth
-                    id="ConPassword"
-                    type="Password"
-                    placeholder="Must Match Password"
-                  />
+                  <Flex>
+                    <Field
+                      as={TextField}
+                      label="Confirm Password"
+                      InputLabelProps={{
+                        style: {
+                          color: "#787878",
+                          fontSize: "20px",
+                          padding: "0 0 10px 0px",
+                        },
+                      }}
+                      InputProps={{
+                        style: {
+                          color: "",
+                        },
+                      }}
+                      className={classes.root}
+                      name="ConPassword"
+                      width="100%"
+                      fullWidth
+                      id="ConPassword"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Must Match Password"
+                    />{" "}
+                  </Flex>
                   {errors.ConPassword && touched.ConPassword ? (
                     <Box as="p" color="red">
                       {errors.ConPassword}
@@ -377,6 +388,7 @@ export default function SignIn() {
                     id="Role"
                     name="Role"
                     placeholder="Select"
+                    style={{ padding: 0 }}
                     bg="#ffffff"
                     color="#787878"
                     borderRadius="unset"
@@ -416,6 +428,7 @@ export default function SignIn() {
                     name="Location"
                     placeholder="Select"
                     bg="#fff"
+                    style={{ padding: 0 }}
                     color="#787878"
                     borderRadius="unset"
                     border="none"
@@ -524,9 +537,11 @@ export default function SignIn() {
                   </Box>
                 </Box>
                 <Box textAlign="center" mt="20px">
-                  <Flex alignItems="center"
+                  <Flex
+                    alignItems="center"
                     display={{ base: "block", sm: "flex" }}
-                    justifyContent="space-between">
+                    justifyContent="space-between"
+                  >
                     <Button
                       bg="#56ab2f"
                       px="50px"
@@ -554,20 +569,24 @@ export default function SignIn() {
                       </Button>
                     </Hide>
                     <Show below="sm">
-                      <Box color="#000"
+                      <Box
+                        color="#000"
                         fontSize="15px"
                         display="flex"
                         alignItems="center"
                         justifyContent="center"
-                        flexWrap="wrap">
+                        flexWrap="wrap"
+                      >
                         Already Have An Account ?
-                        <Text onClick={() => router.push("/LogIn")}
+                        <Text
+                          onClick={() => router.push("/LogIn")}
                           ml="5px"
                           textDecoration="underline"
                           color="blue"
                           cursor="pointer"
                         >
-                          LogIn</Text>
+                          LogIn
+                        </Text>
                       </Box>
                     </Show>
                   </Flex>
@@ -577,6 +596,6 @@ export default function SignIn() {
           )}
         </Formik>
       </Box>
-    </Box >
+    </Box>
   );
 }

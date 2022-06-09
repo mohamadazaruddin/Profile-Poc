@@ -51,16 +51,13 @@ export default function Dashboard() {
         <Box p="10px 10px" border="1px solid rgb(227, 235, 235)">
           <Heading fontSize="25px">Dashboard</Heading>
         </Box>
-        <Box
-          p="15px"
-          mb="15px"
-          border="1px solid rgb(227, 235, 235)"
-        >
-          <RadioGroup onChange={setValue} defaultValue="all" value={value}>
+        <Box p="15px" mb="15px" border="1px solid rgb(227, 235, 235)">
+          <RadioGroup onChange={setValue} defaultValue="all">
             <Stack direction={{ md: "row", base: "column" }} gap="10px">
               <Radio
-                colorScheme="red"
+                colorScheme="green"
                 // as={Radio}
+                _focus={{ border: "none" }}
                 value="all"
                 // checked={true}
                 onChange={handleChange}
@@ -68,8 +65,9 @@ export default function Dashboard() {
                 All
               </Radio>
               <Radio
-                colorScheme="red"
+                colorScheme="green"
                 // as={Radio}
+                _focus={{ border: "none" }}
                 value="Intern"
                 checked={value === "Intern"}
                 onChange={handleChange}
@@ -77,15 +75,17 @@ export default function Dashboard() {
                 Intern
               </Radio>
               <Radio
-                colorScheme="red"
+                colorScheme="green"
                 value="Frontend Developer"
+                _focus={{ border: "none" }}
                 checked={value === "Frontend Developer"}
                 onChange={handleChange}
               >
                 Frontend Dev
               </Radio>
               <Radio
-                colorScheme="red"
+                colorScheme="green"
+                _focus={{ border: "none" }}
                 value="Backend Developer"
                 checked={value === "Backend Developer"}
                 onChange={handleChange}
@@ -93,10 +93,11 @@ export default function Dashboard() {
                 Backend Dev
               </Radio>
               <Radio
-                colorScheme="red"
+                colorScheme="green"
                 value="DevOps"
                 checked={value === "DevOps"}
                 onChange={handleChange}
+                _focus={{ border: "none" }}
               >
                 DevOps
               </Radio>
