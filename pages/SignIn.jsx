@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   FormLabel,
-  Flex,
   Image,
   Select,
   Input,
@@ -19,7 +18,6 @@ import {
   ModalBody,
   ModalCloseButton,
   Checkbox,
-  Spacer,
   Hide,
   Show
 } from "@chakra-ui/react";
@@ -47,7 +45,7 @@ export default function SignIn() {
   const [cropImg, setcropImg] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false);
-  const [errInput, setErrInput] = useState(false);
+  const [errInput, setErrInput] = useState(true);
   const router = useRouter();
 
   const [MobSmallWidth] = useMediaQuery("(max-width:300px)");
@@ -81,31 +79,43 @@ export default function SignIn() {
   };
   const onChange = (e) => {
     e.preventDefault();
-    let files;
-    if (e.dataTransfer) {
-      files = e.dataTransfer.files;
-    } else if (e.target) {
-      files = e.target.files;
+    var fileName = e.target.value;
+    var idxDot = fileName.lastIndexOf(".") + 1;
+    var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+
+    if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+      let files;
+      if (e.dataTransfer) {
+        files = e.dataTransfer.files;
+      } else if (e.target) {
+        files = e.target.files;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(files[0]);
+      setErrInput(false)
+    } else {
+      alert("Only jpg/jpeg and png files are allowed!");
+      setErrInput(true)
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImage(reader.result);
-    };
-    reader.readAsDataURL(files[0]);
   };
   const getCropData = () => {
-    if (typeof cropper !== "undefined") {
+    if (!errInput) {
       setCropData(cropper.getCroppedCanvas().toDataURL());
       setcropImg(true);
       onClose();
+    } else {
+      alert("Image Upload First");
     }
   };
 
   return (
     <Box
       p={{ base: "0px", md: "50px" }}
-      bg="#ffffff"
-      backgroundImage="	https://colorlib.com/etc/cf/ContactFrom_v3/images/bg-01.jpg"
+      bg="#E3F2FD"
+      // backgroundImage="	https://colorlib.com/etc/cf/ContactFrom_v3/images/bg-01.jpg"
       width="100%"
       backgroundRepeat="no-repeat"
       backgroundPosition="center center"
@@ -113,7 +123,7 @@ export default function SignIn() {
       pos="relative"
       _before={{
         content: `""`,
-        bg: "rgba(255,255,255,.8)",
+        bg: "#E3F2FD",
         position: "absolute",
         top: 0,
         bottom: 0,
@@ -128,7 +138,6 @@ export default function SignIn() {
         bg="#ffffff"
         color="#fff"
         p="0 0"
-        borderRadius="5px"
       >
         <Formik
           initialValues={{
@@ -184,19 +193,6 @@ export default function SignIn() {
                     type="text"
                     variant="standard"
                     label="Full Name"
-                    InputLabelProps={{
-                      style: {
-                        color: "#787878",
-                        fontSize: "20px",
-                        padding: "0 0 10px 0px",
-                      },
-                    }}
-                    InputProps={{
-                      style: {
-                        color: "black",
-                        borderColor: "black",
-                      },
-                    }}
                     width="100%"
                     fullWidth
                     placeholder="John Doe"
@@ -215,18 +211,6 @@ export default function SignIn() {
                     name="MobNo"
                     id="MobNo"
                     label="Mobile No"
-                    InputLabelProps={{
-                      style: {
-                        color: "#787878",
-                        fontSize: "20px",
-                        padding: "0 0 10px 0px",
-                      },
-                    }}
-                    InputProps={{
-                      style: {
-                        color: "",
-                      },
-                    }}
                     width="100%"
                     fullWidth
                     type="number"
@@ -246,16 +230,6 @@ export default function SignIn() {
                     name="Email"
                     id="Email"
                     label="Email"
-                    InputLabelProps={{
-                      style: {
-                        color: "#787878",
-                        fontSize: "20px",
-                        padding: "0 0 10px 0px",
-                      },
-                    }}
-                    InputProps={{
-                      style: {},
-                    }}
                     type="email"
                     width="100%"
                     fullWidth
@@ -274,18 +248,6 @@ export default function SignIn() {
                     as={TextField}
                     name="Password"
                     label="Password"
-                    InputLabelProps={{
-                      style: {
-                        color: "#787878",
-                        fontSize: "20px",
-                        padding: "0 0 10px 0px",
-                      },
-                    }}
-                    InputProps={{
-                      style: {
-                        color: "",
-                      },
-                    }}
                     id="Password"
                     width="100%"
                     fullWidth
@@ -312,18 +274,6 @@ export default function SignIn() {
                   <Field
                     as={TextField}
                     label="Confirm Password"
-                    InputLabelProps={{
-                      style: {
-                        color: "#787878",
-                        fontSize: "20px",
-                        padding: "0 0 10px 0px",
-                      },
-                    }}
-                    InputProps={{
-                      style: {
-                        color: "",
-                      },
-                    }}
                     name="ConPassword"
                     width="100%"
                     fullWidth
@@ -343,6 +293,7 @@ export default function SignIn() {
                     fontSize="20px"
                     marginRight="2px"
                     display="inline"
+                    fontWeight="400"
                   >
                     Role
                   </FormLabel>
@@ -351,6 +302,9 @@ export default function SignIn() {
                     id="Role"
                     name="Role"
                     placeholder="Select"
+                    style={{
+                      paddingLeft: 0
+                    }}
                     bg="#ffffff"
                     color="#787878"
                     borderRadius="unset"
@@ -381,6 +335,7 @@ export default function SignIn() {
                     fontSize="20px"
                     marginRight="2px"
                     display="inline"
+                    fontWeight="400"
                   >
                     Location
                   </FormLabel>
@@ -390,6 +345,9 @@ export default function SignIn() {
                     name="Location"
                     placeholder="Select"
                     bg="#fff"
+                    style={{
+                      paddingLeft: 0
+                    }}
                     color="#787878"
                     borderRadius="unset"
                     border="none"
@@ -409,7 +367,7 @@ export default function SignIn() {
                   ) : null}
                 </Box>
                 <Box py="10px">
-                  <Box display={{ base: "block", sm: "flex" }}>
+                  <Box display={{ base: "block", sm: "flex" }} alignItems="end">
                     <Box w={{ base: "100%", sm: "50%" }} m="auto">
                       <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
@@ -448,103 +406,86 @@ export default function SignIn() {
                             />
                           </ModalBody>
                           <ModalFooter>
-                            <Button colorScheme="blue" mr={3} onClick={onClose}>
+                            <Button mr={3} onClick={onClose}>
                               Close
                             </Button>
-                            <Button onClick={getCropData}>Crop Image</Button>
+                            <Button colorScheme="blue" onClick={getCropData}>Crop Image</Button>
                           </ModalFooter>
                         </ModalContent>
                       </Modal>
-                      {cropData ? (
-                        <Image w="100%" src={cropData} alt="cropped" p="20px" />
-                      ) : (
-                        <Box
-                          h={{ base: "200px", sm: "150px" }}
-                          w={{ base: "200px", sm: "150px" }}
-                          bg="#c1bebe"
-                          display="grid"
-                          placeItems="center"
-                          color="#000"
-                          m="auto"
-                        >
-                          Image
-                        </Box>
-                      )}
+                      <Box
+                        h={{ base: "200px", sm: "150px" }}
+                        w={{ base: "200px", sm: "150px" }}
+                        bg="#c1bebe"
+                        display="grid"
+                        placeItems="center"
+                        color="#000"
+                        m="auto"
+                        onClick={onOpen}
+                        cursor="pointer"
+                      >
+                        {cropData ? <Image w="150px" h="150px" src={cropData} alt="cropped" /> : "Upload Image"}
+                      </Box>
                     </Box>
                     <Box
                       pos="relative"
                       w={{ base: "100%", sm: "50%" }}
                       m={{ base: "auto", sm: "0px" }}
                       textAlign="center"
-                      mt={{ base: "15px", sm: "0px" }}
+                      p="0 20px"
                     >
                       <Button
-                        onClick={onOpen}
-                        pos={{ base: "unset", sm: "absolute" }}
-                        left="50%"
-                        bg="#5f43cf"
-                        top="50%"
-                        transform={{
-                          base: "none",
-                          sm: "translate(-50%, -50%)",
-                        }}
-                        color="#fff"
-                        _hover={{ bg: "#715fbb" }}
-                        px={{ base: "50px", sm: "30px" }}
-                      >
-                        Upload Image
-                      </Button>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box textAlign="center" mt="20px">
-                  <Flex alignItems="center"
-                    display={{ base: "block", sm: "flex" }}
-                    justifyContent="space-between">
-                    <Button
-                      bg="#56ab2f"
-                      px="50px"
-                      color="#ffffff"
-                      type="submit"
-                      name="submit"
-                      opacity="0.7"
-                      _hover={{ opacity: "1" }}
-                      transition="0.5s linear"
-                      mb={{ base: "10px", sm: "0px" }}
-                    >
-                      Sign In
-                    </Button>
-                    <Hide below="sm">
-                      <Button
-                        bg="blue"
-                        px="30px"
+                        bg="#56ab2f"
+                        px="50px"
+                        w="100%"
                         color="#ffffff"
-                        onClick={() => router.push("/LogIn")}
-                        opacity="0.5"
+                        type="submit"
+                        name="submit"
+                        opacity="0.7"
                         _hover={{ opacity: "1" }}
                         transition="0.5s linear"
+                        mb={{ base: "10px", sm: "0px" }}
                       >
-                        Already Have An Account Login
+                        Sign In
                       </Button>
-                    </Hide>
-                    <Show below="sm">
-                      <Box color="#000"
-                        fontSize="15px"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        flexWrap="wrap">
-                        Already Have An Account ?
-                        <Text onClick={() => router.push("/LogIn")}
-                          ml="5px"
-                          textDecoration="underline"
-                          color="blue"
-                          cursor="pointer"
-                        >
-                          LogIn</Text>
-                      </Box>
-                    </Show>
-                  </Flex>
+                      <Hide below="sm">
+                        <Box color="#000"
+                          mt="10px"
+                          fontSize="15px"
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          flexWrap="wrap">
+                          Already Have An Account ?
+                          <Text onClick={() => router.push("/LogIn")}
+                            ml="5px"
+                            textDecoration="underline"
+                            color="blue"
+                            cursor="pointer"
+                          >
+                            LogIn</Text>
+                        </Box>
+                      </Hide>
+                      <Show below="sm">
+                        <Box color="#000"
+                          mt="15px"
+                          fontSize="15px"
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          flexWrap="wrap">
+                          Already Have An Account ?
+                          <Text onClick={() => router.push("/LogIn")}
+                            ml="5px"
+                            textDecoration="underline"
+                            color="blue"
+                            cursor="pointer"
+                          >
+                            LogIn</Text>
+                        </Box>
+                      </Show>
+                    </Box>
+                  </Box>
                 </Box>
               </Box>
             </Form>

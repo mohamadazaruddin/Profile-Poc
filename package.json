@@ -20,6 +20,7 @@
     "react": "18.1.0",
     "react-cropper": "^2.1.8",
     "react-dom": "18.1.0",
+    "reshake": "^1.2.4",
     "yup": "^0.32.11"
   },
   "devDependencies": {

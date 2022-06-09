@@ -23,3 +23,8 @@ a {
 .MuiInput-underline::after{
   border-bottom-color:black !important;
 }
+.MuiFormLabel-root.Mui-focused{
+  color: #787878 !important;
+  font-size: 25px;
+  padding: 0 0 10px 0px !important;
+}
