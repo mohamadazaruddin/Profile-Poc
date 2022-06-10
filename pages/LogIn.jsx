@@ -231,7 +231,9 @@ export default function LogIn() {
                             borderColor="#fff"
                             as={cssStyle}
                             placeholder="Email"
-                            fullWidth
+                            style={{
+                              width: "100%"
+                            }}
                           />
                           {errors.Username && touched.Username ? (
                             <Text color="red" fontSize="14px" fontWeight="600">
@@ -249,7 +251,9 @@ export default function LogIn() {
                               label="Password"
                               as={cssStyle}
                               placeholder="Password"
-                              fullWidth
+                              style={{
+                                width: "100%"
+                              }}
                             />
                             <Button
                               color='white'

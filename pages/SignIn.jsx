@@ -60,6 +60,9 @@ export default function SignIn() {
       '& .MuiInputLabel-shrink': {
         top: "-10px"
       },
+      '& .MuiTextField-root': {
+        width: "100%"
+      },
       '& .MuiInput-underline:after': {
         borderBottomColor: 'black',
       },
@@ -206,12 +209,14 @@ export default function SignIn() {
                   <Field
                     as={inpCss}
                     name="FullName"
+                    style={{
+                      width: "100%"
+                    }}
                     id="FullName"
                     type="text"
                     variant="standard"
                     label="Full Name"
                     width="100%"
-                    fullWidth
                     placeholder="John Doe"
                     _focus={{ borderColor: "#ccc" }}
                     _hover={{ borderColor: "#ccc" }}
@@ -229,7 +234,9 @@ export default function SignIn() {
                     id="MobNo"
                     label="Mobile No"
                     width="100%"
-                    fullWidth
+                    style={{
+                      width: "100%"
+                    }}
                     type="number"
                     placeholder="9876543210"
                     _focus={{ borderColor: "#ccc" }}
@@ -249,7 +256,9 @@ export default function SignIn() {
                     label="Email"
                     type="email"
                     width="100%"
-                    fullWidth
+                    style={{
+                      width: "100%"
+                    }}
                     placeholder="example@gmail.com"
                     _focus={{ borderColor: "#ccc" }}
                     _hover={{ borderColor: "#ccc" }}
@@ -267,7 +276,9 @@ export default function SignIn() {
                     label="Password"
                     id="Password"
                     width="100%"
-                    fullWidth
+                    style={{
+                      width: "100%"
+                    }}
                     type={showPassword ? "text" : "password"}
                     placeholder="Pass@123"
                     _focus={{ borderColor: "#ccc" }}
@@ -293,7 +304,9 @@ export default function SignIn() {
                     label="Confirm Password"
                     name="ConPassword"
                     width="100%"
-                    fullWidth
+                    style={{
+                      width: "100%"
+                    }}
                     id="outlined-required"
                     type="Password"
                     placeholder="Must Match Password"
