@@ -8,6 +8,7 @@ import {
   Flex,
   Image
 } from "@chakra-ui/react";
+import Style from "../styles/Home.module.scss";
 import { TextField, styled } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core"
 import React, { useEffect, useState } from "react";

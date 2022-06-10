@@ -36,7 +36,6 @@ import {
 } from "@material-ui/core";
 import { useRouter } from "next/router";
 import { makeStyles, withStyles, createStyles, styled } from "@material-ui/styles";
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 export default function SignIn() {
   const [image, setImage] = useState();
@@ -271,48 +270,45 @@ export default function SignIn() {
                   ) : null}
                 </Box>
                 <Box py="10px">
-                  <Box display='flex' alignItems="end" justifyContent='end'>
-                    <Field
-                      name="Password"
-                      type={showPassword ? 'text' : 'password'}
-                      label="Password"
-                      as={inpCss}
-                      placeholder="Password"
-                      style={{
-                        width: "100%"
-                      }}
-                    />
-                    <Button
-                      alignItems='end'
-                      p='0'
-                      color='#000'
-                      fontSize='20px'
-                      bg='transparent'
-                      _hover={{ bg: 'transparent' }}
-                      _active={{ bg: 'transparent' }}
-                      _focus={{ boxShadow: 'none' }}
-                      onClick={() =>
-                        setShowPassword(!showPassword)
-                      }>
-                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                    </Button></Box>
+                  <Field
+                    as={inpCss}
+                    name="Password"
+                    label="Password"
+                    id="Password"
+                    width="100%"
+                    style={{
+                      width: "100%"
+                    }}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Pass@123"
+                    _focus={{ borderColor: "#ccc" }}
+                    _hover={{ borderColor: "#ccc" }}
+                  />
                   {errors.Password && touched.Password ? (
                     <Box as="p" color="red">
                       {errors.Password}
                     </Box>
                   ) : null}
+                  <Checkbox
+                    onChange={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                    color="#333"
+                  >
+                    Show Password
+                  </Checkbox>
                 </Box>
                 <Box py="10px">
                   <Field
                     as={inpCss}
                     label="Confirm Password"
                     name="ConPassword"
-                    type={showPassword ? 'text' : 'password'}
                     width="100%"
                     style={{
                       width: "100%"
                     }}
                     id="outlined-required"
+                    type="Password"
                     placeholder="Must Match Password"
                   />
                   {errors.ConPassword && touched.ConPassword ? (
@@ -426,8 +422,6 @@ export default function SignIn() {
                               zoomTo={0.5}
                               initialAspectRatio={1}
                               src={image}
-                              aspectRatio={1}
-                              dragMode="none"
                               viewMode={1}
                               minCropBoxHeight={10}
                               minCropBoxWidth={10}
