@@ -24,41 +24,7 @@ const SignupSchema = Yup.object().shape({
   )
     .required("Required"),
 });
-// const CssTextField = styled(TextField)({
-//   '& label.MuiFormLabel-root': {
-//     color: "#fff"
-//   },
-//   '& label.Mui-focused': {
-//     color: '#fff',
-//   },
-//   '& .MuiInput-underline:after': {
-//     borderBottomColor: '#fff',
-//   },
-//   '& .MuiInput-underline:before': {
-//     borderBottomColor: '#fff !important',
-//   },
-//   '& .MuiOutlinedInput-root': {
-//     color: "#fff",
-//     '& fieldset': {
-//       borderColor: '#fff',
-//     },
-//     '&:hover fieldset': {
-//       borderColor: '#fff',
-//     },
-//     '&.Mui-focused fieldset': {
-//       borderColor: '#fff',
-//     },
-//   },
-//   '& .MuiInputBase-input::-webkit-input-placeholder': {
-//     color: "#fff"
-//   },
-//   '& .MuiInput-underline:hover:not:before': {
-//     borderBottomColor: "#fff !important",
-//   },
-//   '& .MuiInput-root': {
-//     color: "#fff"
-//   }
-// });
+
 
 export default function LogIn() {
   const router = useRouter();
