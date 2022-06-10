@@ -1,11 +1,13 @@
 import { Box } from "@chakra-ui/react";
-import SignIn from "./SignIn";
+import LogIn from "./SiginDemo";
 import MaterialUiDemo from "./MaterialuiDemo";
-// import SignIn from "./SiginDemo";
+import "../styles/Home.module.scss"
+import SignIn from "./SignIn";
 
 export default function Home() {
   return (
     <Box w="100%" h="100%">
+      {/* <LogIn /> */}
       <SignIn />
       {/* <MaterialUiDemo /> */}
     </Box>

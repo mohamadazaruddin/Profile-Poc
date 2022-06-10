@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Style from "../styles/Home.module.css";
+import React, { useEffect, useState } from "react";
+import Style from "../styles/Home.module.scss";
 import {
   Box,
   Button,
@@ -35,8 +35,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { useRouter } from "next/router";
-import { makeStyles, withStyles, createStyles } from "@material-ui/styles";
-import { useStyles } from "@chakra-ui/react";
+import { makeStyles, withStyles, createStyles, styled } from "@material-ui/styles";
 
 export default function SignIn() {
   const [image, setImage] = useState();
@@ -46,9 +45,30 @@ export default function SignIn() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false);
   const [errInput, setErrInput] = useState(true);
+  const [inpCss, setInpCss] = useState();
   const router = useRouter();
 
   const [MobSmallWidth] = useMediaQuery("(max-width:300px)");
+
+  useEffect(() => {
+    const CssStyled = styled(TextField)({
+      '& label.Mui-focused': {
+        color: "#787878",
+        fontSize: "25px",
+        padding: " 0 0 10px 0px"
+      },
+      '& .MuiInputLabel-shrink': {
+        top: "-10px"
+      },
+      '& .MuiTextField-root': {
+        width: "100%"
+      },
+      '& .MuiInput-underline:after': {
+        borderBottomColor: 'black',
+      },
+    })
+    setInpCss(CssStyled)
+  }, [])
 
   const handleSubmit = (values) => {
     values.CropImage = cropData;
@@ -107,7 +127,7 @@ export default function SignIn() {
       setcropImg(true);
       onClose();
     } else {
-      alert("Image Upload First");
+      alert("Upload Image First");
     }
   };
 
@@ -174,7 +194,7 @@ export default function SignIn() {
           })}
         >
           {({ errors, touched }) => (
-            <Form>
+            <Form className={Style.signInform}>
               <Box p={{ base: "20px", lg: "40px" }} bg="#ffffff" zIndex="99">
                 <Box
                   textAlign="center"
@@ -187,14 +207,16 @@ export default function SignIn() {
                 </Box>
                 <Box py="10px">
                   <Field
-                    as={TextField}
+                    as={inpCss}
                     name="FullName"
+                    style={{
+                      width: "100%"
+                    }}
                     id="FullName"
                     type="text"
                     variant="standard"
                     label="Full Name"
                     width="100%"
-                    fullWidth
                     placeholder="John Doe"
                     _focus={{ borderColor: "#ccc" }}
                     _hover={{ borderColor: "#ccc" }}
@@ -207,12 +229,14 @@ export default function SignIn() {
                 </Box>
                 <Box py="10px">
                   <Field
-                    as={TextField}
+                    as={inpCss}
                     name="MobNo"
                     id="MobNo"
                     label="Mobile No"
                     width="100%"
-                    fullWidth
+                    style={{
+                      width: "100%"
+                    }}
                     type="number"
                     placeholder="9876543210"
                     _focus={{ borderColor: "#ccc" }}
@@ -226,13 +250,15 @@ export default function SignIn() {
                 </Box>
                 <Box py="10px">
                   <Field
-                    as={TextField}
+                    as={inpCss}
                     name="Email"
                     id="Email"
                     label="Email"
                     type="email"
                     width="100%"
-                    fullWidth
+                    style={{
+                      width: "100%"
+                    }}
                     placeholder="example@gmail.com"
                     _focus={{ borderColor: "#ccc" }}
                     _hover={{ borderColor: "#ccc" }}
@@ -245,12 +271,14 @@ export default function SignIn() {
                 </Box>
                 <Box py="10px">
                   <Field
-                    as={TextField}
+                    as={inpCss}
                     name="Password"
                     label="Password"
                     id="Password"
                     width="100%"
-                    fullWidth
+                    style={{
+                      width: "100%"
+                    }}
                     type={showPassword ? "text" : "password"}
                     placeholder="Pass@123"
                     _focus={{ borderColor: "#ccc" }}
@@ -272,12 +300,14 @@ export default function SignIn() {
                 </Box>
                 <Box py="10px">
                   <Field
-                    as={TextField}
+                    as={inpCss}
                     label="Confirm Password"
                     name="ConPassword"
                     width="100%"
-                    fullWidth
-                    id="ConPassword"
+                    style={{
+                      width: "100%"
+                    }}
+                    id="outlined-required"
                     type="Password"
                     placeholder="Must Match Password"
                   />
@@ -309,10 +339,10 @@ export default function SignIn() {
                     color="#787878"
                     borderRadius="unset"
                     border="none"
-                    borderBottom="2px solid #ccc"
+                    borderBottom="1px solid black"
                     pl="0px"
-                    _focus={{ borderColor: "#ccc" }}
-                    _hover={{ borderColor: "#ccc" }}
+                    _focus={{ borderColor: "black" }}
+                    _hover={{ borderColor: "black", borderBottom: "2px solid black" }}
                   >
                     <option bg="#333" value="Intern">
                       Intern
@@ -351,10 +381,10 @@ export default function SignIn() {
                     color="#787878"
                     borderRadius="unset"
                     border="none"
-                    borderBottom="2px solid #ccc"
+                    borderBottom="1px solid black"
                     pl="0px"
-                    _focus={{ borderColor: "#ccc" }}
-                    _hover={{ borderColor: "#ccc" }}
+                    _focus={{ borderColor: "black" }}
+                    _hover={{ borderColor: "black", borderBottom: "2px solid black" }}
                   >
                     <option value="Wasseypur">Wasseypur</option>
                     <option value="Mirzapur">Mirzapur</option>
@@ -432,17 +462,17 @@ export default function SignIn() {
                       w={{ base: "100%", sm: "50%" }}
                       m={{ base: "auto", sm: "0px" }}
                       textAlign="center"
-                      p="0 20px"
+                      p="0 25px"
+                      mt={{ base: "15px", sm: "0px" }}
                     >
                       <Button
-                        bg="#56ab2f"
+                        bg="#B9DFFF"
                         px="50px"
                         w="100%"
                         color="#ffffff"
                         type="submit"
                         name="submit"
-                        opacity="0.7"
-                        _hover={{ opacity: "1" }}
+                        _hover={{ bg: "#016ABC" }}
                         transition="0.5s linear"
                         mb={{ base: "10px", sm: "0px" }}
                       >
@@ -468,7 +498,6 @@ export default function SignIn() {
                       </Hide>
                       <Show below="sm">
                         <Box color="#000"
-                          mt="15px"
                           fontSize="15px"
                           display="flex"
                           alignItems="center"

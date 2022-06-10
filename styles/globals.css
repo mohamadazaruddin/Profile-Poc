@@ -1,3 +1,4 @@
+
 html,
 body {
   padding: 0;
@@ -21,10 +22,10 @@ a {
   height: 100%;
 }
 .MuiInput-underline::after{
-  border-bottom-color:black !important;
+  border-bottom-color:black ;
 }
 .MuiFormLabel-root.Mui-focused{
-  color: #787878 !important;
+  color: #787878 ;
   font-size: 25px;
-  padding: 0 0 10px 0px !important;
+  padding: 0 0 10px 0px;
 }

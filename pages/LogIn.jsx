@@ -6,21 +6,76 @@ import {
   FormLabel,
   Input,
   Flex,
+  Image
 } from "@chakra-ui/react";
+import Style from "../styles/Home.module.scss";
+import { TextField, styled } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core"
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
 import { useRouter } from "next/router";
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+
 const SignupSchema = Yup.object().shape({
   Username: Yup.string().email().required("Required"),
-  Password: Yup.string().max(50, "Too Long!").required("Required"),
+  Password: Yup.string().matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
+    "Password must be strong"
+  )
+    .required("Required"),
 });
+
 
 export default function LogIn() {
   const router = useRouter();
   const [value, setValues] = useState();
   const [valueSubmitted, setValueSubmitted] = useState(false);
+  const [cssStyle, setCssStyle] = useState();
+  const [showPassword, setShowPassword] = useState(false);
 
+  useEffect(() => {
+    const CssTextField = styled(TextField)({
+      '& label.MuiFormLabel-root': {
+        color: "#fff",
+      },
+      '& label.Mui-focused': {
+        color: '#fff',
+        fontSize: "25px"
+      },
+      '& .MuiInputLabel-shrink': {
+        top: "-10px"
+      },
+      '& .MuiInput-underline:after': {
+        borderBottomColor: '#fff',
+      },
+      '& .MuiInput-underline:before': {
+        borderBottomColor: '#fff !important',
+      },
+      '& .MuiOutlinedInput-root': {
+        color: "#fff",
+        '& fieldset': {
+          borderColor: '#fff',
+        },
+        '&:hover fieldset': {
+          borderColor: '#fff',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#fff',
+        },
+      },
+      '& .MuiInputBase-input::-webkit-input-placeholder': {
+        color: "#fff"
+      },
+      '& .MuiInput-underline:hover:not:before': {
+        borderBottomColor: "#fff !important",
+      },
+      '& .MuiInput-root': {
+        color: "#fff"
+      }
+    });
+    setCssStyle(CssTextField)
+  }, [])
   useEffect(() => {
     const signedInObject = window.localStorage.getItem("signedInObject");
     setValues(JSON.parse(signedInObject));
@@ -28,29 +83,34 @@ export default function LogIn() {
   }, [valueSubmitted]);
 
   return (
-    <Box bg="#E3F2FD">
+    <Box bg="#E3F2FD" overflow="auto" h="100%">
       <Flex
         maxW={{ md: "70%", sm: "100%", base: "100%" }}
-        height="100vh"
         margin="auto"
         display="flex"
         alignItems="center"
+        justifyContent="center"
+        h="600px"
       >
         <Box
           m={{ base: "10px", sm: "50px", md: "auto" }}
           boxShadow={"0px 0px 25px #00000094"}
           w="100%"
-          height={{ md: "auto", base: "" }}
+          height={{ md: "", base: "" }}
           display="flex"
           flexDirection={{ base: "column", md: "row" }}
           justifyContent="center"
         >
-          <Box
-            width={{ base: "0%", md: "50%" }}
-            backgroundImage="https://t4.ftcdn.net/jpg/01/19/11/55/360_F_119115529_mEnw3lGpLdlDkfLgRcVSbFRuVl6sMDty.jpg"
-            backgroundSize="cover"
-            backgroundRepeat="no-repeat"
-          ></Box>
+          <Box width={{ base: "0%", md: "50%" }}>
+            <Box
+              backgroundImage="https://t4.ftcdn.net/jpg/01/19/11/55/360_F_119115529_mEnw3lGpLdlDkfLgRcVSbFRuVl6sMDty.jpg"
+              backgroundSize="cover"
+              backgroundRepeat="no-repeat"
+              backgroundAttachment="inherit"
+              w="100%"
+              h="100%"
+            ></Box>
+          </Box>
           <Box
             width={{ base: "100%", md: "55%" }}
             p={{
@@ -131,20 +191,15 @@ export default function LogIn() {
                     <Box>
                       <Box py="10px">
                         <FormControl>
-                          <FormLabel
-                            color="#fff"
-                            fontSize={{ base: "16px", md: "18px" }}
-                            fontWeight="400"
-                          >
-                            Email
-                          </FormLabel>
                           <Field
                             name="Username"
-                            as={Input}
-                            bg="#fff"
-                            color="#000"
-                            borderRadius="8px"
-                            placeholder="Username"
+                            label="Email"
+                            borderColor="#fff"
+                            as={cssStyle}
+                            placeholder="Email"
+                            style={{
+                              width: "100%"
+                            }}
                           />
                           {errors.Username && touched.Username ? (
                             <Text color="red" fontSize="14px" fontWeight="600">
@@ -155,21 +210,28 @@ export default function LogIn() {
                       </Box>
                       <Box py="10px">
                         <FormControl>
-                          <FormLabel
-                            color="#fff"
-                            fontSize={{ base: "16px", md: "18px" }}
-                            fontWeight="400"
-                          >
-                            Password
-                          </FormLabel>
-                          <Field
-                            name="Password"
-                            as={Input}
-                            borderRadius="8px"
-                            bg="#fff"
-                            color="#000"
-                            placeholder="Password"
-                          />
+                          <Box display='flex' alignItems="end" justifyContent='end'>
+                            <Field
+                              name="Password"
+                              type={showPassword ? 'text' : 'password'}
+                              label="Password"
+                              as={cssStyle}
+                              placeholder="Password"
+                              style={{
+                                width: "100%"
+                              }}
+                            />
+                            <Button
+                              color='white'
+                              bg='transparent'
+                              _hover={{ bg: 'transparent' }}
+                              _active={{ bg: 'transparent' }}
+                              _focus={{ boxShadow: 'none' }}
+                              onClick={() =>
+                                setShowPassword(!showPassword)
+                              }>
+                              {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                            </Button></Box>
                           {errors.Password && touched.Password ? (
                             <Text color="red" fontSize="14px" fontWeight="600">
                               {errors.Password}
