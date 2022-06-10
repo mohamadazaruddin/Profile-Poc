@@ -392,6 +392,8 @@ export default function SignIn() {
                               zoomTo={0.5}
                               initialAspectRatio={1}
                               src={image}
+                              aspectRatio={1}
+                              dragMode="none"
                               viewMode={1}
                               minCropBoxHeight={10}
                               minCropBoxWidth={10}
