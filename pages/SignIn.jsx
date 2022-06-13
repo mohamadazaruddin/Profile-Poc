@@ -102,6 +102,7 @@ export default function SignIn() {
     }
   };
   const onChange = (e) => {
+    onOpen()
     e.preventDefault();
     var fileName = e.target.value;
     var idxDot = fileName.lastIndexOf(".") + 1;
@@ -200,7 +201,7 @@ export default function SignIn() {
               .oneOf([Yup.ref("Password"), null], "Passwords must match"),
             Role: Yup.string().required("Required"),
             Location: Yup.string().required("Required"),
-            // CropImage: Yup.object().required("Required"),
+            CropImage: Yup.object().required("Required"),
           })}
         >
           {({ errors, touched }) => (
@@ -415,7 +416,7 @@ export default function SignIn() {
                     </Text>
                   ) : (<Text color="#fff" fontSize="14px" fontWeight="600" >Text</Text>)}
                 </Box>
-                <Box py="10px">
+                <Box py="5px">
                   <Box display={{ base: "block", sm: "flex" }} alignItems="end">
                     <Box w={{ base: "100%", sm: "50%" }} m="auto">
                       <Modal isOpen={isOpen} onClose={onClose}>
@@ -426,16 +427,6 @@ export default function SignIn() {
                           </ModalHeader>
                           <ModalCloseButton />
                           <ModalBody>
-                            <Input
-                              type="file"
-                              name="CropImage"
-                              mb="10px"
-                              onChange={onChange}
-                              bg="transparent"
-                              border="none"
-                              accept="image/x-png,image/gif,image/jpeg"
-                              _focus={{ boxShadow: "none" }}
-                            />
                             <Cropper
                               style={{ height: 400, width: "100%" }}
                               zoomTo={0.5}
@@ -472,7 +463,7 @@ export default function SignIn() {
                         placeItems="center"
                         color="#000"
                         m="auto"
-                        onClick={onOpen}
+
                         cursor="pointer"
                       >
                         {cropData ? <Image
@@ -480,13 +471,28 @@ export default function SignIn() {
                           w={{ base: "200px", sm: "150px" }}
                           src={cropData} alt="cropped" /> : "Upload Image"}
                       </Box>
-                      {/* {errors.CropImage && touched.CropImage ? (
+                      <Box textAlign={"center"} mt="20px">
+                        <Input
+                          type="file"
+                          name="CropImage"
+                          onChange={onChange}
+                          onClick={onOpen}
+                          padding="0px"
+                          w="70%"
+                          bg="transparent"
+                          color="#000"
+                          border="none"
+                          accept="image/x-png,image/gif,image/jpeg"
+                          _focus={{ boxShadow: "none" }}
+                        />
+                      </Box>
+                      {errors.CropImage && touched.CropImage ? (
                         <Text color="red" textAlign="center" fontSize="14px" fontWeight="600">
                           {errors.CropImage}
                         </Text>
                       ) : (<Text color="transparent" fontSize="14px" fontWeight="600">
                         Text
-                      </Text>)} */}
+                      </Text>)}
                     </Box>
                     <Box
                       pos="relative"
