@@ -46,7 +46,7 @@ export default function Dashboard() {
     console.log(person, "person");
   };
   return (
-    <Box bg="#E3F2FD" p="20px">
+    <Box bg="#E3F2FD" p={{ base: "10px", sm: "20px" }}>
       <Box bg="#fff" borderRadius="8px" my="20px">
         <Box p="10px 10px" border="1px solid rgb(227, 235, 235)">
           <Heading fontSize="25px">Dashboard</Heading>
@@ -56,47 +56,52 @@ export default function Dashboard() {
           mb="15px"
           border="1px solid rgb(227, 235, 235)"
         >
-          <RadioGroup onChange={setValue} defaultValue="all" value={value}>
+          <RadioGroup onChange={setValue} defaultValue="all">
             <Stack direction={{ md: "row", base: "column" }} gap="10px">
               <Radio
-                colorScheme="red"
+                colorScheme="green"
                 // as={Radio}
                 value="all"
                 // checked={true}
                 onChange={handleChange}
+                _focus={{ border: "none", boxShadow: "none" }}
               >
                 All
               </Radio>
               <Radio
-                colorScheme="red"
+                colorScheme="green"
                 // as={Radio}
                 value="Intern"
                 checked={value === "Intern"}
                 onChange={handleChange}
+                _focus={{ border: "none", boxShadow: "none" }}
               >
                 Intern
               </Radio>
               <Radio
-                colorScheme="red"
+                colorScheme="green"
                 value="Frontend Developer"
                 checked={value === "Frontend Developer"}
                 onChange={handleChange}
+                _focus={{ border: "none", boxShadow: "none" }}
               >
                 Frontend Dev
               </Radio>
               <Radio
-                colorScheme="red"
+                colorScheme="green"
                 value="Backend Developer"
                 checked={value === "Backend Developer"}
                 onChange={handleChange}
+                _focus={{ border: "none", boxShadow: "none" }}
               >
                 Backend Dev
               </Radio>
               <Radio
-                colorScheme="red"
+                colorScheme="green"
                 value="DevOps"
                 checked={value === "DevOps"}
                 onChange={handleChange}
+                _focus={{ border: "none", boxShadow: "none" }}
               >
                 DevOps
               </Radio>
@@ -105,21 +110,21 @@ export default function Dashboard() {
         </Box>
         <Box p="10px 10px" borderBottom="1px solid rgba(245, 245, 245)">
           <Grid
-            templateColumns={{ md: "repeat(3, 1fr)", base: "repeat(1, 1fr)" }}
+            templateColumns={{ lg: "repeat(3, 1fr)", md: "repeat(2, 1fr)", base: "repeat(1, 1fr)" }}
             gap={6}
           >
             {value.map((items, i) => (
               <GridItem key={i}>
                 <Box
                   bg="#72a1ff26"
-                  p="16px"
+                  p={{ base: "10px", sm: "16px" }}
                   border="2px sloid transparent"
                   borderRadius="10px"
                   // w={{ base: "100%", lg: "40%" }}
                   m="auto"
                   _hover={{ boxShadow: "0 0 15px  lightblue" }}
                 >
-                  <Box w="90px" h="80px" alignItems="center" pr="15px">
+                  <Box w="80px" h="80px" alignItems="center">
                     <Box
                       w="100%"
                       h="100%"

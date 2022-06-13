@@ -54,6 +54,7 @@ export default function LogIn() {
       },
       '& .MuiOutlinedInput-root': {
         color: "#fff",
+
         '& fieldset': {
           borderColor: '#fff',
         },
@@ -71,7 +72,8 @@ export default function LogIn() {
         borderBottomColor: "#fff !important",
       },
       '& .MuiInput-root': {
-        color: "#fff"
+        color: "#fff",
+        paddingLeft: "5px",
       }
     });
     setCssStyle(CssTextField)
@@ -116,8 +118,7 @@ export default function LogIn() {
             p={{
               sm: "50px 40px",
               base: "30px 20px",
-              md: "30px 20px",
-              lg: "70px 50px",
+              md: "70px 50px",
             }}
             h="100%"
             bg="#406086"
@@ -205,7 +206,7 @@ export default function LogIn() {
                             <Text color="red" fontSize="14px" fontWeight="600">
                               {errors.Username}
                             </Text>
-                          ) : null}
+                          ) : (<Text color="transparent" fontSize="14px" fontWeight="600" cursor="context-menu" >Text</Text>)}
                         </FormControl>
                       </Box>
                       <Box py="10px">
@@ -236,7 +237,7 @@ export default function LogIn() {
                             <Text color="red" fontSize="14px" fontWeight="600">
                               {errors.Password}
                             </Text>
-                          ) : null}
+                          ) : (<Text color="transparent" fontSize="14px" fontWeight="600" cursor="context-menu" >Text</Text>)}
                         </FormControl>
                       </Box>
                       <Box textAlign="center">

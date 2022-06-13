@@ -36,6 +36,7 @@ import {
 } from "@material-ui/core";
 import { useRouter } from "next/router";
 import { makeStyles, withStyles, createStyles, styled } from "@material-ui/styles";
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 export default function SignIn() {
   const [image, setImage] = useState();
@@ -46,9 +47,8 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [errInput, setErrInput] = useState(true);
   const [inpCss, setInpCss] = useState();
+  const [closeImg, setCloseImg] = useState(true);
   const router = useRouter();
-
-  const [MobSmallWidth] = useMediaQuery("(max-width:300px)");
 
   useEffect(() => {
     const CssStyled = styled(TextField)({
@@ -59,6 +59,9 @@ export default function SignIn() {
       },
       '& .MuiInputLabel-shrink': {
         top: "-10px"
+      },
+      '& .MuiInput-root': {
+        paddingLeft: "5px",
       },
       '& .MuiTextField-root': {
         width: "100%"
@@ -71,6 +74,7 @@ export default function SignIn() {
   }, [])
 
   const handleSubmit = (values) => {
+    console.log(cropData, "cropData");
     values.CropImage = cropData;
     let a = [];
     const userObj = localStorage.getItem("signedInObject");
@@ -122,15 +126,20 @@ export default function SignIn() {
     }
   };
   const getCropData = () => {
-    if (!errInput) {
+    if (cropper !== "undefined") {
       setCropData(cropper.getCroppedCanvas().toDataURL());
       setcropImg(true);
       onClose();
-    } else {
-      alert("Upload Image First");
+      console.log(cropData, "dddd");
+    }
+    else {
+      alert("sas")
+      setcropImg(false);
     }
   };
+  // const handleClosed = () => {
 
+  // }
   return (
     <Box
       p={{ base: "0px", md: "50px" }}
@@ -191,6 +200,7 @@ export default function SignIn() {
               .oneOf([Yup.ref("Password"), null], "Passwords must match"),
             Role: Yup.string().required("Required"),
             Location: Yup.string().required("Required"),
+            // CropImage: Yup.object().required("Required"),
           })}
         >
           {({ errors, touched }) => (
@@ -222,10 +232,10 @@ export default function SignIn() {
                     _hover={{ borderColor: "#ccc" }}
                   />
                   {errors.FullName && touched.FullName ? (
-                    <Box as="p" color="red">
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
                       {errors.FullName}
                     </Box>
-                  ) : null}
+                  ) : (<Text color="#fff" fontSize="14px" fontWeight="600" cursor="context-menu" >Text</Text>)}
                 </Box>
                 <Box py="10px">
                   <Field
@@ -243,10 +253,10 @@ export default function SignIn() {
                     _hover={{ borderColor: "#ccc" }}
                   />
                   {errors.MobNo && touched.MobNo ? (
-                    <Box as="p" color="red">
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
                       {errors.MobNo}
                     </Box>
-                  ) : null}
+                  ) : (<Text color="#fff" fontSize="14px" fontWeight="600" cursor="context-menu" >Text</Text>)}
                 </Box>
                 <Box py="10px">
                   <Field
@@ -264,39 +274,48 @@ export default function SignIn() {
                     _hover={{ borderColor: "#ccc" }}
                   />
                   {errors.Email && touched.Email ? (
-                    <Box as="p" color="red">
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
                       {errors.Email}
                     </Box>
-                  ) : null}
+                  ) : (<Text color="#fff" fontSize="14px" fontWeight="600" cursor="context-menu" >Text</Text>)}
                 </Box>
                 <Box py="10px">
-                  <Field
-                    as={inpCss}
-                    name="Password"
-                    label="Password"
-                    id="Password"
-                    width="100%"
-                    style={{
-                      width: "100%"
-                    }}
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Pass@123"
-                    _focus={{ borderColor: "#ccc" }}
-                    _hover={{ borderColor: "#ccc" }}
-                  />
+                  <Box display='flex' alignItems="end" justifyContent='end'>
+                    <Field
+                      as={inpCss}
+                      name="Password"
+                      label="Password"
+                      id="Password"
+                      width="100%"
+                      style={{
+                        width: "100%"
+                      }}
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Pass@123"
+                    />
+                    <Button
+                      alignItems='end'
+                      p='0'
+                      color='#787878'
+                      fontSize='20px'
+                      bg='transparent'
+                      borderRadius="none"
+                      _hover={{ bg: 'transparent', color: "black" }}
+                      _active={{ bg: 'transparent' }}
+                      _focus={{ boxShadow: 'none', color: "black" }}
+                      onClick={() =>
+                        setShowPassword(!showPassword)
+                      }>
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </Box>
                   {errors.Password && touched.Password ? (
-                    <Box as="p" color="red">
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
                       {errors.Password}
                     </Box>
-                  ) : null}
-                  <Checkbox
-                    onChange={() => {
-                      setShowPassword(!showPassword);
-                    }}
-                    color="#333"
-                  >
-                    Show Password
-                  </Checkbox>
+                  ) : (<Box as="p" color="#fff" fontSize="14px" fontWeight="600" cursor="context-menu" >
+                    Text
+                  </Box>)}
                 </Box>
                 <Box py="10px">
                   <Field
@@ -307,15 +326,15 @@ export default function SignIn() {
                     style={{
                       width: "100%"
                     }}
+                    type={showPassword ? "text" : "password"}
                     id="outlined-required"
-                    type="Password"
                     placeholder="Must Match Password"
                   />
                   {errors.ConPassword && touched.ConPassword ? (
-                    <Box as="p" color="red">
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
                       {errors.ConPassword}
                     </Box>
-                  ) : null}
+                  ) : (<Text color="#fff" fontSize="14px" fontWeight="600" cursor="context-menu" >Text</Text>)}
                 </Box>
                 <Box py="10px">
                   <FormLabel
@@ -357,7 +376,7 @@ export default function SignIn() {
                     <Text color="red" fontSize="14px" fontWeight="600">
                       {errors.Role}
                     </Text>
-                  ) : null}
+                  ) : (<Text color="#fff" fontSize="14px" fontWeight="600" cursor="context-menu">Text</Text>)}
                 </Box>
                 <Box py="10px">
                   <FormLabel
@@ -394,7 +413,7 @@ export default function SignIn() {
                     <Text color="red" fontSize="14px" fontWeight="600">
                       {errors.Location}
                     </Text>
-                  ) : null}
+                  ) : (<Text color="#fff" fontSize="14px" fontWeight="600" >Text</Text>)}
                 </Box>
                 <Box py="10px">
                   <Box display={{ base: "block", sm: "flex" }} alignItems="end">
@@ -409,7 +428,7 @@ export default function SignIn() {
                           <ModalBody>
                             <Input
                               type="file"
-                              name="cropImg"
+                              name="CropImage"
                               mb="10px"
                               onChange={onChange}
                               bg="transparent"
@@ -433,6 +452,8 @@ export default function SignIn() {
                                 setCropper(instance);
                               }}
                               guides={true}
+                              aspectRatio={1}
+                              dragMode="none"
                             />
                           </ModalBody>
                           <ModalFooter>
@@ -454,8 +475,18 @@ export default function SignIn() {
                         onClick={onOpen}
                         cursor="pointer"
                       >
-                        {cropData ? <Image w="150px" h="150px" src={cropData} alt="cropped" /> : "Upload Image"}
+                        {cropData ? <Image
+                          h={{ base: "200px", sm: "150px" }}
+                          w={{ base: "200px", sm: "150px" }}
+                          src={cropData} alt="cropped" /> : "Upload Image"}
                       </Box>
+                      {/* {errors.CropImage && touched.CropImage ? (
+                        <Text color="red" textAlign="center" fontSize="14px" fontWeight="600">
+                          {errors.CropImage}
+                        </Text>
+                      ) : (<Text color="transparent" fontSize="14px" fontWeight="600">
+                        Text
+                      </Text>)} */}
                     </Box>
                     <Box
                       pos="relative"
