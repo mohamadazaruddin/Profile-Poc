@@ -9,7 +9,6 @@ import {
   Input,
   Text,
   useDisclosure,
-  useMediaQuery,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -17,26 +16,17 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Checkbox,
   Hide,
-  Show
+  Show,
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import {
-  InputAdornment,
-  IconButton,
-  OutlinedInput,
-  Visibility,
-  VisibilityOff,
-  InputLabel,
-  TextField,
-} from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { useRouter } from "next/router";
-import { makeStyles, withStyles, createStyles, styled } from "@material-ui/styles";
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { styled } from "@material-ui/styles";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function SignIn() {
   const [image, setImage] = useState();
@@ -49,29 +39,31 @@ export default function SignIn() {
   const [inpCss, setInpCss] = useState();
   const router = useRouter();
 
-  const [MobSmallWidth] = useMediaQuery("(max-width:300px)");
-
   useEffect(() => {
     const CssStyled = styled(TextField)({
-      '& label.Mui-focused': {
+      "& label.Mui-focused": {
         color: "#787878",
         fontSize: "25px",
-        padding: " 0 0 10px 0px"
+        padding: " 0 0 10px 0px",
       },
-      '& .MuiInputLabel-shrink': {
-        top: "-10px"
+      "& .MuiInputLabel-shrink": {
+        top: "-10px",
       },
-      '& .MuiTextField-root': {
-        width: "100%"
+      "& .MuiInput-root": {
+        paddingLeft: "0px",
       },
-      '& .MuiInput-underline:after': {
-        borderBottomColor: 'black',
+      "& .MuiTextField-root": {
+        width: "100%",
       },
-    })
-    setInpCss(CssStyled)
-  }, [])
+      "& .MuiInput-underline:after": {
+        borderBottomColor: "black",
+      },
+    });
+    setInpCss(CssStyled);
+  }, []);
 
   const handleSubmit = (values) => {
+    console.log(cropData, "cropData");
     values.CropImage = cropData;
     let a = [];
     const userObj = localStorage.getItem("signedInObject");
@@ -116,22 +108,26 @@ export default function SignIn() {
         setImage(reader.result);
       };
       reader.readAsDataURL(files[0]);
-      setErrInput(false)
+      setErrInput(false);
     } else {
       alert("Only jpg/jpeg and png files are allowed!");
-      setErrInput(true)
+      setErrInput(true);
     }
   };
   const getCropData = () => {
-    if (!errInput) {
+    if (cropper !== "undefined") {
       setCropData(cropper.getCroppedCanvas().toDataURL());
       setcropImg(true);
       onClose();
+      console.log(cropData, "dddd");
     } else {
-      alert("Upload Image First");
+      alert("sas");
+      setcropImg(false);
     }
   };
+  // const handleClosed = () => {
 
+  // }
   return (
     <Box
       p={{ base: "0px", md: "50px" }}
@@ -192,6 +188,7 @@ export default function SignIn() {
               .oneOf([Yup.ref("Password"), null], "Passwords must match"),
             Role: Yup.string().required("Required"),
             Location: Yup.string().required("Required"),
+            // CropImage: Yup.object().required("Required"),
           })}
         >
           {({ errors, touched }) => (
@@ -211,7 +208,7 @@ export default function SignIn() {
                     as={inpCss}
                     name="FullName"
                     style={{
-                      width: "100%"
+                      width: "100%",
                     }}
                     id="FullName"
                     type="text"
@@ -223,10 +220,19 @@ export default function SignIn() {
                     _hover={{ borderColor: "#ccc" }}
                   />
                   {errors.FullName && touched.FullName ? (
-                    <Box as="p" color="red">
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
                       {errors.FullName}
                     </Box>
-                  ) : null}
+                  ) : (
+                    <Text
+                      color="#fff"
+                      fontSize="14px"
+                      fontWeight="600"
+                      cursor="context-menu"
+                    >
+                      Text
+                    </Text>
+                  )}
                 </Box>
                 <Box py="10px">
                   <Field
@@ -236,7 +242,7 @@ export default function SignIn() {
                     label="Mobile No"
                     width="100%"
                     style={{
-                      width: "100%"
+                      width: "100%",
                     }}
                     type="number"
                     placeholder="9876543210"
@@ -244,10 +250,19 @@ export default function SignIn() {
                     _hover={{ borderColor: "#ccc" }}
                   />
                   {errors.MobNo && touched.MobNo ? (
-                    <Box as="p" color="red">
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
                       {errors.MobNo}
                     </Box>
-                  ) : null}
+                  ) : (
+                    <Text
+                      color="#fff"
+                      fontSize="14px"
+                      fontWeight="600"
+                      cursor="context-menu"
+                    >
+                      Text
+                    </Text>
+                  )}
                 </Box>
                 <Box py="10px">
                   <Field
@@ -258,68 +273,99 @@ export default function SignIn() {
                     type="email"
                     width="100%"
                     style={{
-                      width: "100%"
+                      width: "100%",
                     }}
                     placeholder="example@gmail.com"
                     _focus={{ borderColor: "#ccc" }}
                     _hover={{ borderColor: "#ccc" }}
                   />
                   {errors.Email && touched.Email ? (
-                    <Box as="p" color="red">
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
                       {errors.Email}
                     </Box>
-                  ) : null}
+                  ) : (
+                    <Text
+                      color="#fff"
+                      fontSize="14px"
+                      fontWeight="600"
+                      cursor="context-menu"
+                    >
+                      Text
+                    </Text>
+                  )}
                 </Box>
                 <Box py="10px">
-                  <Box display='flex' alignItems="end" justifyContent='end'>
+                  <Box display="flex" alignItems="end" justifyContent="end">
                     <Field
-                      name="Password"
-                      type={showPassword ? 'text' : 'password'}
-                      label="Password"
                       as={inpCss}
-                      placeholder="Password"
+                      name="Password"
+                      label="Password"
+                      id="Password"
+                      width="100%"
                       style={{
-                        width: "100%"
+                        width: "100%",
                       }}
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Pass@123"
                     />
                     <Button
-                      alignItems='end'
-                      p='0'
-                      color='#000'
-                      fontSize='20px'
-                      bg='transparent'
-                      _hover={{ bg: 'transparent' }}
-                      _active={{ bg: 'transparent' }}
-                      _focus={{ boxShadow: 'none' }}
-                      onClick={() =>
-                        setShowPassword(!showPassword)
-                      }>
+                      alignItems="end"
+                      p="0"
+                      color="#787878"
+                      fontSize="20px"
+                      bg="transparent"
+                      borderRadius="none"
+                      _hover={{ bg: "transparent", color: "black" }}
+                      _active={{ bg: "transparent" }}
+                      _focus={{ boxShadow: "none", color: "black" }}
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
                       {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                    </Button></Box>
+                    </Button>
+                  </Box>
                   {errors.Password && touched.Password ? (
-                    <Box as="p" color="red">
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
                       {errors.Password}
                     </Box>
-                  ) : null}
+                  ) : (
+                    <Box
+                      as="p"
+                      color="#fff"
+                      fontSize="14px"
+                      fontWeight="600"
+                      cursor="context-menu"
+                    >
+                      Text
+                    </Box>
+                  )}
                 </Box>
                 <Box py="10px">
                   <Field
                     as={inpCss}
                     label="Confirm Password"
                     name="ConPassword"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     width="100%"
                     style={{
-                      width: "100%"
+                      width: "100%",
                     }}
                     id="outlined-required"
                     placeholder="Must Match Password"
                   />
                   {errors.ConPassword && touched.ConPassword ? (
-                    <Box as="p" color="red">
+                    <Box as="p" color="red" fontSize="14px" fontWeight="600">
                       {errors.ConPassword}
                     </Box>
-                  ) : null}
+                  ) : (
+                    <Text
+                      color="#fff"
+                      fontSize="14px"
+                      fontWeight="600"
+                      cursor="context-menu"
+                    >
+                      Text
+                    </Text>
+                  )}
                 </Box>
                 <Box py="10px">
                   <FormLabel
@@ -337,7 +383,7 @@ export default function SignIn() {
                     name="Role"
                     placeholder="Select"
                     style={{
-                      paddingLeft: 0
+                      paddingLeft: 0,
                     }}
                     bg="#ffffff"
                     color="#787878"
@@ -346,7 +392,10 @@ export default function SignIn() {
                     borderBottom="1px solid black"
                     pl="0px"
                     _focus={{ borderColor: "black" }}
-                    _hover={{ borderColor: "black", borderBottom: "2px solid black" }}
+                    _hover={{
+                      borderColor: "black",
+                      borderBottom: "2px solid black",
+                    }}
                   >
                     <option bg="#333" value="Intern">
                       Intern
@@ -361,7 +410,16 @@ export default function SignIn() {
                     <Text color="red" fontSize="14px" fontWeight="600">
                       {errors.Role}
                     </Text>
-                  ) : null}
+                  ) : (
+                    <Text
+                      color="#fff"
+                      fontSize="14px"
+                      fontWeight="600"
+                      cursor="context-menu"
+                    >
+                      Text
+                    </Text>
+                  )}
                 </Box>
                 <Box py="10px">
                   <FormLabel
@@ -380,7 +438,7 @@ export default function SignIn() {
                     placeholder="Select"
                     bg="#fff"
                     style={{
-                      paddingLeft: 0
+                      paddingLeft: 0,
                     }}
                     color="#787878"
                     borderRadius="unset"
@@ -388,7 +446,10 @@ export default function SignIn() {
                     borderBottom="1px solid black"
                     pl="0px"
                     _focus={{ borderColor: "black" }}
-                    _hover={{ borderColor: "black", borderBottom: "2px solid black" }}
+                    _hover={{
+                      borderColor: "black",
+                      borderBottom: "2px solid black",
+                    }}
                   >
                     <option value="Wasseypur">Wasseypur</option>
                     <option value="Mirzapur">Mirzapur</option>
@@ -398,7 +459,11 @@ export default function SignIn() {
                     <Text color="red" fontSize="14px" fontWeight="600">
                       {errors.Location}
                     </Text>
-                  ) : null}
+                  ) : (
+                    <Text color="#fff" fontSize="14px" fontWeight="600">
+                      Text
+                    </Text>
+                  )}
                 </Box>
                 <Box py="10px">
                   <Box display={{ base: "block", sm: "flex" }} alignItems="end">
@@ -413,7 +478,7 @@ export default function SignIn() {
                           <ModalBody>
                             <Input
                               type="file"
-                              name="cropImg"
+                              name="CropImage"
                               mb="10px"
                               onChange={onChange}
                               bg="transparent"
@@ -445,7 +510,9 @@ export default function SignIn() {
                             <Button mr={3} onClick={onClose}>
                               Close
                             </Button>
-                            <Button colorScheme="blue" onClick={getCropData}>Crop Image</Button>
+                            <Button colorScheme="blue" onClick={getCropData}>
+                              Crop Image
+                            </Button>
                           </ModalFooter>
                         </ModalContent>
                       </Modal>
@@ -460,7 +527,16 @@ export default function SignIn() {
                         onClick={onOpen}
                         cursor="pointer"
                       >
-                        {cropData ? <Image w="150px" h="150px" src={cropData} alt="cropped" /> : "Upload Image"}
+                        {cropData ? (
+                          <Image
+                            h={{ base: "200px", sm: "150px" }}
+                            w={{ base: "200px", sm: "150px" }}
+                            src={cropData}
+                            alt="cropped"
+                          />
+                        ) : (
+                          "Upload Image"
+                        )}
                       </Box>
                     </Box>
                     <Box
@@ -475,48 +551,56 @@ export default function SignIn() {
                         bg="#B9DFFF"
                         px="50px"
                         w="100%"
-                        color="#ffffff"
+                        color="#000000"
                         type="submit"
                         name="submit"
-                        _hover={{ bg: "#016ABC" }}
+                        _hover={{ bg: "#016ABC", color: "#fff" }}
                         transition="0.5s linear"
                         mb={{ base: "10px", sm: "0px" }}
                       >
                         Sign In
                       </Button>
                       <Hide below="sm">
-                        <Box color="#000"
+                        <Box
+                          color="#000"
                           mt="10px"
                           fontSize="15px"
                           display="flex"
                           alignItems="center"
                           justifyContent="center"
-                          flexWrap="wrap">
+                          flexWrap="wrap"
+                        >
                           Already Have An Account ?
-                          <Text onClick={() => router.push("/LogIn")}
+                          <Text
+                            onClick={() => router.push("/LogIn")}
                             ml="5px"
                             textDecoration="underline"
                             color="blue"
                             cursor="pointer"
                           >
-                            LogIn</Text>
+                            LogIn
+                          </Text>
                         </Box>
                       </Hide>
                       <Show below="sm">
-                        <Box color="#000"
+                        <Box
+                          color="#000"
                           fontSize="15px"
                           display="flex"
                           alignItems="center"
                           justifyContent="center"
-                          flexWrap="wrap">
+                          flexWrap="wrap"
+                        >
                           Already Have An Account ?
-                          <Text onClick={() => router.push("/LogIn")}
+                          <Text
+                            onClick={() => router.push("/LogIn")}
                             ml="5px"
                             textDecoration="underline"
                             color="blue"
                             cursor="pointer"
                           >
-                            LogIn</Text>
+                            LogIn
+                          </Text>
                         </Box>
                       </Show>
                     </Box>
@@ -527,6 +611,6 @@ export default function SignIn() {
           )}
         </Formik>
       </Box>
-    </Box >
+    </Box>
   );
 }
