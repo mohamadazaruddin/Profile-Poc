@@ -19,7 +19,6 @@ import { TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
-import { useRouter } from "next/router";
 export default function Profile() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [valueSubmitted, setValueSubmitted] = useState(false);
@@ -69,7 +68,6 @@ export default function Profile() {
     setValueSubmitted(false);
   }, [valueSubmitted]);
 
-  const router = useRouter();
   const handleSubmit = (values) => {
     for (let index = 0; index < userArray.length; index++) {
       const element = userArray[index];

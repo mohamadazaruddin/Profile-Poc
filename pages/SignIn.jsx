@@ -225,7 +225,7 @@ export default function SignIn() {
                     </Box>
                   ) : (
                     <Text
-                      color="#fff"
+                      visibility="hidden"
                       fontSize="14px"
                       fontWeight="600"
                       cursor="context-menu"
@@ -255,7 +255,7 @@ export default function SignIn() {
                     </Box>
                   ) : (
                     <Text
-                      color="#fff"
+                      visibility="hidden"
                       fontSize="14px"
                       fontWeight="600"
                       cursor="context-menu"
@@ -285,7 +285,7 @@ export default function SignIn() {
                     </Box>
                   ) : (
                     <Text
-                      color="#fff"
+                      visibility="hidden"
                       fontSize="14px"
                       fontWeight="600"
                       cursor="context-menu"
@@ -330,7 +330,7 @@ export default function SignIn() {
                   ) : (
                     <Box
                       as="p"
-                      color="#fff"
+                      visibility="hidden"
                       fontSize="14px"
                       fontWeight="600"
                       cursor="context-menu"
@@ -358,7 +358,7 @@ export default function SignIn() {
                     </Box>
                   ) : (
                     <Text
-                      color="#fff"
+                      visibility="hidden"
                       fontSize="14px"
                       fontWeight="600"
                       cursor="context-menu"
@@ -412,7 +412,7 @@ export default function SignIn() {
                     </Text>
                   ) : (
                     <Text
-                      color="#fff"
+                      visibility="hidden"
                       fontSize="14px"
                       fontWeight="600"
                       cursor="context-menu"

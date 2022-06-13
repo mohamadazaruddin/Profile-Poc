@@ -15,13 +15,11 @@ import {
 import React, { useEffect, useState } from "react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
-import { useRouter } from "next/router";
 export default function Dashboard() {
   const [value, setValue] = useState([]);
   const [items, setItems] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const router = useRouter();
   useEffect(() => {
     const itemobtained = localStorage.getItem("signedInObject");
     if (itemobtained) {
@@ -30,6 +28,7 @@ export default function Dashboard() {
       setValue(user_item);
     }
   }, []);
+
   const handleChange = (e) => {
     e.preventDefault();
     var name = e.target.value;

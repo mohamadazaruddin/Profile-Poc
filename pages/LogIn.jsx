@@ -197,7 +197,7 @@ export default function LogIn() {
                             </Text>
                           ) : (
                             <Text
-                              color="transparent"
+                              visibility="hidden"
                               fontSize="14px"
                               fontWeight="600"
                               cursor="context-menu"
@@ -241,7 +241,7 @@ export default function LogIn() {
                             </Text>
                           ) : (
                             <Text
-                              color="transparent"
+                              visibility="hidden"
                               fontSize="14px"
                               fontWeight="600"
                               cursor="context-menu"
