@@ -7,13 +7,21 @@ import {
   Radio,
   GridItem,
   Grid,
+  Flex,
+  HStack,
+  IconButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+
 import { useRouter } from "next/router";
 export default function Dashboard() {
   const [value, setValue] = useState([]);
-  const [media, setMedia] = useState(false);
   const [items, setItems] = useState([]);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const router = useRouter();
   useEffect(() => {
     const itemobtained = localStorage.getItem("signedInObject");
@@ -45,57 +53,135 @@ export default function Dashboard() {
           <Heading fontSize="25px">Dashboard</Heading>
         </Box>
         <Box p="15px" mb="15px" border="1px solid rgb(227, 235, 235)">
-          <RadioGroup onChange={setValue} defaultValue="all">
-            <Stack direction={{ md: "row", base: "column" }} gap="10px">
-              <Radio
-                colorScheme="green"
-                // as={Radio}
-                value="all"
-                // checked={true}
-                onChange={handleChange}
-                _focus={{ border: "none", boxShadow: "none" }}
+          <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+            <IconButton
+              size={"md"}
+              icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+              aria-label={"Open Menu"}
+              display={{ md: "none" }}
+              onClick={isOpen ? onClose : onOpen}
+            />
+            <HStack spacing={8} alignItems={"center"}>
+              <HStack
+                as={"nav"}
+                spacing={4}
+                display={{ base: "none", md: "flex" }}
               >
-                All
-              </Radio>
-              <Radio
-                colorScheme="green"
-                // as={Radio}
-                value="Intern"
-                checked={value === "Intern"}
-                onChange={handleChange}
-                _focus={{ border: "none", boxShadow: "none" }}
-              >
-                Intern
-              </Radio>
-              <Radio
-                colorScheme="green"
-                value="Frontend Developer"
-                checked={value === "Frontend Developer"}
-                onChange={handleChange}
-                _focus={{ border: "none", boxShadow: "none" }}
-              >
-                Frontend Dev
-              </Radio>
-              <Radio
-                colorScheme="green"
-                value="Backend Developer"
-                checked={value === "Backend Developer"}
-                onChange={handleChange}
-                _focus={{ border: "none", boxShadow: "none" }}
-              >
-                Backend Dev
-              </Radio>
-              <Radio
-                colorScheme="green"
-                value="DevOps"
-                checked={value === "DevOps"}
-                onChange={handleChange}
-                _focus={{ border: "none", boxShadow: "none" }}
-              >
-                DevOps
-              </Radio>
-            </Stack>
-          </RadioGroup>
+                <Box p="15px">
+                  <RadioGroup onChange={setValue} defaultValue="all">
+                    <Stack direction={{ md: "row", base: "column" }} gap="10px">
+                      <Radio
+                        colorScheme="green"
+                        // as={Radio}
+                        value="all"
+                        // checked={true}
+                        onChange={handleChange}
+                        _focus={{ border: "none", boxShadow: "none" }}
+                      >
+                        All
+                      </Radio>
+                      <Radio
+                        colorScheme="green"
+                        // as={Radio}
+                        value="Intern"
+                        checked={value === "Intern"}
+                        onChange={handleChange}
+                        _focus={{ border: "none", boxShadow: "none" }}
+                      >
+                        Intern
+                      </Radio>
+                      <Radio
+                        colorScheme="green"
+                        value="Frontend Developer"
+                        checked={value === "Frontend Developer"}
+                        onChange={handleChange}
+                        _focus={{ border: "none", boxShadow: "none" }}
+                      >
+                        Frontend Dev
+                      </Radio>
+                      <Radio
+                        colorScheme="green"
+                        value="Backend Developer"
+                        checked={value === "Backend Developer"}
+                        onChange={handleChange}
+                        _focus={{ border: "none", boxShadow: "none" }}
+                      >
+                        Backend Dev
+                      </Radio>
+                      <Radio
+                        colorScheme="green"
+                        value="DevOps"
+                        checked={value === "DevOps"}
+                        onChange={handleChange}
+                        _focus={{ border: "none", boxShadow: "none" }}
+                      >
+                        DevOps
+                      </Radio>
+                    </Stack>
+                  </RadioGroup>
+                </Box>
+              </HStack>
+            </HStack>
+          </Flex>
+          {isOpen ? (
+            <Box pb={4} display={{ md: "none" }}>
+              <Stack as={"nav"} spacing={4}>
+                <Box p="15px" mb="15px" border="1px solid rgb(227, 235, 235)">
+                  <RadioGroup onChange={setValue} defaultValue="all">
+                    <Stack direction={{ md: "row", base: "column" }} gap="10px">
+                      <Radio
+                        colorScheme="green"
+                        // as={Radio}
+                        value="all"
+                        // checked={true}
+                        onChange={handleChange}
+                        _focus={{ border: "none", boxShadow: "none" }}
+                      >
+                        All
+                      </Radio>
+                      <Radio
+                        colorScheme="green"
+                        // as={Radio}
+                        value="Intern"
+                        checked={value === "Intern"}
+                        onChange={handleChange}
+                        _focus={{ border: "none", boxShadow: "none" }}
+                      >
+                        Intern
+                      </Radio>
+                      <Radio
+                        colorScheme="green"
+                        value="Frontend Developer"
+                        checked={value === "Frontend Developer"}
+                        onChange={handleChange}
+                        _focus={{ border: "none", boxShadow: "none" }}
+                      >
+                        Frontend Dev
+                      </Radio>
+                      <Radio
+                        colorScheme="green"
+                        value="Backend Developer"
+                        checked={value === "Backend Developer"}
+                        onChange={handleChange}
+                        _focus={{ border: "none", boxShadow: "none" }}
+                      >
+                        Backend Dev
+                      </Radio>
+                      <Radio
+                        colorScheme="green"
+                        value="DevOps"
+                        checked={value === "DevOps"}
+                        onChange={handleChange}
+                        _focus={{ border: "none", boxShadow: "none" }}
+                      >
+                        DevOps
+                      </Radio>
+                    </Stack>
+                  </RadioGroup>
+                </Box>
+              </Stack>
+            </Box>
+          ) : null}
         </Box>
         <Box p="10px 10px" borderBottom="1px solid rgba(245, 245, 245)">
           <Grid
